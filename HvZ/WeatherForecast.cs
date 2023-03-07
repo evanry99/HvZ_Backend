@@ -2,7 +2,7 @@ namespace HvZ
 {
     public class WeatherForecast
     {
-        public DateTime Datee { get; set; }
+        public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
 
