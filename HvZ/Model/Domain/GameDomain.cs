@@ -24,5 +24,9 @@ namespace HvZ.Model.Domain
         public float? Nw_Lng { get; set; }
         public float? Se_Lat { get; set; }
         public float? Se_Lng { get; set; }
+
+        // Relationships
+        public ICollection<PlayerDomain> Players { get; set; }
+        public ICollection<KillDomain> Kills { get; set; }
     }
 }
