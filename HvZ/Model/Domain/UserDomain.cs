@@ -1,0 +1,20 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HvZ.Model.Domain
+{
+    public class UserDomain
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string FirstName { get; set; }
+
+        [MaxLength(50)]
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
+        public bool IsAdmin { get; set; }
+    }
+}
