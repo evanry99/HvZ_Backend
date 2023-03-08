@@ -15,7 +15,7 @@ namespace HvZ.Model.Domain
         [Required]
         public bool IsHuman { get; set; }
         [Required]
-        public int UserID { get; set; }
+        public int UserId { get; set; }
         [Required]
         public int GameId { get; set; }
 
@@ -26,6 +26,6 @@ namespace HvZ.Model.Domain
         [Required]
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
-        public ICollection<KillDomain> Kills { get; set; }
+        public ICollection<KillDomain>? Kills { get; set; }
     }
 }

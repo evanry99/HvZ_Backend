@@ -70,7 +70,7 @@ namespace HvZ.Data
                     BiteCode = "231233",
                     IsPatientZero = true,
                     IsHuman = false,
-                    UserID = 1,
+                    UserId = 1,
                     GameId = 1,
                 },
                 new PlayerDomain()
@@ -79,7 +79,7 @@ namespace HvZ.Data
                     BiteCode = "112334",
                     IsPatientZero = false,
                     IsHuman = true,
-                    UserID = 2,
+                    UserId = 2,
                     GameId = 1,
                 },
                 new PlayerDomain()
@@ -88,7 +88,7 @@ namespace HvZ.Data
                     BiteCode = "928475",
                     IsPatientZero = false,
                     IsHuman = true,
-                    UserID = 3,
+                    UserId = 3,
                     GameId = 2,
                 }
             };

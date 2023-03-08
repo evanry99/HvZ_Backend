@@ -17,7 +17,7 @@ namespace HvZ.Controllers
         {
             _logger = logger;
         }
-
+        /*
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -29,5 +29,6 @@ namespace HvZ.Controllers
             })
             .ToArray();
         }
+        */
     }
 }
