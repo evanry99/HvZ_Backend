@@ -20,10 +20,10 @@ namespace HvZ.Model.Domain
 
 
         //Coordinates
-        public float? Nw_Lat { get; set; }
-        public float? Nw_Lng { get; set; }
-        public float? Se_Lat { get; set; }
-        public float? Se_Lng { get; set; }
+        public double? Nw_Lat { get; set; }
+        public double? Nw_Lng { get; set; }
+        public double? Se_Lat { get; set; }
+        public double? Se_Lng { get; set; }
 
         // Relationships
         public ICollection<PlayerDomain> Players { get; set; }
