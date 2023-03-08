@@ -16,7 +16,13 @@ namespace HvZ.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<GameDomain>().HasData(SeedDataHelper.GetGameDomains());
+
+            modelBuilder.Entity<KillDomain>().HasData(SeedDataHelper.GetKillDomains());
+
+            modelBuilder.Entity<PlayerDomain>().HasData(SeedDataHelper.GetPlayerDomains());
+
+            modelBuilder.Entity<UserDomain>().HasData(SeedDataHelper.GetUserDomains());
         }
     }
 }
