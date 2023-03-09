@@ -11,8 +11,8 @@ namespace HvZ.Model.Domain
         public DateTime TimeOfDeath { get; set; }
         [MaxLength(50)]
         public string? Story { get; set; }
-        public float? Lat { get; set; }
-        public float? Lng { get; set; }
+        public double? Lat { get; set; }
+        public double? Lng { get; set; }
         [Required]
         public int GameId { get; set; }
         [Required]
@@ -23,12 +23,13 @@ namespace HvZ.Model.Domain
         // Relationships
         [Required]
         [ForeignKey("GameId")]
-        public int Game { get; set; }
+        public GameDomain Game { get; set; }
         [Required]
         [ForeignKey("KillerId")]
-        public int Killer { get; set; }
+        public PlayerDomain Killer { get; set; }
         [Required]
         [ForeignKey("VictimId")]
-        public int Victim { get; set; }
+        //[InverseProperty("Kills")]
+        public PlayerDomain Victim { get; set; }
     }
 }

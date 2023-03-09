@@ -1,3 +1,6 @@
+using HvZ.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace HvZ
 {
     public class Program
@@ -5,6 +8,12 @@ namespace HvZ
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add DbContext
+            builder.Services.AddDbContext<HvZDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             // Add services to the container.
 

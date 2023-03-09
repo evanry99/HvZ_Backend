@@ -16,5 +16,8 @@ namespace HvZ.Model.Domain
 
         [Required]
         public bool IsAdmin { get; set; }
+
+        // Relationships
+        public ICollection<PlayerDomain> Players { get; set; }
     }
 }

@@ -15,16 +15,17 @@ namespace HvZ.Model.Domain
         [Required]
         public bool IsHuman { get; set; }
         [Required]
-        public int UserID { get; set; }
+        public int UserId { get; set; }
         [Required]
         public int GameId { get; set; }
 
         // Relationships
         [Required]
         [ForeignKey("UserId")]
-        public int User { get; set; }
+        public UserDomain User { get; set; }
         [Required]
         [ForeignKey("GameId")]
-        public int Game { get; set; }
+        public GameDomain Game { get; set; }
+        public ICollection<KillDomain>? Kills { get; set; }
     }
 }
