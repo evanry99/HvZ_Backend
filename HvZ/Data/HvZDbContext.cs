@@ -23,6 +23,20 @@ namespace HvZ.Data
             modelBuilder.Entity<PlayerDomain>().HasData(SeedDataHelper.GetPlayerDomains());
 
             modelBuilder.Entity<UserDomain>().HasData(SeedDataHelper.GetUserDomains());
+
+
+            //On deleting Kill
+            modelBuilder.Entity<KillDomain>()
+                 .HasOne(k => k.Killer)
+                 .WithMany(p => p.Kills)
+                 .HasForeignKey(k => k.KillerId)
+                 .OnDelete(DeleteBehavior.NoAction); 
+
+            modelBuilder.Entity<KillDomain>()
+                .HasOne(k => k.Victim)
+                .WithMany()
+                .HasForeignKey(k => k.VictimId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
