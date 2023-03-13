@@ -18,6 +18,6 @@ namespace HvZ.Model.Domain
         public bool IsAdmin { get; set; }
 
         // Relationships
-        public ICollection<PlayerDomain> Players { get; set; }
+        public ICollection<PlayerDomain>? Players { get; set; } //add nullable for players in userdomain
     }
 }
