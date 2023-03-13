@@ -17,13 +17,11 @@ namespace HvZ.Controllers
     [ApiController]
     public class PlayerDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
         private readonly IMapper _mapper;
         private readonly IPlayerService _playerService;
 
-        public PlayerDomainsController(HvZDbContext context, IMapper mapper, IPlayerService playerService)
+        public PlayerDomainsController(IMapper mapper, IPlayerService playerService)
         {
-            _context = context;
             _mapper = mapper;
             _playerService = playerService;
         }
@@ -32,61 +30,49 @@ namespace HvZ.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetPlayers()
         {
-            return _mapper.Map<List<PlayerReadDTO>>(await _context.Players.ToListAsync());
+            return _mapper.Map<List<PlayerReadDTO>>(await _playerService.GetAllPlayersAsync());
         }
 
         // GET: api/PlayerDomains/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PlayerDomain>> GetPlayerDomain(int id)
+        public async Task<ActionResult<PlayerReadDTO>> GetPlayerDomain(int id)
         {
-            var playerDomain = await _context.Players.FindAsync(id);
+            var playerDomain = await _playerService.GetPlayerAsync(id);
 
             if (playerDomain == null)
             {
                 return NotFound();
             }
 
-            return playerDomain;
+            return _mapper.Map<PlayerReadDTO>(playerDomain);
         }
 
         // PUT: api/PlayerDomains/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayerDomain(int id, PlayerDomain playerDomain)
+        public async Task<IActionResult> PutPlayerDomain(int id, PlayerEditDTO playerDTO)
         {
-            if (id != playerDomain.Id)
+            if (id != playerDTO.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(playerDomain).State = EntityState.Modified;
+            if (!_playerService.PlayerExists(id))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlayerDomainExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            PlayerDomain playerDomain = _mapper.Map<PlayerDomain>(playerDTO);
+            await _playerService.UpdatePlayerAsync(playerDomain);
 
             return NoContent();
         }
 
         // POST: api/PlayerDomains
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PlayerDomain>> PostPlayerDomain(PlayerDomain playerDomain)
+        public async Task<ActionResult<PlayerReadDTO>> PostPlayerDomain(PlayerCreateDTO playerDTO)
         {
-            _context.Players.Add(playerDomain);
-            await _context.SaveChangesAsync();
+            PlayerDomain playerDomain = _mapper.Map<PlayerDomain>(playerDTO);
+            await _playerService.AddPlayerAsync(playerDomain);
 
             return CreatedAtAction("GetPlayerDomain", new { id = playerDomain.Id }, playerDomain);
         }
@@ -95,21 +81,14 @@ namespace HvZ.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlayerDomain(int id)
         {
-            var playerDomain = await _context.Players.FindAsync(id);
-            if (playerDomain == null)
+            if (!_playerService.PlayerExists(id))
             {
                 return NotFound();
             }
 
-            _context.Players.Remove(playerDomain);
-            await _context.SaveChangesAsync();
+            await _playerService.DeletePlayerAsync(id);
 
             return NoContent();
-        }
-
-        private bool PlayerDomainExists(int id)
-        {
-            return _context.Players.Any(e => e.Id == id);
         }
     }
 }
