@@ -29,6 +29,7 @@ namespace HvZ
             //Add services to access DB
             builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
             builder.Services.AddScoped(typeof(IGameService), typeof(GameService));
+            builder.Services.AddScoped(typeof(IPlayerService), typeof(PlayerService));
 
             var app = builder.Build();
 
