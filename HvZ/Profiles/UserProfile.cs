@@ -9,7 +9,7 @@ namespace HvZ.Profiles
         public UserProfile() {
             CreateMap<UserCreateDTO, UserDomain>();
             CreateMap<UserDomain, UserReadDTO>();
-            CreateMap<UserDomain, UserEditDTO>();
+            CreateMap<UserEditDTO, UserDomain>();
         }
     }
 }

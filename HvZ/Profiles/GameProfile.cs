@@ -1,6 +1,6 @@
 ﻿namespace HvZ.Profiles
 {
-    public class TestProfile
+    public class GameProfile
     {
     }
 }
