@@ -30,6 +30,7 @@ namespace HvZ
             builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
             builder.Services.AddScoped(typeof(IGameService), typeof(GameService));
             builder.Services.AddScoped(typeof(IPlayerService), typeof(PlayerService));
+            builder.Services.AddScoped(typeof(IKillService), typeof(KillService));
 
             var app = builder.Build();
 
