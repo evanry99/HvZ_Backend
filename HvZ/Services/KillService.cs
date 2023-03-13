@@ -1,6 +1,8 @@
-﻿namespace HvZ.Services
+﻿using HvZ.Model.Domain;
+
+namespace HvZ.Services
 {
-    public interface KillService
+    public class KillService
     {
     }
 }
