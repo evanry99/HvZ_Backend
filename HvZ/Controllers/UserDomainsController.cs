@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HvZ.Data;
 using HvZ.Model.Domain;
+using AutoMapper;
+using HvZ.Services;
+using HvZ.Model.DTO.UserDTO;
 
 namespace HvZ.Controllers
 {
@@ -14,95 +17,89 @@ namespace HvZ.Controllers
     [ApiController]
     public class UserDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public UserDomainsController(HvZDbContext context)
+
+        public UserDomainsController(IMapper mapper, IUserService userService)
         {
-            _context = context;
+            _mapper = mapper;
+            _userService = userService;
+
+
         }
 
         // GET: api/UserDomains
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDomain>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var userModel = await _userService.GetAllUserAsync();
+            var userReadDTO = _mapper.Map<List<UserReadDTO>>(userModel);
+            return userReadDTO;
         }
 
         // GET: api/UserDomains/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDomain>> GetUserDomain(int id)
+        public async Task<ActionResult<UserReadDTO>> GetUserDomain(int id)
         {
-            var userDomain = await _context.Users.FindAsync(id);
+            var userReadDTO = await _userService.GetUserAsync(id);
 
-            if (userDomain == null)
+            if (userReadDTO == null)
             {
                 return NotFound();
             }
 
-            return userDomain;
+            return _mapper.Map<UserReadDTO>(userReadDTO);
         }
 
         // PUT: api/UserDomains/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserDomain(int id, UserDomain userDomain)
+        public async Task<IActionResult> PutUserDomain(int id, UserEditDTO userDTO)
         {
-            if (id != userDomain.Id)
+            if (id != userDTO.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(userDomain).State = EntityState.Modified;
-
-            try
+            if (!_userService.UserExists(id))
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserDomainExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var userModel = _mapper.Map<UserDomain>(userDTO);
 
+            await _userService.UpdateUserAsync(userModel);
             return NoContent();
+
+
+
         }
 
         // POST: api/UserDomains
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserDomain>> PostUserDomain(UserDomain userDomain)
+        public async Task<ActionResult<UserReadDTO>> PostUserDomain(UserCreateDTO userDTO)
         {
-            _context.Users.Add(userDomain);
-            await _context.SaveChangesAsync();
+            var userModel = _mapper.Map<UserDomain>(userDTO);
+            userModel = await _userService.AddUserAsync(userModel);
 
-            return CreatedAtAction("GetUserDomain", new { id = userDomain.Id }, userDomain);
+            var userReadDTO = _mapper.Map<UserReadDTO>(userModel);
+
+            return CreatedAtAction("GetUser", new { id = userModel.Id }, userReadDTO);
         }
 
         // DELETE: api/UserDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserDomain(int id)
         {
-            var userDomain = await _context.Users.FindAsync(id);
-            if (userDomain == null)
+            if (!_userService.UserExists(id))
             {
                 return NotFound();
             }
+            await _userService.DeleteUserAsync(id);
 
-            _context.Users.Remove(userDomain);
-            await _context.SaveChangesAsync();
+
 
             return NoContent();
-        }
 
-        private bool UserDomainExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
         }
     }
 }
