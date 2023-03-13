@@ -86,14 +86,12 @@ namespace HvZ.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteKillDomain(int id)
         {
-            var killDomain = await _context.Kills.FindAsync(id);
-            if (killDomain == null)
+            if (!_killService.KillExists(id))
             {
                 return NotFound();
             }
 
-            _context.Kills.Remove(killDomain);
-            await _context.SaveChangesAsync();
+            await _killService.DeleteKillAsync(id);
 
             return NoContent();
         }
