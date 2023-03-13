@@ -26,7 +26,6 @@ namespace HvZ.Controllers
             _mapper = mapper;
             _userService = userService;
 
-
         }
 
         // GET: api/UserDomains
@@ -94,9 +93,6 @@ namespace HvZ.Controllers
                 return NotFound();
             }
             await _userService.DeleteUserAsync(id);
-
-
-
             return NoContent();
 
         }

@@ -34,7 +34,7 @@ namespace HvZ.Services
 
         public async Task<IEnumerable<GameDomain>> GetAllGamesAsync()
         {
-            return await _context.Games.Include(g => g.Name).Include(g =>g.Players).Include(g => g.Kills).ToListAsync();
+            return await _context.Games.ToListAsync();
         }
 
         public async Task<GameDomain> GetGameAsync(int id)

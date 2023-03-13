@@ -10,5 +10,7 @@
         public float? Nw_Lng { get; set; }
         public float? Se_Lat { get; set; }
         public float? Se_Lng { get; set; }
+
+  
     }
 }
