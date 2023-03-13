@@ -1,4 +1,5 @@
 using HvZ.Data;
+using HvZ.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace HvZ
@@ -22,7 +23,20 @@ namespace HvZ
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+            builder.Services.AddAutoMapper(typeof(Program));
+
+            //Add services to access DB
+            builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
+            builder.Services.AddScoped(typeof(IGameService), typeof(GameService));
+
             var app = builder.Build();
+
+            //Add automapper service for DTO and mapper
+
+
+
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
