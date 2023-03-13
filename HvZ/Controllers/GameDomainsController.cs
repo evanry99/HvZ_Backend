@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HvZ.Data;
 using HvZ.Model.Domain;
+using AutoMapper;
+using HvZ.Services;
+using HvZ.Model.DTO.GameDTO;
+using HvZ.Model.DTO.UserDTO;
 
 namespace HvZ.Controllers
 {
@@ -15,31 +19,37 @@ namespace HvZ.Controllers
     public class GameDomainsController : ControllerBase
     {
         private readonly HvZDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IGameService _gameService;
 
-        public GameDomainsController(HvZDbContext context)
+        public GameDomainsController(HvZDbContext context, IMapper mapper, IGameService gameService)
         {
             _context = context;
+            _mapper = mapper;
+            _gameService = gameService;
         }
 
         // GET: api/GameDomains
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameDomain>>> GetGames()
+        public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGames()
         {
-            return await _context.Games.ToListAsync();
+            var gameModel = await _gameService.GetAllGamesAsync();
+            var gameReadDTO = _mapper.Map<List<GameReadDTO>>(gameModel);
+            return gameReadDTO;
         }
 
         // GET: api/GameDomains/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GameDomain>> GetGameDomain(int id)
+        public async Task<ActionResult<GameReadDTO>> GetGameDomain(int id)
         {
-            var gameDomain = await _context.Games.FindAsync(id);
+            var gameReadDTO = await _gameService.GetGameAsync(id);
 
-            if (gameDomain == null)
+            if (gameReadDTO == null)
             {
                 return NotFound();
             }
 
-            return gameDomain;
+            return _mapper.Map<GameReadDTO>(gameReadDTO);
         }
 
         // PUT: api/GameDomains/5
