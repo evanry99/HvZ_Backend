@@ -79,12 +79,11 @@ namespace HvZ.Controllers
         public async Task<ActionResult<UserReadDTO>> PostUserDomain(UserCreateDTO userDTO)
         {
             var userModel = _mapper.Map<UserDomain>(userDTO);
-            userModel = await _userService.AddUserAsync(userModel);
+            await _userService.AddUserAsync(userModel);
 
-            var userReadDTO = _mapper.Map<UserReadDTO>(userModel);
-
-            return CreatedAtAction("GetUser", new { id = userModel.Id }, userReadDTO);
+            return CreatedAtAction("GetUserDomain", new { id = userModel.Id }, userDTO);
         }
+
 
         // DELETE: api/UserDomains/5
         [HttpDelete("{id}")]
