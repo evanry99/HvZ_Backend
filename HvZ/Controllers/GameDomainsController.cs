@@ -18,13 +18,11 @@ namespace HvZ.Controllers
     [ApiController]
     public class GameDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
         private readonly IMapper _mapper;
         private readonly IGameService _gameService;
 
-        public GameDomainsController(HvZDbContext context, IMapper mapper, IGameService gameService)
+        public GameDomainsController(IMapper mapper, IGameService gameService)
         {
-            _context = context;
             _mapper = mapper;
             _gameService = gameService;
         }
@@ -51,6 +49,8 @@ namespace HvZ.Controllers
 
             return _mapper.Map<GameReadDTO>(gameReadDTO);
         }
+
+
 
         // PUT: api/GameDomains/5
         [HttpPut("{id}")]
