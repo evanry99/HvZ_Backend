@@ -31,13 +31,13 @@ namespace HvZ.Services
             return player;
         }
 
-        public async Task UpdatePlayer(PlayerDomain player)
+        public async Task UpdatePlayerAsync(PlayerDomain player)
         {
             _context.Entry(player).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task Deleteplayer(int playerId)
+        public async Task DeletePlayerAsync(int playerId)
         {
             var player = await _context.Players.FindAsync(playerId);
             _context.Players.Remove(player);
