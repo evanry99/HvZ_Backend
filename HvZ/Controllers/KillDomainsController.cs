@@ -76,7 +76,7 @@ namespace HvZ.Controllers
         [HttpPost]
         public async Task<ActionResult<KillReadDTO>> PostKillDomain(KillCreateDTO killDTO)
         {
-            KillDomain killDomain = _mapper.Map<KillDomain>(killDTO);
+            var killDomain = _mapper.Map<KillDomain>(killDTO);
             await _killService.AddKillAsync(killDomain);
 
             return CreatedAtAction("GetKillDomain", new { id = killDomain.Id }, killDomain);
