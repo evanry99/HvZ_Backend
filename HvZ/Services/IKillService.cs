@@ -4,11 +4,11 @@ namespace HvZ.Services
 {
     public interface IKillService
     {
-        public Task<IEnumerable<KillDomain>> GetAllKillsAsync(int gameId);
-        public Task<KillDomain> GetKillAsync(int gameId, int killId);
-        public Task<KillDomain> AddKillAsync(int gameId, KillDomain kill);
-        public Task UpdateKillAsync(int gameId, KillDomain kill);
+        public Task<IEnumerable<KillDomain>> GetAllKillsAsync();
+        public Task<KillDomain> GetKillAsync(int killId);
+        public Task<KillDomain> AddKillAsync(KillDomain kill);
+        public Task UpdateKillAsync(KillDomain kill);
         public Task DeleteKillAsync(int killId);
-        public bool KillExists(int gameId, int killId);
+        public bool KillExists(int killId);
     }
 }

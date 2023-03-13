@@ -14,7 +14,7 @@ namespace HvZ.Services
             _context = context;
         }
 
-        public async Task<KillDomain> AddKillAsync(int gameId, KillDomain kill)
+        public async Task<KillDomain> AddKillAsync(KillDomain kill)
         {
             _context.Kills.Add(kill);
             await _context.SaveChangesAsync();
@@ -28,22 +28,22 @@ namespace HvZ.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<KillDomain>> GetAllKillsAsync(int gameId)
+        public async Task<IEnumerable<KillDomain>> GetAllKillsAsync()
         {
-            return await _context.Kills.Where(k => k.GameId == gameId).ToListAsync();
+            return await _context.Kills.ToListAsync();
         }
 
-        public async Task<KillDomain> GetKillAsync(int gameId, int killId)
+        public async Task<KillDomain> GetKillAsync(int killId)
         {
             return await _context.Kills.FindAsync(killId);
         }
 
-        public bool KillExists(int gameId, int killId)
+        public bool KillExists(int killId)
         {
             return _context.Kills.Any(k => k.Id == killId);
         }
 
-        public async Task UpdateKillAsync(int killId, KillDomain kill)
+        public async Task UpdateKillAsync(KillDomain kill)
         {
             _context.Entry(kill).State = EntityState.Modified;
             await _context.SaveChangesAsync();
