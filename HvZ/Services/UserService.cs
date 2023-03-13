@@ -29,7 +29,7 @@ namespace HvZ.Services
 
         public async Task<IEnumerable<UserDomain>> GetAllUserAsync()
         {
-            return await _context.Users.Include(u => u.Players).ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         public async Task<UserDomain> GetUserAsync(int id)
