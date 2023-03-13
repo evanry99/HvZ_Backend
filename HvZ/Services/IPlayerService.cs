@@ -9,5 +9,6 @@ namespace HvZ.Services
         public Task<PlayerDomain> AddPlayerAsync(int gameId, PlayerDomain player);
         public Task UpdatePlayer(int gameId, int playerId, PlayerDomain player);
         public Task Deleteplayer(int gameId, int playerId);
+        public bool PlayerExists(int gameId, int playerId);
     }
 }
