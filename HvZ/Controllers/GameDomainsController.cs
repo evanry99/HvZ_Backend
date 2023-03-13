@@ -10,7 +10,7 @@ using HvZ.Model.Domain;
 using AutoMapper;
 using HvZ.Services;
 using HvZ.Model.DTO.GameDTO;
-using HvZ.Model.DTO.UserDTO;
+
 
 namespace HvZ.Controllers
 {
@@ -53,66 +53,45 @@ namespace HvZ.Controllers
         }
 
         // PUT: api/GameDomains/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGameDomain(int id, GameDomain gameDomain)
+        public async Task<IActionResult> PutGameDomain(int id, GameEditDTO gameDTO)
         {
-            if (id != gameDomain.Id)
+            if (id != gameDTO.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(gameDomain).State = EntityState.Modified;
-
-            try
+            if (!_gameService.GameExists(id))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GameDomainExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
+            var gameModel = _mapper.Map<GameDomain>(gameDTO);
+            await _gameService.UpdateGameAsync(gameModel);
             return NoContent();
         }
 
         // POST: api/GameDomains
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<GameDomain>> PostGameDomain(GameDomain gameDomain)
+        public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
-            _context.Games.Add(gameDomain);
-            await _context.SaveChangesAsync();
+            var gameModel = _mapper.Map<GameDomain>(gameDTO);
+            await _gameService.AddGameAsync(gameModel);
 
-            return CreatedAtAction("GetGameDomain", new { id = gameDomain.Id }, gameDomain);
+            return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, gameDTO);
         }
 
         // DELETE: api/GameDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
         {
-            var gameDomain = await _context.Games.FindAsync(id);
-            if (gameDomain == null)
+            if (!_gameService.GameExists(id))
             {
                 return NotFound();
             }
-
-            _context.Games.Remove(gameDomain);
-            await _context.SaveChangesAsync();
-
+            await _gameService.DeleteGameAsync(id);
             return NoContent();
         }
 
-        private bool GameDomainExists(int id)
-        {
-            return _context.Games.Any(e => e.Id == id);
-        }
     }
 }
