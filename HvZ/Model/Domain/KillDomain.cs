@@ -29,7 +29,6 @@ namespace HvZ.Model.Domain
         public PlayerDomain Killer { get; set; }
         [Required]
         [ForeignKey("VictimId")]
-        //[InverseProperty("Kills")]
         public PlayerDomain Victim { get; set; }
     }
 }
