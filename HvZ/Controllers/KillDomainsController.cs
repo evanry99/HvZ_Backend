@@ -97,10 +97,5 @@ namespace HvZ.Controllers
 
             return NoContent();
         }
-
-        private bool KillDomainExists(int id)
-        {
-            return _context.Kills.Any(e => e.Id == id);
-        }
     }
 }
