@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HvZ.Migrations
 {
     [DbContext(typeof(HvZDbContext))]
-    [Migration("20230309095342_InitialDB")]
+    [Migration("20230313133819_InitialDB")]
     partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

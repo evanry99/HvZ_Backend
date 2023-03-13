@@ -21,15 +21,11 @@ namespace HvZ.Model.Domain
         public int VictimId { get; set; }
 
         // Relationships
-        [Required]
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
-        [Required]
         [ForeignKey("KillerId")]
         public PlayerDomain Killer { get; set; }
-        [Required]
         [ForeignKey("VictimId")]
-        //[InverseProperty("Kills")]
         public PlayerDomain Victim { get; set; }
     }
 }
