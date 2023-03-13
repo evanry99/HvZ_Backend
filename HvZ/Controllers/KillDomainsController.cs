@@ -74,10 +74,10 @@ namespace HvZ.Controllers
         // POST: api/KillDomains
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<KillDomain>> PostKillDomain(KillDomain killDomain)
+        public async Task<ActionResult<KillReadDTO>> PostKillDomain(KillCreateDTO killDTO)
         {
-            _context.Kills.Add(killDomain);
-            await _context.SaveChangesAsync();
+            KillDomain killDomain = _mapper.Map<KillDomain>(killDTO);
+            await _killService.AddKillAsync(killDomain);
 
             return CreatedAtAction("GetKillDomain", new { id = killDomain.Id }, killDomain);
         }
