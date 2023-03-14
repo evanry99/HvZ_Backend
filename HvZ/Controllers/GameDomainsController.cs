@@ -16,6 +16,10 @@ namespace HvZ.Controllers
 {
     [Route("api/game")]
     [ApiController]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class GameDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -27,6 +31,10 @@ namespace HvZ.Controllers
             _gameService = gameService;
         }
 
+        /// <summary>
+        /// Get all games
+        /// </summary>
+        /// <returns></returns>
         // GET: api/GameDomains
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGames()
@@ -36,6 +44,12 @@ namespace HvZ.Controllers
             return gameReadDTO;
         }
 
+
+        /// <summary>
+        /// Get a game by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/GameDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<GameReadDTO>> GetGameDomain(int id)
@@ -52,6 +66,12 @@ namespace HvZ.Controllers
 
 
 
+        /// <summary>
+        /// Update a game by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="gameDTO"></param>
+        /// <returns></returns>
         // PUT: api/GameDomains/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(int id, GameEditDTO gameDTO)
@@ -71,6 +91,12 @@ namespace HvZ.Controllers
             return NoContent();
         }
 
+
+        /// <summary>
+        /// Add a new game
+        /// </summary>
+        /// <param name="gameDTO"></param>
+        /// <returns></returns>
         // POST: api/GameDomains
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
@@ -81,6 +107,12 @@ namespace HvZ.Controllers
             return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, gameDTO);
         }
 
+
+        /// <summary>
+        /// Delete a game by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/GameDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
