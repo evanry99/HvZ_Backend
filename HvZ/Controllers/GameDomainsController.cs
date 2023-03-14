@@ -10,7 +10,7 @@ using HvZ.Model.Domain;
 using AutoMapper;
 using HvZ.Services;
 using HvZ.Model.DTO.GameDTO;
-
+using HvZ.Model.DTO.PlayerDTO;
 
 namespace HvZ.Controllers
 {
@@ -125,5 +125,17 @@ namespace HvZ.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id}/player")]
+        public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetGamePlayers(int id)
+        {
+            if (!_gameService.GameExists(id))
+            {
+                return NotFound();
+            }
+
+            var gameModel = await _gameService.GetGamePlayersAsync(id);
+
+            return _mapper.Map<List<PlayerReadDTO>>(gameModel);
+        }
     }
 }
