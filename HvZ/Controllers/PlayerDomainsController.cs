@@ -15,6 +15,10 @@ namespace HvZ.Controllers
 {
     [Route("api/player")]
     [ApiController]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class PlayerDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -26,6 +30,10 @@ namespace HvZ.Controllers
             _playerService = playerService;
         }
 
+        /// <summary>
+        /// Get all players
+        /// </summary>
+        /// <returns></returns>
         // GET: api/PlayerDomains
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetPlayers()
@@ -33,6 +41,11 @@ namespace HvZ.Controllers
             return _mapper.Map<List<PlayerReadDTO>>(await _playerService.GetAllPlayersAsync());
         }
 
+        /// <summary>
+        /// Get a player by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/PlayerDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PlayerReadDTO>> GetPlayerDomain(int id)
@@ -47,6 +60,12 @@ namespace HvZ.Controllers
             return _mapper.Map<PlayerReadDTO>(playerDomain);
         }
 
+        /// <summary>
+        /// Update a player by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="playerDTO"></param>
+        /// <returns></returns>
         // PUT: api/PlayerDomains/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlayerDomain(int id, PlayerEditDTO playerDTO)
@@ -67,6 +86,11 @@ namespace HvZ.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Add a new player
+        /// </summary>
+        /// <param name="playerDTO"></param>
+        /// <returns></returns>
         // POST: api/PlayerDomains
         [HttpPost]
         public async Task<ActionResult<PlayerReadDTO>> PostPlayerDomain(PlayerCreateDTO playerDTO)
@@ -77,6 +101,11 @@ namespace HvZ.Controllers
             return CreatedAtAction("GetPlayerDomain", new { id = playerDomain.Id }, playerDomain);
         }
 
+        /// <summary>
+        /// Delete a user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/PlayerDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlayerDomain(int id)
