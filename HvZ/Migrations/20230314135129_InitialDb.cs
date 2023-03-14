@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HvZ.Migrations
 {
-    public partial class InitialDB : Migration
+    public partial class InitialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,6 +18,8 @@ namespace HvZ.Migrations
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     GameState = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Nw_Lat = table.Column<double>(type: "float", nullable: true),
                     Nw_Lng = table.Column<double>(type: "float", nullable: true),
                     Se_Lat = table.Column<double>(type: "float", nullable: true),
@@ -109,11 +111,11 @@ namespace HvZ.Migrations
 
             migrationBuilder.InsertData(
                 table: "Games",
-                columns: new[] { "Id", "Description", "GameState", "Name", "Nw_Lat", "Nw_Lng", "Se_Lat", "Se_Lng" },
+                columns: new[] { "Id", "Description", "EndTime", "GameState", "Name", "Nw_Lat", "Nw_Lng", "Se_Lat", "Se_Lng", "StartTime" },
                 values: new object[,]
                 {
-                    { 1, "Human vs Zombie fun", "Registration", "First Game", 40.753, 73.983000000000004, null, null },
-                    { 2, "Very fun game join plz!", "In Progress", "Second Game", null, null, 33.924900000000001, 18.424099999999999 }
+                    { 1, "Human vs Zombie fun", null, "Registration", "First Game", 40.753, 73.983000000000004, null, null, new DateTime(2023, 3, 14, 14, 51, 29, 82, DateTimeKind.Local).AddTicks(623) },
+                    { 2, "Very fun game join plz!", null, "In Progress", "Second Game", null, null, 33.924900000000001, 18.424099999999999, new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HvZ.Migrations
 {
     [DbContext(typeof(HvZDbContext))]
-    [Migration("20230313133819_InitialDB")]
-    partial class InitialDB
+    [Migration("20230314135129_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,9 @@ namespace HvZ.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("GameState")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -59,6 +62,9 @@ namespace HvZ.Migrations
                     b.Property<double?>("Se_Lng")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Games");
@@ -71,7 +77,8 @@ namespace HvZ.Migrations
                             GameState = "Registration",
                             Name = "First Game",
                             Nw_Lat = 40.753,
-                            Nw_Lng = 73.983000000000004
+                            Nw_Lng = 73.983000000000004,
+                            StartTime = new DateTime(2023, 3, 14, 14, 51, 29, 82, DateTimeKind.Local).AddTicks(623)
                         },
                         new
                         {
@@ -80,7 +87,8 @@ namespace HvZ.Migrations
                             GameState = "In Progress",
                             Name = "Second Game",
                             Se_Lat = 33.924900000000001,
-                            Se_Lng = 18.424099999999999
+                            Se_Lng = 18.424099999999999,
+                            StartTime = new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

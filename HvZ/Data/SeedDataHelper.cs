@@ -15,7 +15,8 @@ namespace HvZ.Data
                     GameState = "Registration",
                     Description = "Human vs Zombie fun",
                     Nw_Lat = 40.753,
-                    Nw_Lng = 73.983
+                    Nw_Lng = 73.983,
+                    StartTime = DateTime.Now,
                 },
                 new GameDomain()
                 {
@@ -25,6 +26,7 @@ namespace HvZ.Data
                     Description = "Very fun game join plz!",
                     Se_Lat = 33.9249,
                     Se_Lng = 18.4241,
+                    StartTime = new DateTime(2023, 4, 10),
                 }
             };
             return games;

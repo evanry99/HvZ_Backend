@@ -11,6 +11,6 @@
         public float? Se_Lat { get; set; }
         public float? Se_Lng { get; set; }
         public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
     }
 }
