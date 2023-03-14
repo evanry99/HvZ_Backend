@@ -3,29 +3,31 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HvZ.Model.Domain
 {
-    public class SquadMemberDomain
+    public class SquadCheckInDomain
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
-
         [Required]
-        [MaxLength(20)]
-        public string Rank { get; set; }
+        public DateTime StartTime { get; set; }
+        [Required]
+        public DateTime EndTime { get; set; }
+        [Required]
+        public float Lat { get; set; }
+        [Required]
+        public float Lng { get; set; }
         [Required]
         public int GameId { get; set; }
         [Required]
         public int SquadId { get; set; }
         [Required]
-        public string PlayerId { get; set; }
+        public int SquadMemberId { get; set; }
 
-        // Relationship
+        // Relationships
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
         [ForeignKey("SquadId")]
         public SquadDomain Squad { get; set; }
-        [ForeignKey("PlayerId")]
-        public PlayerDomain Player { get; set; }
-
-        public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
+        [ForeignKey("SquadMemberId")]
+        public SquadCheckInDomain SquadMember { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace HvZ.Model.Domain
         [MaxLength(20)]
         public string Name { get; set; }
         [Required]
-        public bool isHuman { get; set; }
+        public bool IsHuman { get; set; }
         [Required]
         public int GameId { get; set; }
 
@@ -21,8 +21,8 @@ namespace HvZ.Model.Domain
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
 
-        public ICollection<SquadMemberDomain> SquadMemebers  { get; set; }
-        public ICollection<ChatDomain> Chats { get; set; }
-        public ICollection<SquadCheckInDomain> SquadCheckIns { get; set; }
+        public ICollection<SquadMemberDomain>? SquadMemebers  { get; set; }
+        public ICollection<ChatDomain>? Chats { get; set; }
+        public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
     }
 }

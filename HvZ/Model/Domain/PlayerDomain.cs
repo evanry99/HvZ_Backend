@@ -21,9 +21,10 @@ namespace HvZ.Model.Domain
 
         // Relationships
         [ForeignKey("UserId")]
-        public UserDomain? User { get; set; }
+        public UserDomain User { get; set; }
         [ForeignKey("GameId")]
-        public GameDomain? Game { get; set; }
+        public GameDomain Game { get; set; }
         public ICollection<KillDomain>? Kills { get; set; }
+        public ICollection<ChatDomain>? Chats { get; set; }
     }
 }
