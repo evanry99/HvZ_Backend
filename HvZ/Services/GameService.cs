@@ -42,6 +42,14 @@ namespace HvZ.Services
             return await _context.Games.FindAsync(id);
         }
 
+        public async Task<IEnumerable<KillDomain>> GetGameKillsAsync(int id)
+        {
+            var game = await _context.Games.FindAsync(id);
+
+            var kills = await _context.Kills.Where(k => k.GameId == id).ToListAsync();
+            return kills;
+        }
+
         public async Task<IEnumerable<PlayerDomain>> GetGamePlayersAsync(int id)
         {
             var game = await _context.Games.FindAsync(id);
@@ -52,6 +60,9 @@ namespace HvZ.Services
 
             return players;
         }
+
+
+        
 
         public async Task UpdateGameAsync(GameDomain game)
         {
