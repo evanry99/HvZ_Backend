@@ -114,7 +114,7 @@ namespace HvZ.Migrations
                 columns: new[] { "Id", "Description", "EndTime", "GameState", "Name", "Nw_Lat", "Nw_Lng", "Se_Lat", "Se_Lng", "StartTime" },
                 values: new object[,]
                 {
-                    { 1, "Human vs Zombie fun", null, "Registration", "First Game", 40.753, 73.983000000000004, null, null, new DateTime(2023, 3, 14, 14, 51, 29, 82, DateTimeKind.Local).AddTicks(623) },
+                    { 1, "Human vs Zombie fun", null, "Registration", "First Game", 40.753, 73.983000000000004, null, null, new DateTime(2023, 3, 14, 15, 44, 18, 778, DateTimeKind.Local).AddTicks(1638) },
                     { 2, "Very fun game join plz!", null, "In Progress", "Second Game", null, null, 33.924900000000001, 18.424099999999999, new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
