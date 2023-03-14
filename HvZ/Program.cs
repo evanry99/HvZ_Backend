@@ -53,11 +53,6 @@ namespace HvZ
             var app = builder.Build();
 
 
-
-
-
-
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -65,10 +60,9 @@ namespace HvZ
             }
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseCors();
 
             app.UseHttpsRedirection();
-
+            app.UseCors();
             app.UseAuthorization();
 
 
