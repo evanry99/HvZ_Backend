@@ -13,7 +13,7 @@ using HvZ.Model.DTO.PlayerDTO;
 
 namespace HvZ.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/player")]
     [ApiController]
     public class PlayerDomainsController : ControllerBase
     {

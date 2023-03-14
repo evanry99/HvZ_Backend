@@ -13,7 +13,7 @@ using HvZ.Model.DTO.KillDTO;
 
 namespace HvZ.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/kill")]
     [ApiController]
     public class KillDomainsController : ControllerBase
     {
