@@ -15,6 +15,10 @@ namespace HvZ.Controllers
 {
     [Route("api/kill")]
     [ApiController]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class KillDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -28,6 +32,10 @@ namespace HvZ.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Get all kills
+        /// </summary>
+        /// <returns></returns>
         // GET: api/KillDomains
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetKills()
@@ -35,6 +43,11 @@ namespace HvZ.Controllers
             return _mapper.Map<List<KillReadDTO>>(await _killService.GetAllKillsAsync());
         }
 
+        /// <summary>
+        /// Get a kill by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/KillDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<KillReadDTO>> GetKillDomain(int id)
@@ -49,6 +62,13 @@ namespace HvZ.Controllers
             return _mapper.Map<KillReadDTO>(killDomain);
         }
 
+
+        /// <summary>
+        /// Update a kill by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="killDTO"></param>
+        /// <returns></returns>
         // PUT: api/KillDomains/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -71,6 +91,12 @@ namespace HvZ.Controllers
             return NoContent();
         }
 
+
+        /// <summary>
+        /// Add a new kill
+        /// </summary>
+        /// <param name="killDTO"></param>
+        /// <returns></returns>
         // POST: api/KillDomains
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -82,6 +108,12 @@ namespace HvZ.Controllers
             return CreatedAtAction("GetKillDomain", new { id = killDomain.Id }, killDomain);
         }
 
+
+        /// <summary>
+        /// Delete a kill by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/KillDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteKillDomain(int id)
