@@ -23,13 +23,11 @@ namespace HvZ.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IKillService _killService;
-        private readonly HvZDbContext _context;
 
-        public KillDomainsController(HvZDbContext context, IMapper mapper, IKillService killService)
+        public KillDomainsController(IMapper mapper, IKillService killService)
         {
             _mapper = mapper;
             _killService = killService;
-            _context = context;
         }
 
         /// <summary>
