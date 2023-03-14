@@ -33,6 +33,11 @@ namespace HvZ.Controllers
 
         }
 
+
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns></returns>
         // GET: api/UserDomains
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetUsers()
@@ -42,6 +47,12 @@ namespace HvZ.Controllers
             return userReadDTO;
         }
 
+
+        /// <summary>
+        /// Get a user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/UserDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReadDTO>> GetUserDomain(int id)
@@ -56,6 +67,13 @@ namespace HvZ.Controllers
             return _mapper.Map<UserReadDTO>(userReadDTO);
         }
 
+
+        /// <summary>
+        /// Update a user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
         // PUT: api/UserDomains/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -78,6 +96,12 @@ namespace HvZ.Controllers
 
         }
 
+
+        /// <summary>
+        /// Add a new user 
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
         // POST: api/UserDomains
         [HttpPost]
         public async Task<ActionResult<UserReadDTO>> PostUserDomain(UserCreateDTO userDTO)
@@ -89,6 +113,12 @@ namespace HvZ.Controllers
         }
 
 
+
+        /// <summary>
+        /// Delete a user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/UserDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserDomain(int id)
