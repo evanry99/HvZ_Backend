@@ -11,6 +11,8 @@ using AutoMapper;
 using HvZ.Services;
 using HvZ.Model.DTO.GameDTO;
 using HvZ.Model.DTO.PlayerDTO;
+using HvZ.Model.DTO.KillDTO;
+using System.Reflection.Metadata.Ecma335;
 
 namespace HvZ.Controllers
 {
@@ -143,5 +145,24 @@ namespace HvZ.Controllers
 
             return _mapper.Map<List<PlayerReadDTO>>(gameModel);
         }
+
+
+        /// <summary>
+        /// Get all kills from a game by game id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}/kills")]
+        public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetGameKills(int id) 
+        {
+            if (!_gameService.GameExists(id))
+            {
+                return NotFound();
+            }
+            var gameModel = await _gameService.GetGameKillsAsync(id);
+
+            return _mapper.Map<List<KillReadDTO>>(gameModel);
+        }
+
     }
 }
