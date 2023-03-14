@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HvZ.Model.Domain
 {
+    /*
     public class SquadMemberDomain
     {
         [Required]
@@ -28,4 +29,5 @@ namespace HvZ.Model.Domain
 
         public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
     }
+    */
 }
