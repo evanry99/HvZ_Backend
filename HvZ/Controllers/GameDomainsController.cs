@@ -14,7 +14,7 @@ using HvZ.Model.DTO.GameDTO;
 
 namespace HvZ.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/game")]
     [ApiController]
     public class GameDomainsController : ControllerBase
     {
