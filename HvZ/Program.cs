@@ -36,6 +36,10 @@ namespace HvZ
                 c.IncludeXmlComments(xmlPath);
             });
 
+            builder.Services.AddCors(policyBuilder =>
+                policyBuilder.AddDefaultPolicy(policy =>
+                    policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+            );
 
             //Automapper service for DTO and mapper
             builder.Services.AddAutoMapper(typeof(Program));
@@ -61,6 +65,7 @@ namespace HvZ
             }
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseCors();
 
             app.UseHttpsRedirection();
 
