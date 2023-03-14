@@ -13,7 +13,7 @@ namespace HvZ.Model.Domain
         [MaxLength(20)]
         public string Name { get; set; }
         [Required]
-        public bool isHuman { get; set; }
+        public bool IsHuman { get; set; }
         [Required]
         public int GameId { get; set; }
 
