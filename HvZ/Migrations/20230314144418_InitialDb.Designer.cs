@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HvZ.Migrations
 {
     [DbContext(typeof(HvZDbContext))]
-    [Migration("20230314135129_InitialDb")]
+    [Migration("20230314144418_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,7 +78,7 @@ namespace HvZ.Migrations
                             Name = "First Game",
                             Nw_Lat = 40.753,
                             Nw_Lng = 73.983000000000004,
-                            StartTime = new DateTime(2023, 3, 14, 14, 51, 29, 82, DateTimeKind.Local).AddTicks(623)
+                            StartTime = new DateTime(2023, 3, 14, 15, 44, 18, 778, DateTimeKind.Local).AddTicks(1638)
                         },
                         new
                         {
