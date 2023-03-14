@@ -28,5 +28,6 @@ namespace HvZ.Model.Domain
         // Relationships
         public ICollection<PlayerDomain> Players { get; set; }
         public ICollection<KillDomain> Kills { get; set; }
+        public ICollection<ChatDomain> Chats { get; set; }
     }
 }
