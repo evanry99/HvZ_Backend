@@ -13,7 +13,7 @@ using HvZ.Model.DTO.UserDTO;
 
 namespace HvZ.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserDomainsController : ControllerBase
     {
