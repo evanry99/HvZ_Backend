@@ -17,7 +17,7 @@ namespace HvZ.Model.Domain
         [Required]
         public int GameId { get; set; }
 
-        //Relationship
+        // Relationship
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
     }
