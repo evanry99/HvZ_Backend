@@ -15,6 +15,11 @@ namespace HvZ.Controllers
 {
     [Route("api/user")]
     [ApiController]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+
+    [ApiConventionType(typeof(DefaultApiConventions))]
+
     public class UserDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
