@@ -26,6 +26,6 @@ namespace HvZ.Model.Domain
         [ForeignKey("PlayerId")]
         public PlayerDomain Player { get; set; }
 
-        public ICollection<SquadCheckInDomain> SquadCheckIns { get; set; }
+        public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
     }
 }
