@@ -17,7 +17,9 @@ namespace HvZ.Model.Domain
         [Required]
         [MaxLength(400)]
         public string Description { get; set; }
-
+        [Required]
+        public DateTime StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         //Coordinates
         public double? Nw_Lat { get; set; }
