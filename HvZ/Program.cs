@@ -1,6 +1,7 @@
 using HvZ.Data;
 using HvZ.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace HvZ
 {
@@ -21,9 +22,22 @@ namespace HvZ
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            //Swagger documentation
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Human Vs Zombie",
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
 
 
+            //Automapper service for DTO and mapper
             builder.Services.AddAutoMapper(typeof(Program));
 
             //Add services to access DB
@@ -34,7 +48,7 @@ namespace HvZ
 
             var app = builder.Build();
 
-            //Add automapper service for DTO and mapper
+
 
 
 
