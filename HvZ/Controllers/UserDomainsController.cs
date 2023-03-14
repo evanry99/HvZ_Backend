@@ -35,7 +35,7 @@ namespace HvZ.Controllers
 
 
         /// <summary>
-        /// Get all users
+        /// Get all Users
         /// </summary>
         /// <returns></returns>
         // GET: api/UserDomains
