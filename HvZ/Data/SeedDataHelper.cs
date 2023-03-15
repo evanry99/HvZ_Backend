@@ -125,5 +125,203 @@ namespace HvZ.Data
             };
             return users;
         }
+        public static List<ChatDomain> GetChatDomains()
+        {
+            List<ChatDomain> chats = new List<ChatDomain>()
+            {
+                new ChatDomain()
+                {
+                    Id = 1,
+                    Message = "One zombie close to me",
+                    IsHumanGlobal= true,
+                    IsZombieGlobal= false,
+                    ChatTime = DateTime.UtcNow,
+                    GameId= 1,
+                    PlayerId= 2,
+                    SquadId= 1,
+                },
+                new ChatDomain()
+                {
+                    Id = 2,
+                    Message = "Surround that human",
+                    IsHumanGlobal= false,
+                    IsZombieGlobal= true,
+                    ChatTime = DateTime.UtcNow,
+                    GameId= 1,
+                    PlayerId= 1,
+                    SquadId= 2,
+                },
+                new ChatDomain()
+                {
+                    Id = 3,
+                    Message = "Need help!",
+                    IsHumanGlobal= true,
+                    IsZombieGlobal= false,
+                    ChatTime = DateTime.UtcNow,
+                    GameId= 2,
+                    PlayerId= 3,
+                    SquadId= 1,
+                },
+
+            };
+            return chats;
+        }
+        public static List<MissionDomain> GetMissionDomains()
+        {
+            List<MissionDomain> missions = new List<MissionDomain>()
+            {
+                new MissionDomain()
+                {
+                    Id = 1,
+                    Name= "Gather",
+                    IsHumanVisible= true,
+                    IsZombieVisible= false,
+                    Description= "Find a sock to equip yourself",
+                    StartTime= DateTime.UtcNow,
+                    EndTime= DateTime.UtcNow.AddMinutes(30),
+                    GameId= 1,
+                },
+                new MissionDomain()
+                {
+                    Id = 2,
+                    Name= "Survive",
+                    IsHumanVisible= true,
+                    IsZombieVisible= false,
+                    Description= "Survive the horde of zombies for 15 minutes ",
+                    StartTime= DateTime.UtcNow,
+                    EndTime= DateTime.UtcNow.AddMinutes(15),
+                    GameId= 2,
+                },
+                new MissionDomain()
+                {
+                    Id = 3,
+                    Name= "Blood bath",
+                    IsHumanVisible= false,
+                    IsZombieVisible= true,
+                    Description= "Kill 5 humans within 45 minutes ",
+                    StartTime= DateTime.UtcNow,
+                    EndTime= DateTime.UtcNow.AddMinutes(45),
+                    GameId= 2,
+                },
+            };
+            return missions;
+        }
+        public static List<SquadDomain> GetSquadDomains()
+        {
+            List<SquadDomain> squads = new List<SquadDomain>()
+            {
+                new SquadDomain()
+                {
+                    Id= 1,
+                    Name = "Dream team",
+                    IsHuman = true,
+                    GameId= 1,
+                },
+                new SquadDomain()
+                {
+                    Id= 2,
+                    Name = "Survivors",
+                    IsHuman = true,
+                    GameId= 1,
+                },
+                new SquadDomain()
+                {
+                    Id= 3,
+                    Name = "Kill all humans",
+                    IsHuman = false,
+                    GameId= 1,
+                },
+                new SquadDomain()
+                {
+                    Id= 4,
+                    Name = "Zombie zombie",
+                    IsHuman = false,
+                    GameId= 2,
+                },
+                new SquadDomain()
+                {
+                    Id= 5,
+                    Name = "Win win",
+                    IsHuman = true,
+                    GameId= 2,
+                },
+
+            };
+            return squads;
+        }
+        public static List<SquadMemberDomain> GetSquadMemberDomains()
+        {
+            List<SquadMemberDomain> squadMembers = new List<SquadMemberDomain>()
+            {
+                new SquadMemberDomain()
+                {
+                    Id= 1,
+                    Rank = "General",
+                    GameId = 1,
+                    SquadId= 1,
+                    PlayerId = 2,                 
+                },
+                new SquadMemberDomain()
+                {
+                    Id= 2,
+                    Rank = "Soldier",
+                    GameId = 1,
+                    SquadId= 2,
+                    PlayerId = 3,
+                },
+                new SquadMemberDomain()
+                {
+                    Id= 3,
+                    Rank = "Super Zombie",
+                    GameId = 2,
+                    SquadId= 4,
+                    PlayerId = 1,
+                },
+
+            };
+            return squadMembers;
+        }
+        public static List<SquadCheckInDomain> GetSquadCheckInDomains()
+        {
+            List<SquadCheckInDomain> squadCheckIns = new List<SquadCheckInDomain>()
+            {
+                new SquadCheckInDomain()
+                {
+                    Id = 1,
+                    StartTime= DateTime.UtcNow,
+                    EndTime= DateTime.UtcNow.AddMinutes(45),
+                    Lat = 55.230,
+                    Lng = 20.101,
+                    GameId= 1,
+                    SquadId= 1,
+                    SquadMemberId= 1,
+                },
+                new SquadCheckInDomain()
+                {
+                    Id = 2,
+                    StartTime= DateTime.UtcNow,
+                    EndTime= DateTime.UtcNow.AddMinutes(30),
+                    Lat = 10.987,
+                    Lng = 40.501,
+                    GameId= 1,
+                    SquadId= 2,
+                    SquadMemberId= 2,
+                },
+                new SquadCheckInDomain()
+                {
+                    Id = 3,
+                    StartTime= DateTime.UtcNow,
+                    EndTime= DateTime.UtcNow.AddMinutes(10),
+                    Lat = 70.567,
+                    Lng = 5.111,
+                    GameId= 2,
+                    SquadId= 1,
+                    SquadMemberId= 3,
+                },
+
+            }; 
+            return squadCheckIns;
+        }
+
     }
 }
