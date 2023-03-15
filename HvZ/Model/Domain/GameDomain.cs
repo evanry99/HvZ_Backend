@@ -30,10 +30,10 @@ namespace HvZ.Model.Domain
         // Relationships
         public ICollection<PlayerDomain>? Players { get; set; }
         public ICollection<KillDomain>? Kills { get; set; }
-        //public ICollection<ChatDomain>? Chats { get; set; }
-        //public ICollection<SquadDomain>? Squads { get; set; }
-        //public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
-        //public ICollection<SquadMemberDomain>? SquadMembers { get; set; }
-        //public ICollection<MissionDomain>? Missions { get; set; }
+        public ICollection<ChatDomain>? Chats { get; set; }
+        public ICollection<SquadDomain>? Squads { get; set; }
+        public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
+        public ICollection<SquadMemberDomain>? SquadMembers { get; set; }
+        public ICollection<MissionDomain>? Missions { get; set; }
     }
 }

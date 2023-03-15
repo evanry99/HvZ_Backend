@@ -4,7 +4,7 @@ using System.Security.Policy;
 
 namespace HvZ.Model.Domain
 {
-    /*
+    
     public class SquadDomain
     {
         [Key]
@@ -22,9 +22,9 @@ namespace HvZ.Model.Domain
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
 
-        public ICollection<SquadMemberDomain>? SquadMemebers  { get; set; }
+        public ICollection<SquadMemberDomain>? SquadMembers  { get; set; }
         public ICollection<ChatDomain>? Chats { get; set; }
         public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
     }
-    */
+    
 }
