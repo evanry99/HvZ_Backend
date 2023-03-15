@@ -41,7 +41,7 @@ namespace HvZ.Data
 
 
 
-            //On deleting Kill
+            //On deleting Kill and Victim
             modelBuilder.Entity<KillDomain>()
                  .HasOne(k => k.Killer)
                  .WithMany(p => p.Kills)
@@ -54,19 +54,55 @@ namespace HvZ.Data
                 .HasForeignKey(k => k.VictimId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // On deleting Chats
+            // On deleting Chats and Player
             modelBuilder.Entity<ChatDomain>()
                 .HasOne(c => c.Player)
                 .WithMany(p => p.Chats)
                 .HasForeignKey(c => c.PlayerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // On deleting SquadMembers
+            // On deleting SquadMembers and Players
             modelBuilder.Entity<SquadMemberDomain>()
-                .HasOne(p => p.Squad)
-                .WithMany(s => s.SquadMembers)
-                .HasForeignKey(p => p.PlayerId)
+                .HasOne(p => p.Player)
+                .WithOne(s => s.SquadMember)
+                .HasForeignKey<SquadMemberDomain>(p => p.PlayerId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // On deleting SquadMembers and Squad
+            modelBuilder.Entity<SquadMemberDomain>()
+                .HasOne(sm => sm.Squad)
+                .WithMany(s => s.SquadMembers)
+                .HasForeignKey(sm => sm.SquadId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // On deleting Player and SquadMember
+            modelBuilder.Entity<PlayerDomain>()
+                .HasOne(p => p.SquadMember)
+                .WithOne(sm => sm.Player)
+                .HasForeignKey<SquadMemberDomain>(sm => sm.PlayerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // On deleting SquadCheckIn and Squad
+            modelBuilder.Entity<SquadCheckInDomain>()
+                .HasOne(s => s.Squad)
+                .WithMany(s => s.SquadCheckIns)
+                .HasForeignKey(s => s.SquadId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // On deleting SquadCheckIn and SquadMember
+            modelBuilder.Entity<SquadCheckInDomain>()
+                .HasOne(s => s.SquadMember)
+                .WithMany(sm => sm.SquadCheckIns)
+                .HasForeignKey(s => s.SquadMemberId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+
+
+
+
+
         }
+
     }
 }
