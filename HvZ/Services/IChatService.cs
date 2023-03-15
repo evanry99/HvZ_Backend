@@ -1,5 +1,6 @@
 ﻿using HvZ.Model.Domain;
 
+/*
 namespace HvZ.Services
 {
     public interface IChatService
@@ -10,3 +11,4 @@ namespace HvZ.Services
         public bool ChatExists(int chatId);
     }
 }
+*/

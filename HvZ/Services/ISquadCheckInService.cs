@@ -1,4 +1,5 @@
 ﻿using HvZ.Model.Domain;
+/*
 
 namespace HvZ.Services
 {
@@ -8,3 +9,4 @@ namespace HvZ.Services
         public Task<SquadCheckInDomain> AddSquadCheckInAsync(SquadCheckInDomain squadCheckIn, int gameId, int squadId);
     }
 }
+*/

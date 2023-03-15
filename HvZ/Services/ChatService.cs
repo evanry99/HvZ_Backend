@@ -1,6 +1,6 @@
 ﻿using HvZ.Data;
 using HvZ.Model.Domain;
-
+/*
 namespace HvZ.Services
 {
     public class ChatService : IChatService
@@ -32,3 +32,4 @@ namespace HvZ.Services
         }
     }
 }
+*/
