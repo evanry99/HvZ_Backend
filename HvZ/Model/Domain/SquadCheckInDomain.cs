@@ -3,6 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HvZ.Model.Domain
 {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> main
     public class SquadCheckInDomain
     {
         [Key]
@@ -12,9 +16,9 @@ namespace HvZ.Model.Domain
         [Required]
         public DateTime EndTime { get; set; }
         [Required]
-        public float Lat { get; set; }
+        public double Lat { get; set; }
         [Required]
-        public float Lng { get; set; }
+        public double Lng { get; set; }
         [Required]
         public int GameId { get; set; }
         [Required]
@@ -30,4 +34,8 @@ namespace HvZ.Model.Domain
         [ForeignKey("SquadMemberId")]
         public SquadMemberDomain SquadMember { get; set; }
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> main
 }
