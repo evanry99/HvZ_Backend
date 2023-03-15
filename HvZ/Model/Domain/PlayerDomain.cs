@@ -24,6 +24,8 @@ namespace HvZ.Model.Domain
         public UserDomain User { get; set; }
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
+  
+        public SquadMemberDomain SquadMember { get; set; }
         public ICollection<KillDomain>? Kills { get; set; }
         public ICollection<ChatDomain>? Chats { get; set; }
     }
