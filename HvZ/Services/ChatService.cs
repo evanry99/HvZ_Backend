@@ -1,6 +1,7 @@
 ﻿using HvZ.Data;
 using HvZ.Model.Domain;
-/*
+using Microsoft.EntityFrameworkCore;
+
 namespace HvZ.Services
 {
     public class ChatService : IChatService
@@ -11,25 +12,33 @@ namespace HvZ.Services
             _context = context;
         }
 
-        public Task<ChatDomain> AddChatAsync(ChatDomain chat, int gameId)
+        public async Task<ChatDomain> AddChatAsync(ChatDomain chat, int gameId)
         {
-            throw new NotImplementedException();
+            chat.GameId = gameId;
+
+            _context.Chats.Add(chat);
+
+            await _context.SaveChangesAsync();
+            return chat;
         }
 
         public bool ChatExists(int chatId)
         {
-            throw new NotImplementedException();
+            return _context.Chats.Any(g => g.Id == chatId);
         }
 
-        public Task DeleteChatAsync(int chatId)
+        public async Task DeleteChatAsync(int chatId)
         {
-            throw new NotImplementedException();
+            var chat = await _context.Chats.FindAsync(chatId);
+            _context.Chats.Remove(chat);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<ChatDomain>> GetChatsAsync(int gameId)
+        public async Task<IEnumerable<ChatDomain>> GetChatsAsync(int gameId)
         {
-            throw new NotImplementedException();
+            var chats = await _context.Chats.Where(c => c.GameId == gameId).ToListAsync();
+
+            return chats;
         }
     }
 }
-*/
