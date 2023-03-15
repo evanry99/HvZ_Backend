@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HvZ.Model.Domain
 {
-    /*
     public class SquadCheckInDomain
     {
         [Key]
@@ -29,7 +28,6 @@ namespace HvZ.Model.Domain
         [ForeignKey("SquadId")]
         public SquadDomain Squad { get; set; }
         [ForeignKey("SquadMemberId")]
-        public SquadCheckInDomain SquadMember { get; set; }
+        public SquadMemberDomain SquadMember { get; set; }
     }
-    */
 }

@@ -4,7 +4,6 @@ using System.Security.Policy;
 
 namespace HvZ.Model.Domain
 {
-    /*
     public class SquadDomain
     {
         [Key]
@@ -26,5 +25,4 @@ namespace HvZ.Model.Domain
         public ICollection<ChatDomain>? Chats { get; set; }
         public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
     }
-    */
 }

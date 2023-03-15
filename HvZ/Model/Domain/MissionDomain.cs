@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HvZ.Model.Domain
 {
-    /*
     public class MissionDomain
     {
         [Key]
@@ -25,5 +24,4 @@ namespace HvZ.Model.Domain
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
     }
-    */
 }
