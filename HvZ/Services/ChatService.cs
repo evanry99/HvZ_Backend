@@ -40,5 +40,10 @@ namespace HvZ.Services
 
             return chats;
         }
+
+        public bool GameExists(int id)
+        {
+            return _context.Games.Any(g => g.Id == id);
+        }
     }
 }
