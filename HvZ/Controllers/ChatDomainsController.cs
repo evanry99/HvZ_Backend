@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using HvZ.Data;
 using HvZ.Model.Domain;
 using AutoMapper;
 using HvZ.Services;
-using HvZ.Model.DTO.GameDTO;
 using HvZ.Model.DTO.ChatDTO;
-using HvZ.Model.DTO.PlayerDTO;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HvZ.Controllers
 {
@@ -20,13 +11,11 @@ namespace HvZ.Controllers
     [ApiController]
     public class ChatDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
         private readonly IMapper _mapper;
         private readonly IChatService _chatService;
 
-        public ChatDomainsController(HvZDbContext context, IMapper mapper, IChatService chatService)
+        public ChatDomainsController(IMapper mapper, IChatService chatService)
         {
-            _context = context;
             _mapper = mapper;
             _chatService = chatService;
         }
@@ -45,6 +34,11 @@ namespace HvZ.Controllers
         [HttpPost("{gameId}/chat")]
         public async Task<ActionResult<ChatReadDTO>> PostChat(ChatCreateDTO chatDTO, int gameId)
         {
+            if (!_chatService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
             var chatDomain = _mapper.Map<ChatDomain>(chatDTO);
             await _chatService.AddChatAsync(chatDomain, gameId);
 
@@ -52,13 +46,9 @@ namespace HvZ.Controllers
         }
 
         // DELETE: api/ChatDomains/5
-        [HttpDelete("{gameId}/chat/{chatId}")]
-        public async Task<IActionResult> DeleteChatDomain(int gameId, int chatId)
+        [HttpDelete("{chatId}/chat")]
+        public async Task<IActionResult> DeleteChatDomain(int chatId)
         {
-            if (!_chatService.GameExists(gameId))
-            {
-                return NotFound($"Game with id {gameId} does not exist");
-            }
             if (!_chatService.ChatExists(chatId))
             {
                 return NotFound($"Chat with id {chatId} does not exist");
