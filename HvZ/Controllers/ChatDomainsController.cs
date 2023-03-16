@@ -12,10 +12,11 @@ using HvZ.Services;
 using HvZ.Model.DTO.GameDTO;
 using HvZ.Model.DTO.ChatDTO;
 using HvZ.Model.DTO.PlayerDTO;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HvZ.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/game")]
     [ApiController]
     public class ChatDomainsController : ControllerBase
     {
@@ -31,7 +32,7 @@ namespace HvZ.Controllers
         }
 
         // GET: api/ChatDomains
-        [HttpGet("{gameId}")]
+        [HttpGet("{gameId}/chat")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetChats(int gameId)
         {
             var chatModel = await _chatService.GetChatsAsync(gameId);
@@ -39,75 +40,33 @@ namespace HvZ.Controllers
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
 
-        // PUT: api/ChatDomains/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutChatDomain(int id, ChatDomain chatDomain)
-        {
-            if (id != chatDomain.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(chatDomain).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ChatDomainExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/ChatDomains
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<ChatDomain>> PostChatDomain(ChatDomain chatDomain)
+        [HttpPost("{gameId}/chat")]
+        public async Task<ActionResult<ChatReadDTO>> PostChat(ChatCreateDTO chatDTO, int gameId)
         {
-          if (_context.Chats == null)
-          {
-              return Problem("Entity set 'HvZDbContext.Chats'  is null.");
-          }
-            _context.Chats.Add(chatDomain);
-            await _context.SaveChangesAsync();
+            var chatDomain = _mapper.Map<ChatDomain>(chatDTO);
+            await _chatService.AddChatAsync(chatDomain, gameId);
 
-            return CreatedAtAction("GetChatDomain", new { id = chatDomain.Id }, chatDomain);
+            return CreatedAtAction("PostChat", new { id = chatDomain.Id }, chatDTO);
         }
 
         // DELETE: api/ChatDomains/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteChatDomain(int id)
+        [HttpDelete("{gameId}/chat/{chatId}")]
+        public async Task<IActionResult> DeleteChatDomain(int gameId, int chatId)
         {
-            if (_context.Chats == null)
+            if (!_chatService.GameExists(gameId))
             {
-                return NotFound();
+                return NotFound($"Game with id {gameId} does not exist");
             }
-            var chatDomain = await _context.Chats.FindAsync(id);
-            if (chatDomain == null)
+            if (!_chatService.ChatExists(chatId))
             {
-                return NotFound();
+                return NotFound($"Chat with id {chatId} does not exist");
             }
 
-            _context.Chats.Remove(chatDomain);
-            await _context.SaveChangesAsync();
+            await _chatService.DeleteChatAsync(chatId);
 
             return NoContent();
-        }
-
-        private bool ChatDomainExists(int id)
-        {
-            return (_context.Chats?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
