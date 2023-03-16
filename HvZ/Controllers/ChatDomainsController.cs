@@ -9,6 +9,10 @@ namespace HvZ.Controllers
 {
     [Route("api/game")]
     [ApiController]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class ChatDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -20,7 +24,11 @@ namespace HvZ.Controllers
             _chatService = chatService;
         }
 
-        // GET: api/ChatDomains
+        /// <summary>
+        /// Get all chats in a game by game id
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         [HttpGet("{gameId}/chat")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetChats(int gameId)
         {
@@ -29,8 +37,12 @@ namespace HvZ.Controllers
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
 
-        // POST: api/ChatDomains
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Create a new chat in a game
+        /// </summary>
+        /// <param name="chatDTO"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         [HttpPost("{gameId}/chat")]
         public async Task<ActionResult<ChatReadDTO>> PostChat(ChatCreateDTO chatDTO, int gameId)
         {
@@ -45,7 +57,11 @@ namespace HvZ.Controllers
             return CreatedAtAction("PostChat", new { id = chatDomain.Id }, chatDTO);
         }
 
-        // DELETE: api/ChatDomains/5
+        /// <summary>
+        /// Delete a chat by chat id
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
         [HttpDelete("{chatId}/chat")]
         public async Task<IActionResult> DeleteChatDomain(int chatId)
         {
