@@ -63,12 +63,12 @@ namespace HvZ.Services
 
         public async Task<IEnumerable<SquadDomain>> GetAllSquadsAsync(int gameId)
         {
-            return await _context.Squads.ToListAsync();
+            return await _context.Squads.Where(s => s.GameId == gameId).ToListAsync();
         }
 
         public async Task<SquadDomain> GetSquadAsync(int gameId, int squadId)
         {
-            return await _context.Squads.FindAsync(gameId, squadId);
+            return await _context.Squads.FirstOrDefaultAsync(s => s.GameId == gameId && s.Id == squadId);
         }
 
         public async Task<SquadMemberDomain> AddSquadMemberAsync(int gameId, int squadId, int playerId)
