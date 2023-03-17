@@ -32,5 +32,10 @@ namespace HvZ.Services
 
             return squadCheckIns;
         }
+
+        public bool SquadExists(int squadId)
+        {
+            return _context.Squads.Any(s => s.Id == squadId);
+        }
     }
 }
