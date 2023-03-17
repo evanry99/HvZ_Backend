@@ -52,5 +52,9 @@ namespace HvZ.Services
             _context.Entry(mission).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+        public bool GameExists(int id)
+        {
+            return _context.Games.Any(g => g.Id == id);
+        }
     }
 }
