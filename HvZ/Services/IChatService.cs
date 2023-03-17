@@ -1,6 +1,6 @@
 ﻿using HvZ.Model.Domain;
 
-/*
+
 namespace HvZ.Services
 {
     public interface IChatService
@@ -9,6 +9,6 @@ namespace HvZ.Services
         public Task<ChatDomain> AddChatAsync(ChatDomain chat, int gameId);
         public Task DeleteChatAsync(int chatId);
         public bool ChatExists(int chatId);
+        public bool GameExists(int gameId);
     }
 }
-*/
