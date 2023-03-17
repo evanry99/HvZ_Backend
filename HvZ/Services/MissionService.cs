@@ -35,14 +35,22 @@ namespace HvZ.Services
             return mission;
         }
 
-        public async Task<MissionDomain> PostMissionAsync(int gameId)
+        public async Task<MissionDomain> PostMissionAsync(MissionDomain mission, int gameId)
         {
-            throw new NotImplementedException();
+            mission.GameId = gameId;
+
+            _context.Missions.Add(mission);
+            await _context.SaveChangesAsync();
+            return mission;
         }
 
         public async Task UpdateMissionAsync(MissionDomain mission, int gameId, int missionId)
         {
-            throw new NotImplementedException();
+            mission.GameId = gameId;
+            mission.Id = missionId;
+
+            _context.Entry(mission).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

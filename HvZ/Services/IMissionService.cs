@@ -6,7 +6,7 @@ namespace HvZ.Services
     {
         public Task<IEnumerable<MissionDomain>> GetAllGameMissionsAsync(int gameId);
         public Task<MissionDomain> GetGameMissionAsync(int gameId, int missionId);
-        public Task<MissionDomain> PostMissionAsync(int gameId);
+        public Task<MissionDomain> PostMissionAsync(MissionDomain mission, int gameId);
         public Task UpdateMissionAsync(MissionDomain mission, int gameId, int missionId);
         public Task DeleteMissionAsync(int gameId, int missionId);
     }
