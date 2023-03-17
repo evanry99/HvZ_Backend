@@ -51,6 +51,7 @@ namespace HvZ
             builder.Services.AddScoped(typeof(IKillService), typeof(KillService));
             builder.Services.AddScoped(typeof(IChatService), typeof(ChatService));
             builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(SquadCheckInService));
+            builder.Services.AddScoped(typeof(IMissionService), typeof(MissionService));
 
             var app = builder.Build();
 
