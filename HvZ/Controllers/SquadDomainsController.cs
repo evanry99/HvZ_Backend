@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HvZ.Data;
 using HvZ.Model.Domain;
+using HvZ.Model.DTO.SquadCheckInDTO;
+using HvZ.Services;
+using AutoMapper;
 
 namespace HvZ.Controllers
 {
@@ -15,10 +18,14 @@ namespace HvZ.Controllers
     public class SquadDomainsController : ControllerBase
     {
         private readonly HvZDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly ISquadCheckInService _squadCheckInService;
 
-        public SquadDomainsController(HvZDbContext context)
+        public SquadDomainsController(HvZDbContext context, IMapper mapper, ISquadCheckInService squadCheckInService)
         {
             _context = context;
+            _mapper = mapper;
+            _squadCheckInService = squadCheckInService;
         }
 
         // GET: api/SquadDomains
@@ -114,6 +121,19 @@ namespace HvZ.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("{gameId}/squad/{squadId}/check-in")]
+        public async Task<ActionResult<IEnumerable<SquadCheckInReadDTO>>> GetSquadCheckIns(int gameId, int squadId)
+        {
+            if (!_squadCheckInService.SquadExists(squadId))
+            {
+                return NotFound($"Squad with id {squadId} does not exist");
+            }
+
+            var squadCheckInModel = await _squadCheckInService.GetSquadCheckInsAsync(gameId, squadId);
+
+            return _mapper.Map<List<SquadCheckInReadDTO>>(squadCheckInModel);
         }
 
         private bool SquadDomainExists(int id)
