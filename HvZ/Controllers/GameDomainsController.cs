@@ -13,6 +13,7 @@ using HvZ.Model.DTO.GameDTO;
 using HvZ.Model.DTO.PlayerDTO;
 using HvZ.Model.DTO.KillDTO;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HvZ.Controllers
 {
@@ -38,6 +39,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: api/GameDomains
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGames()
         {
