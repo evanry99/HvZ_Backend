@@ -6,5 +6,6 @@ namespace HvZ.Services
     {
         public Task<IEnumerable<SquadCheckInDomain>> GetSquadCheckInsAsync(int gameId, int squadId);
         public Task<SquadCheckInDomain> AddSquadCheckInAsync(SquadCheckInDomain squadCheckIn, int gameId, int squadId);
+        public bool SquadExists(int squadId);
     }
 }
