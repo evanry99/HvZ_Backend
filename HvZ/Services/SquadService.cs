@@ -102,17 +102,6 @@ namespace HvZ.Services
 
             return squadMember;
 
-
-        }
-
-        public async Task<bool> PlayerAlreadyJoinedGameAsync(int gameId, int playerId)
-        {
-            return await _context.SquadMembers.AnyAsync(sm => sm.GameId == gameId && sm.PlayerId == playerId);
-        }
-
-        public async Task<bool> SquadExistsAsync(int squadId)
-        {
-            return await _context.Squads.AnyAsync(s => s.Id == squadId);
         }
 
         public async Task <SquadDomain> UpdateSquadAsync(int gameId, int squadId, SquadDomain squad)
@@ -128,6 +117,15 @@ namespace HvZ.Services
 
             await _context.SaveChangesAsync();
             return existingsSquad;
+        }
+        public async Task<bool> PlayerAlreadyJoinedGameAsync(int gameId, int playerId)
+        {
+            return await _context.SquadMembers.AnyAsync(sm => sm.GameId == gameId && sm.PlayerId == playerId);
+        }
+
+        public async Task<bool> SquadExistsAsync(int squadId)
+        {
+            return await _context.Squads.AnyAsync(s => s.Id == squadId);
         }
 
         public async Task<bool> IsHumanAsync(int playerId)
