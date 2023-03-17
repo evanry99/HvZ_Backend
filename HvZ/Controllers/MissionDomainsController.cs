@@ -41,20 +41,21 @@ namespace HvZ.Controllers
 
         // GET: api/MissionDomains/5
         [HttpGet("{gameId}/mission/{missionId}")]
-        public async Task<ActionResult<MissionDomain>> GetMissionDomain(int gameId, int missionId)
+        public async Task<ActionResult<MissionReadDTO>> GetMissionDomain(int gameId, int missionId)
         {
-          if (_context.Missions == null)
-          {
-              return NotFound();
-          }
-            var missionDomain = await _context.Missions.FindAsync(id);
+            if (!_missionService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
 
-            if (missionDomain == null)
+            var missionModel = await _missionService.GetGameMissionAsync(gameId, missionId);
+
+            if (missionModel == null)
             {
                 return NotFound();
             }
 
-            return missionDomain;
+            return _mapper.Map<MissionReadDTO>(missionModel);
         }
 
         // PUT: api/MissionDomains/5
