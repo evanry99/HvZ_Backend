@@ -16,13 +16,11 @@ namespace HvZ.Controllers
     [Consumes("application/json")]
     public class MissionDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
         private readonly IMapper _mapper;
         private readonly IMissionService _missionService;
 
-        public MissionDomainsController(HvZDbContext context, IMapper mapper, IMissionService missionService)
+        public MissionDomainsController(IMapper mapper, IMissionService missionService)
         {
-            _context = context;
             _mapper = mapper;
             _missionService = missionService;
         }
