@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HvZ.Data;
 using HvZ.Model.Domain;
+using HvZ.Model.DTO.GameDTO;
 using HvZ.Model.DTO.KillDTO;
 using HvZ.Model.DTO.MissionDTO;
 using HvZ.Services;
@@ -61,32 +62,21 @@ namespace HvZ.Controllers
 
         // PUT: api/MissionDomains/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMissionDomain(int id, MissionDomain missionDomain)
+        [HttpPut("{gameId}/mission/{missionId}")]
+        public async Task<IActionResult> PutMissionDomain(MissionEditDTO missionDTO, int gameId, int missionId)
         {
-            if (id != missionDomain.Id)
+            if (gameId != missionDTO.GameId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(missionDomain).State = EntityState.Modified;
-
-            try
+            if (!_missionService.GameExists(gameId))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MissionDomainExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
+            var missionModel = _mapper.Map<MissionDomain>(missionDTO);
+            await _missionService.UpdateMissionAsync(missionModel, gameId, missionId);
             return NoContent();
         }
 
@@ -108,8 +98,8 @@ namespace HvZ.Controllers
         }
 
         // DELETE: api/MissionDomains/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMissionDomain(int id)
+        [HttpDelete("{gameId/mission/{missionId}}")]
+        public async Task<IActionResult> DeleteMissionDomain(int gameId, int missionId)
         {
             if (_context.Missions == null)
             {
