@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HvZ.Data;
 using HvZ.Model.Domain;
+using HvZ.Model.DTO.KillDTO;
 using HvZ.Model.DTO.MissionDTO;
 using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace HvZ.Controllers
         }
 
         // GET: api/MissionDomains
-        [HttpGet("{gameId}")]
+        [HttpGet("{gameId}/mission")]
         public async Task<ActionResult<IEnumerable<MissionReadDTO>>> GetAllGameMissions(int gameId)
         {
             if (!_missionService.GameExists(gameId))
@@ -91,17 +92,19 @@ namespace HvZ.Controllers
 
         // POST: api/MissionDomains
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<MissionDomain>> PostMissionDomain(MissionDomain missionDomain)
+        [HttpPost("{gameId}/mission")]
+        public async Task<ActionResult<MissionReadDTO>> PostMissionDomain(MissionCreateDTO missionDTO, int gameId)
         {
-          if (_context.Missions == null)
+          if (!_missionService.GameExists(gameId))
           {
-              return Problem("Entity set 'HvZDbContext.Missions'  is null.");
+              return NotFound($"Game with id {gameId} does not exist");
           }
-            _context.Missions.Add(missionDomain);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMissionDomain", new { id = missionDomain.Id }, missionDomain);
+            var missionDomain = _mapper.Map<MissionDomain>(missionDTO);
+
+            await _missionService.PostMissionAsync(missionDomain, gameId);
+
+            return CreatedAtAction("PostMissionDomain", new { id = missionDomain.Id }, missionDomain);
         }
 
         // DELETE: api/MissionDomains/5
