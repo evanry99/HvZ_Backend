@@ -25,7 +25,11 @@ namespace HvZ.Controllers
             _missionService = missionService;
         }
 
-        // GET: api/MissionDomains
+        /// <summary>
+        /// Get all missions in a game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         [HttpGet("{gameId}/mission")]
         public async Task<ActionResult<IEnumerable<MissionReadDTO>>> GetAllGameMissions(int gameId)
         {
@@ -39,7 +43,12 @@ namespace HvZ.Controllers
             return _mapper.Map<List<MissionReadDTO>>(missionModel);
         }
 
-        // GET: api/MissionDomains/5
+        /// <summary>
+        /// Get a specific mission in a game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         [HttpGet("{gameId}/mission/{missionId}")]
         public async Task<ActionResult<MissionReadDTO>> GetMissionDomain(int gameId, int missionId)
         {
@@ -58,8 +67,13 @@ namespace HvZ.Controllers
             return _mapper.Map<MissionReadDTO>(missionModel);
         }
 
-        // PUT: api/MissionDomains/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Edit a mission in a game
+        /// </summary>
+        /// <param name="missionDTO"></param>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         [HttpPut("{gameId}/mission/{missionId}")]
         public async Task<IActionResult> PutMissionDomain(MissionEditDTO missionDTO, int gameId, int missionId)
         {
@@ -80,8 +94,12 @@ namespace HvZ.Controllers
             return NoContent();
         }
 
-        // POST: api/MissionDomains
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Add a new mission record in a game
+        /// </summary>
+        /// <param name="missionDTO"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         [HttpPost("{gameId}/mission")]
         public async Task<ActionResult<MissionReadDTO>> PostMissionDomain(MissionCreateDTO missionDTO, int gameId)
         {
@@ -97,7 +115,12 @@ namespace HvZ.Controllers
             return CreatedAtAction("PostMissionDomain", new { id = missionDomain.Id }, missionDomain);
         }
 
-        // DELETE: api/MissionDomains/5
+        /// <summary>
+        /// Delete a mission in a game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         [HttpDelete("{gameId}/mission/{missionId}")]
         public async Task<IActionResult> DeleteMissionDomain(int gameId, int missionId)
         {
