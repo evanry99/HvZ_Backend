@@ -66,6 +66,24 @@ namespace HvZ.Controllers
 
             return _mapper.Map<UserReadDTO>(userReadDTO);
         }
+        /// <summary>
+        /// Get a user by username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        [HttpGet("username/{username}")]
+        public async Task<ActionResult<UserReadDTO>> GetUserByUsername(string username)
+        {
+            var userReadDTO = await _userService.GetUserByUsernameAsync(username);
+
+            if (userReadDTO == null)
+            {
+                return NotFound();
+            }
+
+            return _mapper.Map<UserReadDTO>(userReadDTO);
+        }
+
 
 
         /// <summary>
