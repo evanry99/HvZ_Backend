@@ -1,4 +1,5 @@
 using HvZ.Data;
+using HvZ.Model;
 using HvZ.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -35,6 +36,7 @@ namespace HvZ
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            builder.Services.AddSignalR();
 
             builder.Services.AddCors(policyBuilder =>
                 policyBuilder.AddDefaultPolicy(policy =>
@@ -68,8 +70,7 @@ namespace HvZ
             app.UseHttpsRedirection();
             app.UseCors();
             app.UseAuthorization();
-
-
+            app.MapHub<BroadcastHub>("/notify");
             app.MapControllers();
 
             app.Run();
