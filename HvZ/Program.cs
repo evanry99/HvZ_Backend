@@ -38,7 +38,7 @@ namespace HvZ
 
             builder.Services.AddCors(policyBuilder =>
                 policyBuilder.AddDefaultPolicy(policy =>
-                    policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+                    policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader())
             );
 
             //Automapper service for DTO and mapper
@@ -52,6 +52,7 @@ namespace HvZ
             builder.Services.AddScoped(typeof(IChatService), typeof(ChatService));
             builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(SquadCheckInService));
             builder.Services.AddScoped(typeof(ISquadService), typeof(SquadService));
+            builder.Services.AddScoped(typeof(IMissionService), typeof(MissionService));
 
             var app = builder.Build();
 

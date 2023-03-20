@@ -14,9 +14,9 @@ namespace HvZ.Model.Domain
         public bool IsHumanVisible { get; set; }
         [Required]
         public bool IsZombieVisible { get; set; }
-        public string Description { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public string? Description { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         [Required]
         public int GameId { get; set; }
 
