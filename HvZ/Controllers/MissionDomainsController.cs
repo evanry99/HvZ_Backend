@@ -76,7 +76,9 @@ namespace HvZ.Controllers
             }
 
             var missionModel = _mapper.Map<MissionDomain>(missionDTO);
+
             await _missionService.UpdateMissionAsync(missionModel, gameId, missionId);
+
             return NoContent();
         }
 
@@ -98,28 +100,17 @@ namespace HvZ.Controllers
         }
 
         // DELETE: api/MissionDomains/5
-        [HttpDelete("{gameId/mission/{missionId}}")]
+        [HttpDelete("{gameId}/mission/{missionId}")]
         public async Task<IActionResult> DeleteMissionDomain(int gameId, int missionId)
         {
-            if (_context.Missions == null)
+            if (!_missionService.GameExists(gameId))
             {
-                return NotFound();
-            }
-            var missionDomain = await _context.Missions.FindAsync(id);
-            if (missionDomain == null)
-            {
-                return NotFound();
+                return NotFound($"Game with id {gameId} does not exist");
             }
 
-            _context.Missions.Remove(missionDomain);
-            await _context.SaveChangesAsync();
+            await _missionService.DeleteMissionAsync(gameId, missionId);
 
             return NoContent();
-        }
-
-        private bool MissionDomainExists(int id)
-        {
-            return (_context.Missions?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
