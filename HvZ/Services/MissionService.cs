@@ -30,7 +30,7 @@ namespace HvZ.Services
 
         public async Task<MissionDomain> GetGameMissionAsync(int gameId, int missionId)
         {
-            var mission = await _context.Missions.FindAsync(gameId, missionId);
+            var mission = await _context.Missions.FirstOrDefaultAsync(m => m.GameId == gameId && m.Id == missionId);
 
             return mission;
         }
