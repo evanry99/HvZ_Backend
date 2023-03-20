@@ -4,6 +4,8 @@ using HvZ.Model.Domain;
 using AutoMapper;
 using HvZ.Services;
 using HvZ.Model.DTO.ChatDTO;
+using Microsoft.AspNetCore.SignalR;
+using HvZ.Model;
 
 namespace HvZ.Controllers
 {
@@ -17,11 +19,13 @@ namespace HvZ.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IChatService _chatService;
+        private readonly IHubContext<BroadcastHub, IHubClient> _hubContext;
 
-        public ChatDomainsController(IMapper mapper, IChatService chatService)
+        public ChatDomainsController(IMapper mapper, IChatService chatService, IHubContext<BroadcastHub, IHubClient> hubContext)
         {
             _mapper = mapper;
             _chatService = chatService;
+            _hubContext = hubContext;
         }
 
         /// <summary>
@@ -53,6 +57,7 @@ namespace HvZ.Controllers
 
             var chatDomain = _mapper.Map<ChatDomain>(chatDTO);
             await _chatService.AddChatAsync(chatDomain, gameId);
+            await _hubContext.Clients.All.BroadcastMessage();
 
             return CreatedAtAction("PostChat", new { id = chatDomain.Id }, chatDTO);
         }
