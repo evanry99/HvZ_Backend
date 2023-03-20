@@ -106,6 +106,7 @@ namespace HvZ.Data
                 Id = 1,
                 FirstName = "Håvard",
                 LastName = "Madland",
+                UserName = "Hav",
                 IsAdmin = false,
                 },
                 new UserDomain()
@@ -113,6 +114,7 @@ namespace HvZ.Data
                     Id = 2,
                     FirstName = "An",
                     LastName = "Nguyen",
+                    UserName = "Al",
                     IsAdmin = false,
                 },
                 new UserDomain()
@@ -120,6 +122,7 @@ namespace HvZ.Data
                     Id = 3,
                     FirstName = "Vilhelm",
                     LastName = "Assersen",
+                    UserName = "Will",
                     IsAdmin = false,
                 }
             };
