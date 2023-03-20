@@ -14,7 +14,7 @@ namespace HvZ.Services
 
         public async Task DeleteMissionAsync(int gameId, int missionId)
         {
-            var missionDomain = await _context.Missions.FindAsync(gameId, missionId);
+            var missionDomain = await _context.Missions.FirstOrDefaultAsync(m => m.GameId == gameId && m.Id == missionId);
 
             _context.Missions.Remove(missionDomain);
             await _context.SaveChangesAsync();
