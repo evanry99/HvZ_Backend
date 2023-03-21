@@ -61,11 +61,9 @@ namespace HvZ.Services
             return players;
         }
 
-
-        
-
-        public async Task UpdateGameAsync(GameDomain game)
+        public async Task UpdateGameAsync(GameDomain game, int id)
         {
+            game.Id = id;
             _context.Entry(game).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
