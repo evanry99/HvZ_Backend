@@ -10,10 +10,9 @@ namespace HvZ.Services
         public Task <SquadMemberDomain> AddSquadMemberAsync(int gameId, int squadId, SquadMemberDomain squadMember, int playerId);
         public Task <SquadDomain> UpdateSquadAsync(int gameId, int squadId, SquadDomain squad);
         public Task DeleteSquadAsync(int gameId, int squadId);
-        public Task<bool> SquadExistsAsync(int gameId, int squadId);
-        public Task<bool> PlayerAlreadyJoinedGameAsync(int gameId, int playerId);
-        public Task<bool> IsHumanAsync(int playerId);
-
-
+        public Task <bool> SquadExistsAsync(int gameId, int squadId);
+        public Task <bool> PlayerAlreadyJoinedGameAsync(int gameId, int playerId);
+        public Task <bool> IsHumanAsync(int playerId);
+        public Task <SquadMemberDomain> GetSquadMemberAsync(int gameId, int playerId);
     }
 }
