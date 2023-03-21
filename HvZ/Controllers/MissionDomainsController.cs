@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
-using HvZ.Data;
 using HvZ.Model.Domain;
-using HvZ.Model.DTO.GameDTO;
-using HvZ.Model.DTO.KillDTO;
 using HvZ.Model.DTO.MissionDTO;
 using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HvZ.Controllers
 {
@@ -14,20 +10,24 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
+
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class MissionDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
         private readonly IMapper _mapper;
         private readonly IMissionService _missionService;
 
-        public MissionDomainsController(HvZDbContext context, IMapper mapper, IMissionService missionService)
+        public MissionDomainsController(IMapper mapper, IMissionService missionService)
         {
-            _context = context;
             _mapper = mapper;
             _missionService = missionService;
         }
 
-        // GET: api/MissionDomains
+        /// <summary>
+        /// Get all missions in a game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         [HttpGet("{gameId}/mission")]
         public async Task<ActionResult<IEnumerable<MissionReadDTO>>> GetAllGameMissions(int gameId)
         {
@@ -41,7 +41,12 @@ namespace HvZ.Controllers
             return _mapper.Map<List<MissionReadDTO>>(missionModel);
         }
 
-        // GET: api/MissionDomains/5
+        /// <summary>
+        /// Get a specific mission in a game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         [HttpGet("{gameId}/mission/{missionId}")]
         public async Task<ActionResult<MissionReadDTO>> GetMissionDomain(int gameId, int missionId)
         {
@@ -60,19 +65,24 @@ namespace HvZ.Controllers
             return _mapper.Map<MissionReadDTO>(missionModel);
         }
 
-        // PUT: api/MissionDomains/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Edit a mission in a game
+        /// </summary>
+        /// <param name="missionDTO"></param>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         [HttpPut("{gameId}/mission/{missionId}")]
         public async Task<IActionResult> PutMissionDomain(MissionEditDTO missionDTO, int gameId, int missionId)
         {
-            if (gameId != missionDTO.GameId)
-            {
-                return BadRequest();
-            }
-
             if (!_missionService.GameExists(gameId))
             {
-                return NotFound();
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            if (missionDTO.EndTime <= missionDTO.StartTime)
+            {
+                return BadRequest("Mission start or end time is invalid");
             }
 
             var missionModel = _mapper.Map<MissionDomain>(missionDTO);
@@ -82,15 +92,24 @@ namespace HvZ.Controllers
             return NoContent();
         }
 
-        // POST: api/MissionDomains
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Add a new mission record in a game
+        /// </summary>
+        /// <param name="missionDTO"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         [HttpPost("{gameId}/mission")]
         public async Task<ActionResult<MissionReadDTO>> PostMissionDomain(MissionCreateDTO missionDTO, int gameId)
         {
-          if (!_missionService.GameExists(gameId))
-          {
-              return NotFound($"Game with id {gameId} does not exist");
-          }
+            if (!_missionService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            if (missionDTO.EndTime <= missionDTO.StartTime)
+            {
+                return BadRequest("Mission start or end time is invalid");
+            }
 
             var missionDomain = _mapper.Map<MissionDomain>(missionDTO);
 
@@ -99,7 +118,12 @@ namespace HvZ.Controllers
             return CreatedAtAction("PostMissionDomain", new { id = missionDomain.Id }, missionDomain);
         }
 
-        // DELETE: api/MissionDomains/5
+        /// <summary>
+        /// Delete a mission in a game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         [HttpDelete("{gameId}/mission/{missionId}")]
         public async Task<IActionResult> DeleteMissionDomain(int gameId, int missionId)
         {

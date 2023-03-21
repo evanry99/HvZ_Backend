@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using HvZ.Data;
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.SquadCheckInDTO;
-using HvZ.Services;
-using AutoMapper;
 using HvZ.Model.DTO.SquadDTO;
 using HvZ.Model.DTO.SquadMemberDTO;
+using HvZ.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {
@@ -23,14 +17,12 @@ namespace HvZ.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class SquadDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
         private readonly IMapper _mapper;
         private readonly ISquadCheckInService _squadCheckInService;
         private readonly ISquadService _squadService;
 
         public SquadDomainsController(HvZDbContext context, IMapper mapper, ISquadCheckInService squadCheckInService, ISquadService squadService)
         {
-            _context = context;
             _mapper = mapper;
             _squadCheckInService = squadCheckInService;
             _squadService = squadService;
@@ -234,11 +226,6 @@ namespace HvZ.Controllers
             await _squadCheckInService.AddSquadCheckInAsync(squadCheckInDomain, gameId, squadId);
 
             return CreatedAtAction("PostSquadCheckIn", new { id = squadCheckInDomain.Id }, squadCheckInDomain);
-        }
-
-        private bool SquadDomainExists(int id)
-        {
-            return (_context.Squads?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

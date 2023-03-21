@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HvZ.Data;
+﻿using AutoMapper;
 using HvZ.Model.Domain;
-using AutoMapper;
-using HvZ.Services;
 using HvZ.Model.DTO.GameDTO;
-using HvZ.Model.DTO.PlayerDTO;
 using HvZ.Model.DTO.KillDTO;
-using System.Reflection.Metadata.Ecma335;
+using HvZ.Model.DTO.PlayerDTO;
+using HvZ.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {
@@ -71,8 +63,6 @@ namespace HvZ.Controllers
             return _mapper.Map<GameReadDTO>(gameReadDTO);
         }
 
-
-
         /// <summary>
         /// Update a game by id
         /// </summary>
@@ -85,23 +75,24 @@ namespace HvZ.Controllers
         /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGameDomain(int id, GameEditDTO gameDTO)
+        public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
         {
-            if (id != gameDTO.Id)
-            {
-                return BadRequest();
-            }
-
             if (!_gameService.GameExists(id))
             {
-                return NotFound();
+                return NotFound($"Game with id {id} does not exist");
+            }
+
+            if (gameDTO.EndTime <= gameDTO.StartTime)
+            {
+                return BadRequest("Game start or end time is invalid");
             }
 
             var gameModel = _mapper.Map<GameDomain>(gameDTO);
-            await _gameService.UpdateGameAsync(gameModel);
+
+            await _gameService.UpdateGameAsync(gameModel, id);
+
             return NoContent();
         }
-
 
         /// <summary>
         /// Add a new game
@@ -115,7 +106,13 @@ namespace HvZ.Controllers
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
+            if (gameDTO.EndTime <= gameDTO.StartTime)
+            {
+                return BadRequest("Game start or end time is invalid");
+            }
+
             var gameModel = _mapper.Map<GameDomain>(gameDTO);
+
             await _gameService.AddGameAsync(gameModel);
 
             return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, gameDTO);

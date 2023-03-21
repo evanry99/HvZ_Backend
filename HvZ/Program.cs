@@ -32,6 +32,7 @@ namespace HvZ
                 {
                     Version = "v1",
                     Title = "Human Vs Zombie",
+                    Description = "ASP.NET Core Web API for a Human vs Zombie game"
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

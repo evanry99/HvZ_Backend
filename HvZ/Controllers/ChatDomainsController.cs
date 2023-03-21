@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using HvZ.Data;
-using HvZ.Model.Domain;
-using AutoMapper;
-using HvZ.Services;
-using HvZ.Model.DTO.ChatDTO;
-using Microsoft.AspNetCore.SignalR;
+﻿using AutoMapper;
 using HvZ.Model;
+using HvZ.Model.Domain;
+using HvZ.Model.DTO.ChatDTO;
+using HvZ.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HvZ.Controllers
 {
