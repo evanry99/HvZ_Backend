@@ -148,7 +148,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200"> User deleted succesfully</response>
+        /// <response code="204"> User deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> User not found</response>
         /// <response code="500"> Internal error</response>

@@ -26,6 +26,8 @@ namespace HvZ.Services
 
         public async Task<PlayerDomain> AddPlayerAsync(PlayerDomain player)
         {
+        
+            player.BiteCode = GenerateBiteCode();
             _context.Players.Add(player);
             await _context.SaveChangesAsync();
             return player;
@@ -47,6 +49,26 @@ namespace HvZ.Services
         public bool PlayerExists(int playerId)
         {
             return _context.Players.Any(p => p.Id == playerId);
+        }
+
+        /// <summary>
+        /// Generates a random six-character string consisting of characters from the string "123456"
+        /// Then check if a player is using the BiteCode, if a player are using it then it create a new BiteCode
+        /// until a new unique BiteCode are generated
+        /// </summary>
+        /// <returns></returns>
+        private string GenerateBiteCode()
+        {
+            const string chars = "123456";
+            var random = new Random();
+            var biteCode = new string (Enumerable.Repeat(chars,6).Select(s => s[random.Next(s.Length)]).ToArray());
+
+            //Check if bitcode exsist
+            while (_context.Players.Any(p => p.BiteCode == biteCode))
+            {
+                biteCode = new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
+            }
+            return biteCode;
         }
     }
 }

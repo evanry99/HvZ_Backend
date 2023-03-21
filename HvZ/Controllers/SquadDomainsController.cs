@@ -157,7 +157,7 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <param name="squadId"></param>
         /// <returns></returns>
-        /// <response code="200"> Squad deleted succesfully</response>
+        /// <response code="204"> Squad deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> Game or squad not found</response>
         /// <response code="500"> Internal error</response>
