@@ -41,6 +41,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="gameId"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a list of squads in a game</response>
+        /// <response code="404"> Game not found. </response>
+        /// <response code="500"> Internal error</response>
         // GET: api/SquadDomains
         [HttpGet("{gameId}/squad")]
         public async Task<ActionResult<IEnumerable<SquadReadDTO>>> GetSquads(int gameId)
@@ -58,8 +61,14 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <param name="squadId"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a specific squad in a game</response>
+        /// <response code="404"> Game or squad not found. </response>
+        /// <response code="500"> Internal error</response>
         // GET: api/SquadDomains/5
         [HttpGet("{gameId}/squad/{squadId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<SquadReadDTO>> GetSquadDomain(int gameId, int squadId)
         {
             var squadReadDTO = await _squadService.GetSquadAsync(gameId, squadId);
@@ -78,8 +87,17 @@ namespace HvZ.Controllers
         /// <param name="squadId"></param>
         /// <param name="squadDTO"></param>
         /// <returns></returns>
+        /// <response code="204"> Update success. Squad updated</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="404"> The game or squad was not found</response>
+        /// <response code="500"> Internal error</response>
         // PUT: api/SquadDomains/5
         [HttpPut(("{gameId}/squads/{squadId}"))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> UpdateSquad(int gameId, int squadId, SquadEditDTO squadDTO)
         {
             if (!await _squadService.SquadExistsAsync(gameId, squadId))
@@ -98,8 +116,14 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <param name="squadDTO"></param>
         /// <returns></returns>
+        /// <response code="201"> Squad created succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="500"> Internal error</response>
         // POST: api/SquadDomains
         [HttpPost("{gameId}/squad")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<SquadReadDTO>> PostSquad(int gameId,SquadCreateDTO squadDTO)
         {
             var squadDomain = _mapper.Map<SquadDomain>(squadDTO);
@@ -119,8 +143,14 @@ namespace HvZ.Controllers
         /// <param name="squadId"></param>
         /// <param name="squadMemberDTO"></param>
         /// <returns></returns>
+        /// <response code="201"> Squad member created succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="500"> Internal error</response>
         // Post add squad member
         [HttpPost("{gameId}/squad/{squadId}/join")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<SquadMemberReadDTO>> PostSquadMember(int gameId, int squadId, SquadMemberCreateDTO squadMemberDTO)
         {
             var squadMemberDomain = _mapper.Map<SquadMemberDomain>(squadMemberDTO);
@@ -135,8 +165,16 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <param name="squadId"></param>
         /// <returns></returns>
+        /// <response code="200"> Squad deleted succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="404"> Game or squad not found</response>
+        /// <response code="500"> Internal error</response>
         // DELETE: api/SquadDomains/5
         [HttpDelete("{gameId}/squad/{squadId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteSquadDomain(int gameId, int squadId)
         {
             await _squadService.DeleteSquadAsync(gameId, squadId);
@@ -150,7 +188,13 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <param name="squadId"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a list of squads check-ins for a squad in a game</response>
+        /// <response code="404"> Game or squad not found. </response>
+        /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/squad/{squadId}/check-in")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<SquadCheckInReadDTO>>> GetSquadCheckIns(int gameId, int squadId)
         {
             if (!_squadCheckInService.SquadExists(squadId))
@@ -170,7 +214,14 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <param name="squadId"></param>
         /// <returns></returns>
+        /// <response code="201"> Squad check-in created succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="500"> Internal error</response>
         [HttpPost("{gameId}/squad/{squadId}/check-in")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<ActionResult<SquadCheckInReadDTO>> PostSquadCheckIn(SquadCheckInCreateDTO squadCheckInDTO, int gameId, int squadId)
         {
             if (!_squadCheckInService.SquadExists(squadId))
