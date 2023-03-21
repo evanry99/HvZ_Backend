@@ -39,9 +39,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: api/GameDomains
-        [Authorize]
+        //[Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGames()
+        public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGame()
         {
             var gameModel = await _gameService.GetAllGamesAsync();
             var gameReadDTO = _mapper.Map<List<GameReadDTO>>(gameModel);
