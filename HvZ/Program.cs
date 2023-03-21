@@ -4,6 +4,7 @@ using HvZ.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+
 namespace HvZ
 {
     public class Program
@@ -70,7 +71,7 @@ namespace HvZ
             app.UseHttpsRedirection();
             app.UseCors();
             app.UseAuthorization();
-            app.MapHub<BroadcastHub>("/notify");
+            app.MapHub<BroadcastHub>("/hub");
             app.MapControllers();
 
             app.Run();
