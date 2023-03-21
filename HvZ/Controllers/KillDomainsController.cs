@@ -34,6 +34,8 @@ namespace HvZ.Controllers
         /// Get all kills
         /// </summary>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a list of all kills </response>
+        /// <response code="500"> Internal error </response>
         // GET: api/KillDomains
         [HttpGet]
         public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetKills()
@@ -46,6 +48,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a specific kill </response>
+        /// <response code="404"> KIll not found </response> 
+        /// <response code="500"> Internal error </response> 
         // GET: api/KillDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<KillReadDTO>> GetKillDomain(int id)
@@ -67,6 +72,9 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <param name="killDTO"></param>
         /// <returns></returns>
+        /// <response code="204"> Update success. Kill updated  </response>
+        /// <response code="404"> Kill not found </response> 
+        /// <response code="500"> Internal error </response> 
         // PUT: api/KillDomains/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -95,6 +103,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="killDTO"></param>
         /// <returns></returns>
+        /// <response code="201"> Kill created successfully </response>
+        /// <response code="400"> Bad request </response> 
+        /// <response code="500"> Internal error </response> 
         // POST: api/KillDomains
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -112,6 +123,10 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Kill deleted successfully </response>
+        /// <response code="400"> Bad request </response> 
+        /// <response code="404"> Kill not found </response> 
+        /// <response code="500"> Internal error </response> 
         // DELETE: api/KillDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteKillDomain(int id)

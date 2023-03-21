@@ -33,6 +33,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="gameId"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a list of all chats in a game</response>
+        /// <response code="404"> Game not found. </response>
+        /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/chat")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetChats(int gameId)
         {
@@ -47,7 +50,14 @@ namespace HvZ.Controllers
         /// <param name="chatDTO"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
+        /// <response code="201"> Chat created successfully</response>
+        /// <response code="400"> Bad request </response>
+        /// <response code="500"> Internal error</response>
         [HttpPost("{gameId}/chat")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<ActionResult<ChatReadDTO>> PostChat(ChatCreateDTO chatDTO, int gameId)
         {
             if (!_chatService.GameExists(gameId))
@@ -67,6 +77,10 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="chatId"></param>
         /// <returns></returns>
+        /// <response code="200"> Chat deleted successfully</response>
+        /// <response code="400"> Bad request </response>
+        /// <response code="404"> Chat not found</response>
+        /// <response code="500"> Internal error</response>
         [HttpDelete("{chatId}/chat")]
         public async Task<IActionResult> DeleteChatDomain(int chatId)
         {

@@ -38,6 +38,8 @@ namespace HvZ.Controllers
         /// Get all Users
         /// </summary>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a list of all users</response>
+        /// <response code="500"> Internal error</response>
         // GET: api/UserDomains
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetUsers()
@@ -53,6 +55,10 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a specific user</response>
+        /// <response code="404"> User not found. </response>
+        /// <response code="500"> Internal error</response>
+
         // GET: api/UserDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReadDTO>> GetUserDomain(int id)
@@ -71,7 +77,13 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a specific user</response>
+        /// <response code="404"> Username not found. </response>
+        /// <response code="500"> Internal error</response>
         [HttpGet("username/{username}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> GetUserByUsername(string username)
         {
             var userReadDTO = await _userService.GetUserByUsernameAsync(username);
@@ -92,6 +104,10 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <param name="userDTO"></param>
         /// <returns></returns>
+        /// <response code="204"> Update success. User updated</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="404"> User was not found</response>
+        /// <response code="500"> Internal error</response>
         // PUT: api/UserDomains/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -120,6 +136,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="userDTO"></param>
         /// <returns></returns>
+        /// <response code="201"> User created successfully</response>
+        /// <response code="400"> Bad request</response>
+        /// <response code="500"> Internal error</response>
         // POST: api/UserDomains
         [HttpPost]
         public async Task<ActionResult<UserReadDTO>> PostUserDomain(UserCreateDTO userDTO)
@@ -137,6 +156,10 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> User deleted succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="404"> User not found</response>
+        /// <response code="500"> Internal error</response>
         // DELETE: api/UserDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserDomain(int id)

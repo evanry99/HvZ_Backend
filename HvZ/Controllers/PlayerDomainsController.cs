@@ -34,8 +34,11 @@ namespace HvZ.Controllers
         /// Get all players
         /// </summary>
         /// <returns></returns>
+        /// <response code="200"> Success. Returns a list of players</response>
+        /// <response code="500"> Internal error</response>
         // GET: api/PlayerDomains
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetPlayers()
         {
             return _mapper.Map<List<PlayerReadDTO>>(await _playerService.GetAllPlayersAsync());
@@ -46,6 +49,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a specific player</response>
+        /// <response code="404"> Player was not found</response>
+        /// <response code="500"> Internal error</response>
         // GET: api/PlayerDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PlayerReadDTO>> GetPlayerDomain(int id)
@@ -66,6 +72,10 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <param name="playerDTO"></param>
         /// <returns></returns>
+        /// <response code="204"> Update success. Player updated</response>
+        /// <response code="404"> Player was not found</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="500"> Internal error</response>
         // PUT: api/PlayerDomains/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlayerDomain(int id, PlayerEditDTO playerDTO)
@@ -91,6 +101,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="playerDTO"></param>
         /// <returns></returns>
+        /// <response code="201"> Player created succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="500"> Internal error</response>
         // POST: api/PlayerDomains
         [HttpPost]
         public async Task<ActionResult<PlayerReadDTO>> PostPlayerDomain(PlayerCreateDTO playerDTO)
@@ -106,6 +119,10 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Player deleted succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="404"> Player not found</response>
+        /// <response code="500"> Internal error</response>
         // DELETE: api/PlayerDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlayerDomain(int id)
