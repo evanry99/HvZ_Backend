@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
-using HvZ.Data;
 using HvZ.Model.Domain;
-using HvZ.Model.DTO.GameDTO;
-using HvZ.Model.DTO.KillDTO;
 using HvZ.Model.DTO.MissionDTO;
 using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HvZ.Controllers
 {

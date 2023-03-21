@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HvZ.Data;
+﻿using AutoMapper;
 using HvZ.Model.Domain;
-using AutoMapper;
-using HvZ.Services;
 using HvZ.Model.DTO.GameDTO;
-using HvZ.Model.DTO.PlayerDTO;
 using HvZ.Model.DTO.KillDTO;
-using System.Reflection.Metadata.Ecma335;
+using HvZ.Model.DTO.PlayerDTO;
+using HvZ.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {

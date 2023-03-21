@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using HvZ.Data;
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.SquadCheckInDTO;
-using HvZ.Services;
-using AutoMapper;
 using HvZ.Model.DTO.SquadDTO;
 using HvZ.Model.DTO.SquadMemberDTO;
+using HvZ.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {
