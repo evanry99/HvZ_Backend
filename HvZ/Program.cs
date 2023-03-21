@@ -1,10 +1,12 @@
 using HvZ.Data;
+using HvZ.Model;
 using HvZ.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+
 
 namespace HvZ
 {
@@ -46,10 +48,11 @@ namespace HvZ
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            builder.Services.AddSignalR();
 
             builder.Services.AddCors(policyBuilder =>
                 policyBuilder.AddDefaultPolicy(policy =>
-                    policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+                    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin())
             );
 
             //Automapper service for DTO and mapper
@@ -60,6 +63,10 @@ namespace HvZ
             builder.Services.AddScoped(typeof(IGameService), typeof(GameService));
             builder.Services.AddScoped(typeof(IPlayerService), typeof(PlayerService));
             builder.Services.AddScoped(typeof(IKillService), typeof(KillService));
+            builder.Services.AddScoped(typeof(IChatService), typeof(ChatService));
+            builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(SquadCheckInService));
+            builder.Services.AddScoped(typeof(ISquadService), typeof(SquadService));
+            builder.Services.AddScoped(typeof(IMissionService), typeof(MissionService));
             //builder.Services.AddScoped(typeof(IChatService), typeof(ChatService));
             //builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(ChatService));
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -106,8 +113,7 @@ namespace HvZ
             app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
-
-
+            app.MapHub<BroadcastHub>("/hub");
             app.MapControllers();
 
 

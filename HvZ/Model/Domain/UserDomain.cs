@@ -13,6 +13,9 @@ namespace HvZ.Model.Domain
         [MaxLength(50)]
         [Required]
         public string LastName { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string UserName { get; set; }
 
         [Required]
         public bool IsAdmin { get; set; }

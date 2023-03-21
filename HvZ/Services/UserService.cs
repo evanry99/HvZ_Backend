@@ -37,6 +37,12 @@ namespace HvZ.Services
             return await _context.Users.FindAsync(id);
         }
 
+        public async Task<UserDomain> GetUserByUsernameAsync(string username)
+        {
+            var users = await _context.Users.ToListAsync();
+            return users.FirstOrDefault(u => string.Equals(u.UserName, username, StringComparison.Ordinal));
+        }
+
         public async Task UpdateUserAsync(UserDomain user)
         {
             _context.Entry(user).State = EntityState.Modified;
