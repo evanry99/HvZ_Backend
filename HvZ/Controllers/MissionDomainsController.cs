@@ -10,6 +10,8 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
+
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class MissionDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
