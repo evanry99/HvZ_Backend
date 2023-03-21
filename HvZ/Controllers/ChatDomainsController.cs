@@ -77,7 +77,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="chatId"></param>
         /// <returns></returns>
-        /// <response code="200"> Chat deleted successfully</response>
+        /// <response code="204"> Chat deleted successfully</response>
         /// <response code="400"> Bad request </response>
         /// <response code="404"> Chat not found</response>
         /// <response code="500"> Internal error</response>

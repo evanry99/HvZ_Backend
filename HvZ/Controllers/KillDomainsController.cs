@@ -123,7 +123,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200"> Kill deleted successfully </response>
+        /// <response code="204"> Kill deleted successfully </response>
         /// <response code="400"> Bad request </response> 
         /// <response code="404"> Kill not found </response> 
         /// <response code="500"> Internal error </response> 

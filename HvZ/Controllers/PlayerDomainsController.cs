@@ -119,7 +119,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200"> Player deleted succesfully</response>
+        /// <response code="204"> Player deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> Player not found</response>
         /// <response code="500"> Internal error</response>

@@ -127,7 +127,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200"> Game deleted succesfully</response>
+        /// <response code="204"> Game deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
