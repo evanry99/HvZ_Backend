@@ -10,6 +10,7 @@ using HvZ.Model.Domain;
 using AutoMapper;
 using HvZ.Services;
 using HvZ.Model.DTO.KillDTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HvZ.Controllers
 {
@@ -17,6 +18,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
+    //[Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class KillDomainsController : ControllerBase

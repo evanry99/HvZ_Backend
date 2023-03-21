@@ -39,7 +39,6 @@ namespace HvZ.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: api/GameDomains
-        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGame()
         {
@@ -77,6 +76,7 @@ namespace HvZ.Controllers
         /// <param name="gameDTO"></param>
         /// <returns></returns>
         // PUT: api/GameDomains/5
+        //[Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(int id, GameEditDTO gameDTO)
         {
@@ -102,6 +102,7 @@ namespace HvZ.Controllers
         /// <param name="gameDTO"></param>
         /// <returns></returns>
         // POST: api/GameDomains
+        //[Authorize]
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
@@ -118,6 +119,7 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // DELETE: api/GameDomains/5
+        //[Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
         {
@@ -135,6 +137,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        //[Authorize]
         [HttpGet("{id}/player")]
         public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetGamePlayers(int id)
         {
@@ -154,6 +157,7 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet("{id}/kills")]
         public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetGameKills(int id) 
         {

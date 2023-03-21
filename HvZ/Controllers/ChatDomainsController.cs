@@ -4,10 +4,11 @@ using HvZ.Model.Domain;
 using AutoMapper;
 using HvZ.Services;
 using HvZ.Model.DTO.ChatDTO;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace HvZ.Controllers
 {
+    [Authorize]
     [Route("api/game")]
     [ApiController]
     [Produces("application/json")]

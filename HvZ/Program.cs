@@ -111,10 +111,10 @@ namespace HvZ
 
             app.UseHttpsRedirection();
             app.UseCors();
-            app.UseAuthentication();
-            app.UseAuthorization();
             app.MapHub<BroadcastHub>("/hub");
             app.MapControllers();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
 
             app.Run();
