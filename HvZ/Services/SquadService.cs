@@ -133,5 +133,10 @@ namespace HvZ.Services
                 .Select(p => p.IsHuman)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<SquadMemberDomain> GetSquadMemberAsync(int gameId, int playerId)
+        {
+            return await _context.SquadMembers.FirstOrDefaultAsync(sm => sm.GameId == gameId && sm.PlayerId == playerId);
+        }
     }
 }
