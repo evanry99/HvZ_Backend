@@ -75,14 +75,14 @@ namespace HvZ.Controllers
         [HttpPut("{gameId}/mission/{missionId}")]
         public async Task<IActionResult> PutMissionDomain(MissionEditDTO missionDTO, int gameId, int missionId)
         {
-            if (gameId != missionDTO.GameId)
-            {
-                return BadRequest();
-            }
-
             if (!_missionService.GameExists(gameId))
             {
-                return NotFound();
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            if (missionDTO.EndTime <= missionDTO.StartTime)
+            {
+                return BadRequest("Mission start or end time is invalid");
             }
 
             var missionModel = _mapper.Map<MissionDomain>(missionDTO);
@@ -101,10 +101,15 @@ namespace HvZ.Controllers
         [HttpPost("{gameId}/mission")]
         public async Task<ActionResult<MissionReadDTO>> PostMissionDomain(MissionCreateDTO missionDTO, int gameId)
         {
-          if (!_missionService.GameExists(gameId))
-          {
-              return NotFound($"Game with id {gameId} does not exist");
-          }
+            if (!_missionService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            if (missionDTO.EndTime <= missionDTO.StartTime)
+            {
+                return BadRequest("Mission start or end time is invalid");
+            }
 
             var missionDomain = _mapper.Map<MissionDomain>(missionDTO);
 
