@@ -28,17 +28,17 @@ namespace HvZ.Controllers
         }
 
         /// <summary>
-        /// Get all chats in a game by game id
+        /// Get cross faction global chat by gameId
         /// </summary>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        /// <response code="200"> Success. Return a list of all chats in a game</response>
+        /// <response code="200"> Success. Return a list of global chats in a game</response>
         /// <response code="404"> Game not found. </response>
         /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/chat")]
-        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetChats(int gameId)
+        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetGlobalChats(int gameId)
         {
-            var chatModel = await _chatService.GetChatsAsync(gameId);
+            var chatModel = await _chatService.GetGlobalChatsAsync(gameId);
 
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
@@ -91,6 +91,48 @@ namespace HvZ.Controllers
             await _chatService.DeleteChatAsync(chatId);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Get faction chats based on gameId and playerId
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        /// <response code="200"> Success. Return a list of faction chats in a game</response>
+        /// <response code="404"> Game not found. </response>
+        /// <response code="500"> Internal error</response>
+        [HttpGet("{gameId}/chat/faction-chat/{playerId}")]
+        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetFactionChats(int gameId, int playerId)
+        {
+            if (!_chatService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            var chatModel = await _chatService.GetFactionChatsAsync(gameId, playerId);
+
+            return _mapper.Map<List<ChatReadDTO>>(chatModel);
+        }
+
+        /// <summary>
+        /// Get squad chat
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        /// <response code="200"> Success. Return a list of squad chats in a game</response>
+        /// <response code="404"> Game not found. </response>
+        /// <response code="500"> Internal error</response>
+        [HttpGet("{gameId}/chat/squad-chat/{squadId}/")]
+        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetSquadChats(int gameId, int squadId)
+        {
+            if (!_chatService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            var chatModel = await _chatService.GetSquadChatsAsync(gameId, squadId);
+
+            return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
     }
 }
