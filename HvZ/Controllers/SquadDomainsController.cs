@@ -17,14 +17,12 @@ namespace HvZ.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class SquadDomainsController : ControllerBase
     {
-        private readonly HvZDbContext _context;
         private readonly IMapper _mapper;
         private readonly ISquadCheckInService _squadCheckInService;
         private readonly ISquadService _squadService;
 
         public SquadDomainsController(HvZDbContext context, IMapper mapper, ISquadCheckInService squadCheckInService, ISquadService squadService)
         {
-            _context = context;
             _mapper = mapper;
             _squadCheckInService = squadCheckInService;
             _squadService = squadService;
@@ -177,11 +175,6 @@ namespace HvZ.Controllers
             await _squadCheckInService.AddSquadCheckInAsync(squadCheckInDomain, gameId, squadId);
 
             return CreatedAtAction("PostSquadCheckIn", new { id = squadCheckInDomain.Id }, squadCheckInDomain);
-        }
-
-        private bool SquadDomainExists(int id)
-        {
-            return (_context.Squads?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
