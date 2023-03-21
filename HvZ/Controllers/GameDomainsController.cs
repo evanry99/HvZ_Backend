@@ -36,7 +36,9 @@ namespace HvZ.Controllers
         /// <summary>
         /// Get all games
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of games</returns>
+        /// <response code="200"> Success. Returns a list of Games</response>
+        /// <response code="500"> Internal error</response>
         // GET: api/GameDomains
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGames()
@@ -52,6 +54,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a specific game</response>
+        /// <response code="404"> The game was not found</response>
+        /// <response code="500"> Internal error</response>
         // GET: api/GameDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<GameReadDTO>> GetGameDomain(int id)
@@ -74,6 +79,10 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <param name="gameDTO"></param>
         /// <returns></returns>
+        /// <response code="204"> Update success. Game updated</response>
+        /// <response code="404"> The game was not found</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(int id, GameEditDTO gameDTO)
@@ -99,6 +108,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="gameDTO"></param>
         /// <returns></returns>
+        /// <response code="201"> Game created succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="500"> Internal error</response>
         // POST: api/GameDomains
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
@@ -115,6 +127,10 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Game deleted succesfully</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="404"> Game not found</response>
+        /// <response code="500"> Internal error</response>
         // DELETE: api/GameDomains/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
@@ -133,6 +149,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a list of players in a game</response>
+        /// <response code="404"> Game not found. </response>
+        /// <response code="500"> Internal error</response>
         [HttpGet("{id}/player")]
         public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetGamePlayers(int id)
         {
@@ -152,6 +171,9 @@ namespace HvZ.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code="200"> Success. Return a list of killers in a game</response>
+        /// <response code="404"> Game not found. </response>
+        /// <response code="500"> Internal error</response>
         [HttpGet("{id}/kills")]
         public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetGameKills(int id) 
         {
