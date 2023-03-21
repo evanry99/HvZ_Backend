@@ -1,10 +1,13 @@
-﻿using HvZ.Services;
+﻿using HvZ.Model.DTO.ChatDTO;
 using Microsoft.AspNetCore.SignalR;
 
 namespace HvZ.Model
 {
-    public class BroadcastHub: Hub<IHubClient>
+    public class BroadcastHub: Hub
     {
-        public string getConnectionId() => Context.ConnectionId;
+        public Task SendChat(ChatCreateDTO chat)
+        {
+            return Clients.All.SendAsync("chat", chat);
+        }
     }
 }
