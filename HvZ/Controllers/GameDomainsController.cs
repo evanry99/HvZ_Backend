@@ -58,8 +58,6 @@ namespace HvZ.Controllers
             return _mapper.Map<GameReadDTO>(gameReadDTO);
         }
 
-
-
         /// <summary>
         /// Update a game by id
         /// </summary>
@@ -68,23 +66,24 @@ namespace HvZ.Controllers
         /// <returns></returns>
         // PUT: api/GameDomains/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGameDomain(int id, GameEditDTO gameDTO)
+        public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
         {
-            if (id != gameDTO.Id)
-            {
-                return BadRequest();
-            }
-
             if (!_gameService.GameExists(id))
             {
-                return NotFound();
+                return NotFound($"Game with id {id} does not exist");
+            }
+
+            if (gameDTO.EndTime <= gameDTO.StartTime)
+            {
+                return BadRequest("Game start or end time is invalid");
             }
 
             var gameModel = _mapper.Map<GameDomain>(gameDTO);
-            await _gameService.UpdateGameAsync(gameModel);
+
+            await _gameService.UpdateGameAsync(gameModel, id);
+
             return NoContent();
         }
-
 
         /// <summary>
         /// Add a new game
@@ -95,7 +94,13 @@ namespace HvZ.Controllers
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
+            if (gameDTO.EndTime <= gameDTO.StartTime)
+            {
+                return BadRequest("Game start or end time is invalid");
+            }
+
             var gameModel = _mapper.Map<GameDomain>(gameDTO);
+
             await _gameService.AddGameAsync(gameModel);
 
             return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, gameDTO);
