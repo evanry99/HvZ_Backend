@@ -41,7 +41,7 @@ namespace HvZ
 
             builder.Services.AddCors(policyBuilder =>
                 policyBuilder.AddDefaultPolicy(policy =>
-                    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin())
+                    policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin())
             );
 
             //Automapper service for DTO and mapper
