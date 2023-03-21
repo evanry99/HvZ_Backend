@@ -4,6 +4,7 @@ using HvZ.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+
 namespace HvZ
 {
     public class Program
@@ -41,7 +42,7 @@ namespace HvZ
 
             builder.Services.AddCors(policyBuilder =>
                 policyBuilder.AddDefaultPolicy(policy =>
-                    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin())
+                    policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin())
             );
 
             //Automapper service for DTO and mapper
@@ -71,7 +72,7 @@ namespace HvZ
             app.UseHttpsRedirection();
             app.UseCors();
             app.UseAuthorization();
-            app.MapHub<BroadcastHub>("/notify");
+            app.MapHub<BroadcastHub>("/hub");
             app.MapControllers();
 
             app.Run();
