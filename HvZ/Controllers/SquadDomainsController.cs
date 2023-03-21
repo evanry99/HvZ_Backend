@@ -233,6 +233,9 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
+        /// <response code="200">Get squad member sucessfully</response>
+        /// <response code="404">Squad member not Found</response>
+        /// <response code="500">Internal error</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
