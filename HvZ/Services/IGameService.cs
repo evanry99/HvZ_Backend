@@ -6,7 +6,6 @@ namespace HvZ.Services
     {
         public Task <IEnumerable<GameDomain>> GetAllGamesAsync();
         public Task <GameDomain> GetGameAsync(int id);
-        public Task <IEnumerable<PlayerDomain>> GetGamePlayersAsync(int id);
         public Task<IEnumerable<KillDomain>> GetGameKillsAsync(int id);
         public Task <GameDomain> AddGameAsync(GameDomain game);
         public Task UpdateGameAsync(GameDomain game, int id);

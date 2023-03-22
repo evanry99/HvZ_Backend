@@ -50,16 +50,6 @@ namespace HvZ.Services
             return kills;
         }
 
-        public async Task<IEnumerable<PlayerDomain>> GetGamePlayersAsync(int id)
-        {
-            var game = await _context.Games.FindAsync(id);
-
-            var players = await _context.Players
-                .Where(p => p.GameId ==  id)
-                .ToListAsync();
-
-            return players;
-        }
 
         public async Task UpdateGameAsync(GameDomain game, int id)
         {
