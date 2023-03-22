@@ -13,6 +13,12 @@ namespace HvZ.Services
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Method to create a new game.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
         public async Task<GameDomain> AddGameAsync(GameDomain game)
         {
             _context.Games.Add(game);
@@ -20,50 +26,56 @@ namespace HvZ.Services
             return game;
         }
 
-        public async Task DeleteGameAsync(int id)
+        /// <summary>
+        /// Method to delete a game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task DeleteGameAsync(int gameId)
         {
-            var game = await _context.Games.FindAsync(id);
+            var game = await _context.Games.FindAsync(gameId);
             _context.Games.Remove(game);
             await _context.SaveChangesAsync();
         }
 
-        public bool GameExists(int id)
+        /// <summary>
+        /// Method to check if game exists.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public bool GameExists(int gameId)
         {
-            return _context.Games.Any(g => g.Id == id);
+            return _context.Games.Any(g => g.Id == gameId);
         }
 
+        /// <summary>
+        /// Method to get all games.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<GameDomain>> GetAllGamesAsync()
         {
             return await _context.Games.ToListAsync();
         }
 
-        public async Task<GameDomain> GetGameAsync(int id)
+        /// <summary>
+        /// Method to get a specific game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<GameDomain> GetGameAsync(int gameId)
         {
-            return await _context.Games.FindAsync(id);
+            return await _context.Games.FindAsync(gameId);
         }
 
-        public async Task<IEnumerable<KillDomain>> GetGameKillsAsync(int id)
+        /// <summary>
+        /// Method to update a game.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task UpdateGameAsync(GameDomain game, int gameId)
         {
-            var game = await _context.Games.FindAsync(id);
-
-            var kills = await _context.Kills.Where(k => k.GameId == id).ToListAsync();
-            return kills;
-        }
-
-        public async Task<IEnumerable<PlayerDomain>> GetGamePlayersAsync(int id)
-        {
-            var game = await _context.Games.FindAsync(id);
-
-            var players = await _context.Players
-                .Where(p => p.GameId ==  id)
-                .ToListAsync();
-
-            return players;
-        }
-
-        public async Task UpdateGameAsync(GameDomain game, int id)
-        {
-            game.Id = id;
+            game.Id = gameId;
             _context.Entry(game).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }

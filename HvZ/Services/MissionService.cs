@@ -12,6 +12,12 @@ namespace HvZ.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Method to delete a mission in a game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         public async Task DeleteMissionAsync(int gameId, int missionId)
         {
             var missionDomain = await _context.Missions.FirstOrDefaultAsync(m => m.GameId == gameId && m.Id == missionId);
@@ -20,6 +26,11 @@ namespace HvZ.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Method to get all missions in a game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<MissionDomain>> GetAllGameMissionsAsync(int gameId)
         {
             var missions = await _context.Missions.Where(m => m.GameId == gameId)
@@ -28,6 +39,12 @@ namespace HvZ.Services
             return missions;
         }
 
+        /// <summary>
+        /// Method to get a specific mission in a game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         public async Task<MissionDomain> GetGameMissionAsync(int gameId, int missionId)
         {
             var mission = await _context.Missions.FirstOrDefaultAsync(m => m.GameId == gameId && m.Id == missionId);
@@ -35,6 +52,12 @@ namespace HvZ.Services
             return mission;
         }
 
+        /// <summary>
+        /// Method to create a new mission in a game.
+        /// </summary>
+        /// <param name="mission"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         public async Task<MissionDomain> PostMissionAsync(MissionDomain mission, int gameId)
         {
             mission.GameId = gameId;
@@ -44,6 +67,13 @@ namespace HvZ.Services
             return mission;
         }
 
+        /// <summary>
+        /// Method to update a mission in a game.
+        /// </summary>
+        /// <param name="mission"></param>
+        /// <param name="gameId"></param>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         public async Task UpdateMissionAsync(MissionDomain mission, int gameId, int missionId)
         {
             mission.GameId = gameId;
@@ -52,6 +82,12 @@ namespace HvZ.Services
             _context.Entry(mission).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Method to check if a game exists.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool GameExists(int id)
         {
             return _context.Games.Any(g => g.Id == id);

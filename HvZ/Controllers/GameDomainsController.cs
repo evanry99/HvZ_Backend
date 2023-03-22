@@ -59,7 +59,7 @@ namespace HvZ.Controllers
 
             if (gameReadDTO == null)
             {
-                return NotFound();
+                return NotFound($"Game with id {id} does not exist");
             }
 
             return _mapper.Map<GameReadDTO>(gameReadDTO);
@@ -138,11 +138,14 @@ namespace HvZ.Controllers
         {
             if (!_gameService.GameExists(id))
             {
-                return NotFound();
+                return NotFound($"Game with id {id} does not exist");
             }
             await _gameService.DeleteGameAsync(id);
             return NoContent();
         }
+
+
+
 
         /// <summary>
         /// Get all kills from a game by game id
@@ -152,18 +155,16 @@ namespace HvZ.Controllers
         /// <response code="200"> Success. Return a list of killers in a game</response>
         /// <response code="404"> Game not found. </response>
         /// <response code="500"> Internal error</response>
-        [Authorize]
-        [HttpGet("{id}/kills")]
-        public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetGameKills(int id) 
-        {
-            if (!_gameService.GameExists(id))
-            {
-                return NotFound();
-            }
-            var gameModel = await _gameService.GetGameKillsAsync(id);
+        //[HttpGet("{id}/kills")]
+        //public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetGameKills(int id) 
+        //{
+        //    if (!_gameService.GameExists(id))
+        //    {
+        //        return NotFound($"Game with id {id} does not exist");
+        //    }
+        //    var gameModel = await _gameService.GetGameKillsAsync(id);
 
-            return _mapper.Map<List<KillReadDTO>>(gameModel);
-        }
-
+        //    return _mapper.Map<List<KillReadDTO>>(gameModel);
+        //}
     }
 }

@@ -107,7 +107,7 @@ namespace HvZ.Controllers
             PlayerDomain playerDomain = _mapper.Map<PlayerDomain>(playerDTO);
             await _playerService.AddPlayerAsync(playerDomain, gameId);
 
-            return CreatedAtAction("GetPlayerDomain", new { id = playerDomain.Id }, playerDomain);
+            return CreatedAtAction("PostPlayerDomain", new { id = playerDomain.Id }, playerDomain);
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> Player not found</response>
         /// <response code="500"> Internal error</response>
-        [Authorize]
-        [HttpDelete("{gameId}/{playerId}")]
+        [Authtorize]
+        [HttpDelete("{gameId}/player/{playerId}")]
         public async Task<IActionResult> DeletePlayerDomain(int gameId, int playerId)
         {
             var playerDomain = await _playerService.GetPlayerAsync(gameId, playerId);

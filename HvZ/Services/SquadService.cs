@@ -20,13 +20,6 @@ namespace HvZ.Services
                 throw new Exception("Player has already joined the game.");
             }
 
-            // Check if the game exists
-            var gameExists = await _context.Games.AnyAsync(g => g.Id == gameId);
-            if (!gameExists)
-            {
-                return null;
-            }
-
             // Check if the squad type matches the player's species
             if (squad.IsHuman != await IsHumanAsync(playerId))
             {
@@ -48,11 +41,6 @@ namespace HvZ.Services
         {
             var squad = await _context.Squads.FindAsync(squadId);
 
-            if (squad == null || squad.GameId != gameId)
-            {
-                throw new Exception($"Squad with id {squadId} not found in game {gameId}.");
-            }
-
             var squadMembers = await _context.SquadMembers.Where(sm => sm.GameId == gameId && sm.SquadId == squadId).ToListAsync();
             _context.SquadMembers.RemoveRange(squadMembers);
 
@@ -73,10 +61,6 @@ namespace HvZ.Services
 
         public async Task<SquadMemberDomain> AddSquadMemberAsync(int gameId, int squadId, SquadMemberDomain squadMember, int playerId)
         {
-            if (!await SquadExistsAsync(gameId, squadId))
-            {
-                throw new Exception("Squad does not exist or is invalid.");
-            }
 
             var squad = await _context.Squads.FindAsync(squadId);
 
@@ -137,6 +121,16 @@ namespace HvZ.Services
         public async Task<SquadMemberDomain> GetSquadMemberAsync(int gameId, int playerId)
         {
             return await _context.SquadMembers.FirstOrDefaultAsync(sm => sm.GameId == gameId && sm.PlayerId == playerId);
+        }
+
+        public async Task<bool> GameExistsAsync(int gameId)
+        {
+            return await _context.Games.AnyAsync(g => g.Id == gameId);
+        }
+
+        public async Task<bool> PlayerExistsAsync(int playerId)
+        {
+            return await _context.Players.AnyAsync(p => p.Id == playerId);
         }
     }
 }

@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {
-    //[Authorize] //TODO
-    [Route("api/mission")]
+    [Route("api/game")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
