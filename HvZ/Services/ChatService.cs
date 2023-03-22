@@ -28,9 +28,9 @@ namespace HvZ.Services
             return _context.Chats.Any(g => g.Id == chatId);
         }
 
-        public async Task DeleteChatAsync(int chatId)
+        public async Task DeleteChatAsync(int gameId, int chatId)
         {
-            var chat = await _context.Chats.FindAsync(chatId);
+            var chat = await _context.Chats.FirstOrDefaultAsync(c => c.GameId == gameId && c.Id == chatId);
             _context.Chats.Remove(chat);
             await _context.SaveChangesAsync();
         }

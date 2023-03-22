@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {
-    [Route("api/mission")]
+    [Route("api/game")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]

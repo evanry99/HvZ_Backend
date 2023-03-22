@@ -74,21 +74,27 @@ namespace HvZ.Controllers
         /// <summary>
         /// Delete a chat by chat id
         /// </summary>
+        /// <param name="gameId"></param>
         /// <param name="chatId"></param>
         /// <returns></returns>
         /// <response code="204"> Chat deleted successfully</response>
         /// <response code="400"> Bad request </response>
         /// <response code="404"> Chat not found</response>
         /// <response code="500"> Internal error</response>
-        [HttpDelete("{chatId}/chat")]
-        public async Task<IActionResult> DeleteChatDomain(int chatId)
+        [HttpDelete("{gameId}/chat/{chatId}")]
+        public async Task<IActionResult> DeleteChatDomain(int gameId, int chatId)
         {
             if (!_chatService.ChatExists(chatId))
             {
                 return NotFound($"Chat with id {chatId} does not exist");
             }
 
-            await _chatService.DeleteChatAsync(chatId);
+            if (!_chatService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            await _chatService.DeleteChatAsync(gameId, chatId);
 
             return NoContent();
         }
@@ -97,6 +103,7 @@ namespace HvZ.Controllers
         /// Get faction chats based on gameId and playerId
         /// </summary>
         /// <param name="gameId"></param>
+        /// <param name="playerId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of faction chats in a game</response>
         /// <response code="404"> Game not found. </response>
@@ -118,6 +125,7 @@ namespace HvZ.Controllers
         /// Get squad chat
         /// </summary>
         /// <param name="gameId"></param>
+        /// <param name="squadId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of squad chats in a game</response>
         /// <response code="404"> Game not found. </response>
