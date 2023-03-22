@@ -49,6 +49,7 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: api/KillDomains/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<KillReadDTO>> GetKillDomain(int id)
         {
