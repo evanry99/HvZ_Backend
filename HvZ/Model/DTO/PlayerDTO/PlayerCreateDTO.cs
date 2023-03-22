@@ -6,6 +6,5 @@
         public bool IsPatientZero { get; set; }
         public bool IsHuman { get; set; }
         public int UserId { get; set; }
-        public int GameId { get; set; }
     }
 }

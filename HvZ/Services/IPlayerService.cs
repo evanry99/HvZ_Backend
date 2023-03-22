@@ -4,11 +4,11 @@ namespace HvZ.Services
 {
     public interface IPlayerService
     {
-        public Task<IEnumerable<PlayerDomain>> GetAllPlayersAsync();
-        public Task<PlayerDomain> GetPlayerAsync(int playerId);
-        public Task<PlayerDomain> AddPlayerAsync(PlayerDomain player);
-        public Task UpdatePlayerAsync(PlayerDomain player);
-        public Task DeletePlayerAsync(int playerId);
+        public Task<IEnumerable<PlayerDomain>> GetAllGamePlayersAsync(int gameId);
+        public Task<PlayerDomain> GetPlayerAsync(int gameId, int playerId);
+        public Task<PlayerDomain> AddPlayerAsync(PlayerDomain player, int gameId);
+        public Task UpdatePlayerAsync(PlayerDomain player, int gameId, int playerId);
+        public Task DeletePlayerAsync(int gameId, int playerId);
         public bool PlayerExists(int playerId);
     }
 }
