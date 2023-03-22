@@ -6,8 +6,10 @@ using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
+using Microsoft.AspNetCore.Authorization;
 namespace HvZ.Controllers
 {
+    [Authorize]
     [Route("api/game")]
     [ApiController]
     [Produces("application/json")]

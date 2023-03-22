@@ -5,6 +5,8 @@ using HvZ.Model.DTO.KillDTO;
 using HvZ.Model.DTO.PlayerDTO;
 using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HvZ.Controllers
 {
@@ -33,7 +35,7 @@ namespace HvZ.Controllers
         /// <response code="500"> Internal error</response>
         // GET: api/GameDomains
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGames()
+        public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGame()
         {
             var gameModel = await _gameService.GetAllGamesAsync();
             var gameReadDTO = _mapper.Map<List<GameReadDTO>>(gameModel);
@@ -74,6 +76,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
+        //[Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
         {
@@ -103,6 +106,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         // POST: api/GameDomains
+        //[Authorize]
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
@@ -129,6 +133,7 @@ namespace HvZ.Controllers
         /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
         // DELETE: api/GameDomains/5
+        //[Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
         {
