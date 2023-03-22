@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Authorization;
 namespace HvZ.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/game")]
     [ApiController]
     [Produces("application/json")]
@@ -40,6 +40,10 @@ namespace HvZ.Controllers
         [HttpGet("{gameId}/chat")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetGlobalChats(int gameId)
         {
+            if(!_chatService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist ");
+            }
             var chatModel = await _chatService.GetGlobalChatsAsync(gameId);
 
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
@@ -86,15 +90,22 @@ namespace HvZ.Controllers
         [HttpDelete("{gameId}/chat/{chatId}")]
         public async Task<IActionResult> DeleteChatDomain(int gameId, int chatId)
         {
+
+            if (gameId <= 0 || chatId <= 0)
+            {
+                return BadRequest($"Invalid game id {gameId} or chat id {chatId}");
+            }
+
             if (!_chatService.ChatExists(chatId))
             {
                 return NotFound($"Chat with id {chatId} does not exist");
             }
 
-            if (!_chatService.GameExists(gameId))
+            if(!_chatService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist");
             }
+
 
             await _chatService.DeleteChatAsync(gameId, chatId);
 
@@ -108,14 +119,29 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of faction chats in a game</response>
+        /// <response code="400"> Bad request. </response>
         /// <response code="404"> Game not found. </response>
         /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/chat/faction-chat/{playerId}")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetFactionChats(int gameId, int playerId)
         {
+            if (gameId <= 0)
+            {
+                return BadRequest("Invalid gameId parameter. The gameId must be greater than zero.");
+            }
+
+            if (playerId <= 0)
+            {
+                return BadRequest("Invalid playerId parameter. The playerId must be greater than zero.");
+            }
             if (!_chatService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            if (!_chatService.PlayerExists(playerId))
+            {
+                return NotFound($"Player with id {playerId} does not exist");
             }
 
             var chatModel = await _chatService.GetFactionChatsAsync(gameId, playerId);
