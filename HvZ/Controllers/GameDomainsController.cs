@@ -59,7 +59,7 @@ namespace HvZ.Controllers
 
             if (gameReadDTO == null)
             {
-                return NotFound();
+                return NotFound($"Game with id {id} does not exist");
             }
 
             return _mapper.Map<GameReadDTO>(gameReadDTO);
@@ -139,7 +139,7 @@ namespace HvZ.Controllers
         {
             if (!_gameService.GameExists(id))
             {
-                return NotFound();
+                return NotFound($"Game with id {id} does not exist");
             }
             await _gameService.DeleteGameAsync(id);
             return NoContent();
@@ -161,7 +161,7 @@ namespace HvZ.Controllers
         {
             if (!_gameService.GameExists(id))
             {
-                return NotFound();
+                return NotFound($"Game with id {id} does not exist");
             }
             var gameModel = await _gameService.GetGameKillsAsync(id);
 
