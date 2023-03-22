@@ -65,9 +65,13 @@ namespace HvZ.Controllers
         {
             var squadReadDTO = await _squadService.GetSquadAsync(gameId, squadId);
 
-            if (squadReadDTO == null)
+            if (!await _squadService.GameExistsAsync(gameId))
             {
-                return NotFound();
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+            if (!await _squadService.SquadExistsAsync(gameId, squadId)) 
+            {
+                return NotFound($"Squad with id {squadId} not found in game {gameId}");
             }
             return _mapper.Map<SquadReadDTO>(squadReadDTO);
         }
@@ -92,9 +96,14 @@ namespace HvZ.Controllers
 
         public async Task<IActionResult> UpdateSquad(int gameId, int squadId, SquadEditDTO squadDTO)
         {
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
             if (!await _squadService.SquadExistsAsync(gameId, squadId))
             {
-                return NotFound();
+                return NotFound($"Squad with id {squadId} not found in game {gameId}");
             }
             var squadModel = _mapper.Map<SquadDomain>(squadDTO);
             await _squadService.UpdateSquadAsync(gameId,squadId,squadModel);
@@ -110,20 +119,28 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Squad created succesfully</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="404"> The game or player was not found</response>
         /// <response code="500"> Internal error</response>
         // POST: api/SquadDomains
         [HttpPost("{gameId}/squad")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<SquadReadDTO>> PostSquad(int gameId,SquadCreateDTO squadDTO)
         {
+
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+            if (!await _squadService.PlayerExistsAsync(squadDTO.SquadMember.PlayerId))
+            {
+                return NotFound($"Player with id {squadDTO.SquadMember.PlayerId} does not exist in game id {gameId}");
+            }
+
             var squadDomain = _mapper.Map<SquadDomain>(squadDTO);
             var addedSquad = await _squadService.AddSquadAsync(gameId, squadDomain, squadDTO.SquadMember.PlayerId);
-            if (addedSquad == null)
-            {
-                return NotFound();
-            }
             var squadReadDTO = _mapper.Map<SquadReadDTO>(addedSquad);
             return CreatedAtAction("PostSquad", new { gameId = addedSquad.GameId, squadId = addedSquad.Id }, squadReadDTO);
         }
@@ -137,14 +154,29 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Squad member created succesfully</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="404"> The game or player was not found</response>
         /// <response code="500"> Internal error</response>
         // Post add squad member
         [HttpPost("{gameId}/squad/{squadId}/join")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<SquadMemberReadDTO>> PostSquadMember(int gameId, int squadId, SquadMemberCreateDTO squadMemberDTO)
         {
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+            if (!await _squadService.PlayerExistsAsync(squadMemberDTO.PlayerId))
+            {
+                return NotFound($"Player with id {squadMemberDTO.PlayerId} does not exist in game id {gameId}");
+            }
+            if (!await _squadService.SquadExistsAsync(gameId, squadId))
+            {
+                return NotFound($"Squad with id {squadId} not found in game {gameId}");
+            }
+
             var squadMemberDomain = _mapper.Map<SquadMemberDomain>(squadMemberDTO);
             var addedSquadMember = await _squadService.AddSquadMemberAsync(gameId, squadId, squadMemberDomain, squadMemberDTO.PlayerId);
             var squadMemberReadDTO = _mapper.Map<SquadMemberReadDTO>(addedSquadMember);
@@ -169,6 +201,15 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteSquadDomain(int gameId, int squadId)
         {
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            if (!await _squadService.SquadExistsAsync(gameId, squadId))
+            {
+                return NotFound($"Squad with id {squadId} does not exist in game id {gameId}");
+            }
             await _squadService.DeleteSquadAsync(gameId, squadId);
             return NoContent();
           
@@ -189,9 +230,14 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<SquadCheckInReadDTO>>> GetSquadCheckIns(int gameId, int squadId)
         {
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
             if (!_squadCheckInService.SquadExists(squadId))
             {
-                return NotFound($"Squad with id {squadId} does not exist");
+                return NotFound($"Squad with id {squadId} does not exist in game id {gameId}");
             }
 
             var squadCheckInModel = await _squadCheckInService.GetSquadCheckInsAsync(gameId, squadId);
@@ -215,9 +261,14 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<SquadCheckInReadDTO>> PostSquadCheckIn(SquadCheckInCreateDTO squadCheckInDTO, int gameId, int squadId)
         {
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
             if (!_squadCheckInService.SquadExists(squadId))
             {
-                return NotFound($"Squad with id {squadId} does not exist");
+                return NotFound($"Squad with id {squadId} does not exist in game id {gameId}t");
             }
 
             SquadCheckInDomain squadCheckInDomain = _mapper.Map<SquadCheckInDomain>(squadCheckInDTO);
@@ -241,7 +292,11 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{gameId}/squadMember/{playerId}")]
         public async Task<ActionResult<SquadMemberReadDTO>> GetSquadMember(int gameId, int playerId)
-        {   
+        {
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
             var squadMemberModel = await _squadService.GetSquadMemberAsync(gameId, playerId);
 
             if (squadMemberModel == null)
