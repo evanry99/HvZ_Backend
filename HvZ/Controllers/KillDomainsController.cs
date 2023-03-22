@@ -11,7 +11,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    //[Authorize]
+    [Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class KillDomainsController : ControllerBase
@@ -47,7 +47,6 @@ namespace HvZ.Controllers
         /// <response code="404"> KIll not found </response> 
         /// <response code="500"> Internal error </response> 
         // GET: api/KillDomains/5
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<KillReadDTO>> GetKillDomain(int id)
         {

@@ -11,7 +11,6 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    //[Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class PlayerDomainsController : ControllerBase
@@ -47,6 +46,7 @@ namespace HvZ.Controllers
         /// <response code="200"> Success. Return a specific player</response>
         /// <response code="404"> Player was not found</response>
         /// <response code="500"> Internal error</response>
+        [Authorize]
         [HttpGet("{gameId}/player/{playerId}")]
         public async Task<ActionResult<PlayerReadDTO>> GetPlayerDomain(int gameId, int playerId)
         {
@@ -59,7 +59,7 @@ namespace HvZ.Controllers
 
             return _mapper.Map<PlayerReadDTO>(playerDomain);
         }
-
+        
         /// <summary>
         /// Update a player by game Id and player Id
         /// </summary>
@@ -71,6 +71,7 @@ namespace HvZ.Controllers
         /// <response code="404"> Player was not found</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
+        [Authorize]
         [HttpPut("{gameId}/player/{playerId}")]
         public async Task<IActionResult> PutPlayerDomain(PlayerEditDTO playerDTO, int gameId, int playerId)
         {
@@ -99,6 +100,7 @@ namespace HvZ.Controllers
         /// <response code="201"> Player created succesfully</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
+        [Authorize]
         [HttpPost("{gameId}/player")]
         public async Task<ActionResult<PlayerReadDTO>> PostPlayerDomain(PlayerCreateDTO playerDTO, int gameId)
         {
@@ -118,6 +120,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> Player not found</response>
         /// <response code="500"> Internal error</response>
+        [Authorize]
         [HttpDelete("{gameId}/{playerId}")]
         public async Task<IActionResult> DeletePlayerDomain(int gameId, int playerId)
         {

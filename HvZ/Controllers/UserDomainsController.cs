@@ -2,6 +2,7 @@
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.UserDTO;
 using HvZ.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
@@ -10,6 +11,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
+    [Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class UserDomainsController : ControllerBase
