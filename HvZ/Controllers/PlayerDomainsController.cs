@@ -105,7 +105,7 @@ namespace HvZ.Controllers
             PlayerDomain playerDomain = _mapper.Map<PlayerDomain>(playerDTO);
             await _playerService.AddPlayerAsync(playerDomain, gameId);
 
-            return CreatedAtAction("GetPlayerDomain", new { id = playerDomain.Id }, playerDomain);
+            return CreatedAtAction("PostPlayerDomain", new { id = playerDomain.Id }, playerDomain);
         }
 
         /// <summary>

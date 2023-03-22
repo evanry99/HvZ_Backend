@@ -13,6 +13,12 @@ namespace HvZ.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Async method to add a new chat to DB. GameId gets automatically set.
+        /// </summary>
+        /// <param name="chat"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         public async Task<ChatDomain> AddChatAsync(ChatDomain chat, int gameId)
         {
             chat.GameId = gameId;
@@ -23,11 +29,22 @@ namespace HvZ.Services
             return chat;
         }
 
+        /// <summary>
+        /// Method to check if chat exists in DB.
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
         public bool ChatExists(int chatId)
         {
             return _context.Chats.Any(g => g.Id == chatId);
         }
 
+        /// <summary>
+        /// Method to delete chat record from DB.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
         public async Task DeleteChatAsync(int gameId, int chatId)
         {
             var chat = await _context.Chats.FirstOrDefaultAsync(c => c.GameId == gameId && c.Id == chatId);
@@ -35,6 +52,11 @@ namespace HvZ.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Method to get chat messages for the global chat. Returns chat messages for both factions.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<ChatDomain>> GetGlobalChatsAsync(int gameId)
         {
             var chats = await _context.Chats
@@ -43,11 +65,24 @@ namespace HvZ.Services
             return chats;
         }
 
+        /// <summary>
+        /// Method to check if game exists in DB.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool GameExists(int id)
         {
             return _context.Games.Any(g => g.Id == id);
         }
 
+        /// <summary>
+        /// Method to get faction chat messages. Takes input player Id and checks 
+        /// if player is human then returns appropiate faction chat messages.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<IEnumerable<ChatDomain>> GetFactionChatsAsync(int gameId, int playerId)
         {
             var playerModel = await _context.Players.FindAsync(playerId);
@@ -69,6 +104,12 @@ namespace HvZ.Services
             }
         }
 
+        /// <summary>
+        /// Method to get squad chat messages with a specific squad Id.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="squadId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<ChatDomain>> GetSquadChatsAsync(int gameId, int squadId)
         {
             return await _context.Chats.Where(c => c.SquadId == squadId).ToListAsync();
