@@ -51,8 +51,8 @@ namespace HvZ.Controllers
         // GET: api/KillDomains/5
         [Authorize]
         [HttpGet("{gameId}/kill/{killId}")]
-        public async Task<ActionResult<KillReadDTO>> GetKillDomain(int id)
-        HvZ/Controllers/KillDomainsController.cs
+        public async Task<ActionResult<KillReadDTO>> GetKillDomain(int gameId, int killId)
+        
         {
             var killDomain = await _killService.GetKillAsync(gameId, killId);
 
