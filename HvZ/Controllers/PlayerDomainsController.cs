@@ -3,6 +3,7 @@ using HvZ.Model.Domain;
 using HvZ.Model.DTO.PlayerDTO;
 using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HvZ.Controllers
 {
@@ -10,6 +11,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
+    //[Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class PlayerDomainsController : ControllerBase

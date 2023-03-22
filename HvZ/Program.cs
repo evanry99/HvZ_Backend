@@ -3,15 +3,26 @@ using HvZ.Model;
 using HvZ.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 
 namespace HvZ
 {
     public class Program
     {
+        public Program(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        public IConfiguration Configuration { get; }
+
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
 
             // Add DbContext
             builder.Services.AddDbContext<HvZDbContext>(options =>
@@ -57,6 +68,36 @@ namespace HvZ
             builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(SquadCheckInService));
             builder.Services.AddScoped(typeof(ISquadService), typeof(SquadService));
             builder.Services.AddScoped(typeof(IMissionService), typeof(MissionService));
+            //builder.Services.AddScoped(typeof(IChatService), typeof(ChatService));
+            //builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(ChatService));
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    //Access token for postman can be found at http://localhost:8000/#
+                    //requires token from keycloak instance - location stored in secret manager
+                    IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                    {
+                        var client = new HttpClient();
+                        var keyuri = builder.Configuration["TokenSecrets:KeyURI"];
+                        //Retrieves the keys from keycloak instance to verify token
+                        var response = client.GetAsync(keyuri).Result;
+                        var responseString = response.Content.ReadAsStringAsync().Result;
+                        var keys = JsonConvert.DeserializeObject<JsonWebKeySet>(responseString);
+                        return keys.Keys;
+                    },
+
+                    ValidIssuers = new List<string>
+                   {
+                        builder.Configuration["TokenSecrets:IssuerURI"]
+                   },
+
+                    //This checks the token for a the 'aud' claim value
+                    ValidAudience = "account",
+                };
+            });
 
             var app = builder.Build();
 
@@ -71,11 +112,14 @@ namespace HvZ
 
             app.UseHttpsRedirection();
             app.UseCors();
-            app.UseAuthorization();
             app.MapHub<BroadcastHub>("/hub");
             app.MapControllers();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.Run();
         }
+
     }
 }

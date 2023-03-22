@@ -55,12 +55,11 @@ namespace HvZ.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReadDTO>> GetUserDomain(int id)
         {
-            var userReadDTO = await _userService.GetUserAsync(id);
-
-            if (userReadDTO == null)
+            if(!_userService.UserExists(id))
             {
-                return NotFound();
+                return NotFound($"User with id {id} does not exsist");
             }
+            var userReadDTO = await _userService.GetUserAsync(id);
 
             return _mapper.Map<UserReadDTO>(userReadDTO);
         }
@@ -78,12 +77,12 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> GetUserByUsername(string username)
         {
-            var userReadDTO = await _userService.GetUserByUsernameAsync(username);
 
-            if (userReadDTO == null)
+            if (!_userService.UserNameExists(username))
             {
-                return NotFound();
+                return NotFound($"User with username: {username} does not exsist");
             }
+            var userReadDTO = await _userService.GetUserByUsernameAsync(username);
 
             return _mapper.Map<UserReadDTO>(userReadDTO);
         }
@@ -111,7 +110,7 @@ namespace HvZ.Controllers
             }
             if (!_userService.UserExists(id))
             {
-                return NotFound();
+                return NotFound($"User with id {id} does not exist");
             }
             var userModel = _mapper.Map<UserDomain>(userDTO);
 
@@ -158,7 +157,7 @@ namespace HvZ.Controllers
         {
             if (!_userService.UserExists(id))
             {
-                return NotFound();
+                return NotFound($"User with id {id} does not exist");
             }
             await _userService.DeleteUserAsync(id);
             return NoContent();

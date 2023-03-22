@@ -1,8 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.KillDTO;
 using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HvZ.Controllers
 {
@@ -10,6 +11,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
+    //[Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class KillDomainsController : ControllerBase
@@ -47,8 +49,10 @@ namespace HvZ.Controllers
         /// <response code="404"> KIll not found </response> 
         /// <response code="500"> Internal error </response> 
         // GET: api/KillDomains/5
+        [Authorize]
         [HttpGet("{gameId}/kill/{killId}")]
-        public async Task<ActionResult<KillReadDTO>> GetKillDomain(int gameId, int killId)
+        public async Task<ActionResult<KillReadDTO>> GetKillDomain(int id)
+        HvZ/Controllers/KillDomainsController.cs
         {
             var killDomain = await _killService.GetKillAsync(gameId, killId);
 
