@@ -14,5 +14,7 @@ namespace HvZ.Services
         public Task <bool> PlayerAlreadyJoinedGameAsync(int gameId, int playerId);
         public Task <bool> IsHumanAsync(int playerId);
         public Task <SquadMemberDomain> GetSquadMemberAsync(int gameId, int playerId);
+        public Task<bool> GameExistsAsync(int gameId);
+        public Task<bool> PlayerExistsAsync(int playerId);
     }
 }
