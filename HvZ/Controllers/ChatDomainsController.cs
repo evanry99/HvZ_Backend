@@ -76,7 +76,6 @@ namespace HvZ.Controllers
         /// <summary>
         /// Delete a chat by chat id
         /// </summary>
-        /// <param name="gameId"></param>
         /// <param name="chatId"></param>
         /// <returns></returns>
         /// <response code="204"> Chat deleted successfully</response>
@@ -101,11 +100,11 @@ namespace HvZ.Controllers
             return NoContent();
         }
 
+
         /// <summary>
         /// Get faction chats based on gameId and playerId
         /// </summary>
         /// <param name="gameId"></param>
-        /// <param name="playerId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of faction chats in a game</response>
         /// <response code="404"> Game not found. </response>
@@ -127,7 +126,6 @@ namespace HvZ.Controllers
         /// Get squad chat
         /// </summary>
         /// <param name="gameId"></param>
-        /// <param name="squadId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of squad chats in a game</response>
         /// <response code="404"> Game not found. </response>
