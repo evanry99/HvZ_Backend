@@ -76,6 +76,7 @@ namespace HvZ.Controllers
         /// <summary>
         /// Delete a chat by chat id
         /// </summary>
+        /// <param name="gameId"></param>
         /// <param name="chatId"></param>
         /// <returns></returns>
         /// <response code="204"> Chat deleted successfully</response>
