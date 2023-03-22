@@ -48,14 +48,19 @@ namespace HvZ.Services
             return _context.Games.Any(g => g.Id == id);
         }
 
+        public bool PlayerExists(int playerId) 
+        {
+            return _context.Players.Any(p => p.Id == playerId);
+        }
+
         public async Task<IEnumerable<ChatDomain>> GetFactionChatsAsync(int gameId, int playerId)
         {
             var playerModel = await _context.Players.FindAsync(playerId);
 
-            if (playerModel == null)
+           /* if (playerModel == null)
             {
                 throw new ArgumentException($"Player with id {playerId} could not be found");
-            }
+            }*/
 
             if (playerModel.IsHuman == true)
             {

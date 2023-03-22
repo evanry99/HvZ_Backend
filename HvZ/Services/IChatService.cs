@@ -12,5 +12,6 @@ namespace HvZ.Services
         public Task DeleteChatAsync(int gameId, int chatId);
         public bool ChatExists(int chatId);
         public bool GameExists(int gameId);
+        public bool PlayerExists(int gameId);
     }
 }
