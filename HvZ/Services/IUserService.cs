@@ -11,6 +11,7 @@ namespace HvZ.Services
         public Task UpdateUserAsync(UserDomain user);
         public Task DeleteUserAsync(int id);
         public bool UserExists(int id);
+        public bool UserNameExists(string username);
 
 
     }

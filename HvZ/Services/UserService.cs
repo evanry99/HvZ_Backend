@@ -53,5 +53,9 @@ namespace HvZ.Services
         {
             return _context.Users.Any(u => u.Id == id);
         }
+        public bool UserNameExists(string username)
+        {
+            return _context.Users.Any(u => u.UserName == username);
+        }
     }
 }
