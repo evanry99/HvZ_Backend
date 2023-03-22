@@ -146,26 +146,6 @@ namespace HvZ.Controllers
         }
 
 
-        /// <summary>
-        /// Get all players from a game by game id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <response code="200"> Success. Return a list of players in a game</response>
-        /// <response code="404"> Game not found. </response>
-        /// <response code="500"> Internal error</response>
-        [HttpGet("{id}/player")]
-        public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetGamePlayers(int id)
-        {
-            if (!_gameService.GameExists(id))
-            {
-                return NotFound();
-            }
-
-            var gameModel = await _gameService.GetGamePlayersAsync(id);
-
-            return _mapper.Map<List<PlayerReadDTO>>(gameModel);
-        }
 
 
         /// <summary>
