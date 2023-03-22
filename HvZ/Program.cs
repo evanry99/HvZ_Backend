@@ -68,8 +68,6 @@ namespace HvZ
             builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(SquadCheckInService));
             builder.Services.AddScoped(typeof(ISquadService), typeof(SquadService));
             builder.Services.AddScoped(typeof(IMissionService), typeof(MissionService));
-            //builder.Services.AddScoped(typeof(IChatService), typeof(ChatService));
-            //builder.Services.AddScoped(typeof(ISquadCheckInService), typeof(ChatService));
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             .AddJwtBearer(options =>
