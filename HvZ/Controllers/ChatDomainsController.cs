@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Authorization;
 namespace HvZ.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/game")]
     [ApiController]
     [Produces("application/json")]
