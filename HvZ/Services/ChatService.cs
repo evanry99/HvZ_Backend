@@ -114,5 +114,15 @@ namespace HvZ.Services
         {
             return await _context.Chats.Where(c => c.SquadId == squadId).ToListAsync();
         }
+
+        /// <summary>
+        /// Method to get all chat messages in a game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ChatDomain>> GetGameChatsAsync(int gameId)
+        {
+            return await _context.Chats.Where(c => c.GameId == gameId).ToListAsync();
+        }
     }
 }
