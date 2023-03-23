@@ -1,4 +1,4 @@
-﻿using HvZ.Data;
+using HvZ.Data;
 using HvZ.Model.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -75,6 +75,17 @@ namespace HvZ.Services
             return _context.Games.Any(g => g.Id == id);
         }
 
+        public bool PlayerExists(int playerId) 
+        {
+            return _context.Players.Any(p => p.Id == playerId);
+        }
+
+        public bool SquadExists(int squadId)
+        {
+            return _context.Squads.Any(s => s.Id == squadId);
+        }
+
+
         /// <summary>
         /// Method to get faction chat messages. Takes input player Id and checks 
         /// if player is human then returns appropiate faction chat messages.
@@ -87,10 +98,10 @@ namespace HvZ.Services
         {
             var playerModel = await _context.Players.FindAsync(playerId);
 
-            if (playerModel == null)
+           /* if (playerModel == null)
             {
                 throw new ArgumentException($"Player with id {playerId} could not be found");
-            }
+            }*/
 
             if (playerModel.IsHuman == true)
             {

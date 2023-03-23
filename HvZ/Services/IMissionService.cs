@@ -10,5 +10,6 @@ namespace HvZ.Services
         public Task UpdateMissionAsync(MissionDomain mission, int gameId, int missionId);
         public Task DeleteMissionAsync(int gameId, int missionId);
         public bool GameExists(int gameId);
+        public bool MissionExists(int missionId);
     }
 }

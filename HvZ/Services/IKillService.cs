@@ -10,5 +10,6 @@ namespace HvZ.Services
         public Task UpdateKillAsync(KillDomain kill, int gameId, int killId);
         public Task DeleteKillAsync(int gameId, int killId);
         public bool KillExists(int killId);
+        public bool GameExists(int gameId);
     }
 }

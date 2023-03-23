@@ -55,13 +55,17 @@ namespace HvZ.Controllers
 
         // GET: api/UserDomains/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserReadDTO>> GetUserDomain(int id)
+        public async Task<ActionResult<UserReadDTO>> GetUserDomain(int userId)
         {
-            if(!_userService.UserExists(id))
+            if (userId <= 0)
             {
-                return NotFound($"User with id {id} does not exsist");
+                return BadRequest($"Invalid user id {userId}. The gameId must be greater than zero.");
             }
-            var userReadDTO = await _userService.GetUserAsync(id);
+            if (!_userService.UserExists(userId))
+            {
+                return NotFound($"User with id {userId} does not exsist");
+            }
+            var userReadDTO = await _userService.GetUserAsync(userId);
 
             return _mapper.Map<UserReadDTO>(userReadDTO);
         }
@@ -104,15 +108,15 @@ namespace HvZ.Controllers
         // PUT: api/UserDomains/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserDomain(int id, UserEditDTO userDTO)
+        public async Task<IActionResult> PutUserDomain(int userId, UserEditDTO userDTO)
         {
-            if (id != userDTO.Id)
+            if (userId <= 0)
             {
-                return BadRequest();
+                return BadRequest($"Invalid user id {userId}. The gameId must be greater than zero.");
             }
-            if (!_userService.UserExists(id))
+            if (!_userService.UserExists(userId))
             {
-                return NotFound($"User with id {id} does not exist");
+                return NotFound($"User with id {userId} does not exist");
             }
             var userModel = _mapper.Map<UserDomain>(userDTO);
 
@@ -155,13 +159,18 @@ namespace HvZ.Controllers
         /// <response code="500"> Internal error</response>
         // DELETE: api/UserDomains/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserDomain(int id)
+        public async Task<IActionResult> DeleteUserDomain(int userId)
         {
-            if (!_userService.UserExists(id))
+            if (userId <= 0)
             {
-                return NotFound($"User with id {id} does not exist");
+                return BadRequest($"Invalid user id {userId}. The gameId must be greater than zero.");
             }
-            await _userService.DeleteUserAsync(id);
+
+            if (!_userService.UserExists(userId))
+            {
+                return NotFound($"User with id {userId} does not exist");
+            }
+            await _userService.DeleteUserAsync(userId);
             return NoContent();
 
         }
