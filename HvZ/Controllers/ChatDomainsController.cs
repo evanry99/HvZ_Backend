@@ -5,8 +5,10 @@ using HvZ.Model.DTO.ChatDTO;
 using HvZ.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-
 using Microsoft.AspNetCore.Authorization;
+using System.Web;
+using System;
+
 namespace HvZ.Controllers
 {
     [Authorize]
@@ -41,7 +43,7 @@ namespace HvZ.Controllers
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetGlobalChats(int gameId)
         {
             var chatModel = await _chatService.GetGlobalChatsAsync(gameId);
-
+            
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
 
@@ -65,6 +67,8 @@ namespace HvZ.Controllers
             {
                 return NotFound($"Game with id {gameId} does not exist");
             }
+            string encodedMessage = HttpUtility.HtmlEncode(chatDTO.Message);
+            chatDTO.Message = encodedMessage;
 
             var chatDomain = _mapper.Map<ChatDomain>(chatDTO);
             await _chatService.AddChatAsync(chatDomain, gameId);
