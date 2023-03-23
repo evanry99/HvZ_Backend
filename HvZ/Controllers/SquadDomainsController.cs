@@ -14,7 +14,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    //[Authorize]
+    [Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class SquadDomainsController : ControllerBase
