@@ -308,5 +308,35 @@ namespace HvZ.Controllers
 
             return Ok(_mapper.Map<SquadMemberReadDTO>(squadMemberModel));
         }
+
+        /// <summary>
+        /// Get all squad members in a squad by gameId and squadId
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="squadId"></param>
+        /// <returns></returns>
+        /// <response code="200">Get squad member sucessfully</response>
+        /// <response code="404">Squad member not Found</response>
+        /// <response code="500">Internal error</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet("{gameId}/squadMembers/{squadId}")]
+        public async Task<ActionResult<IEnumerable<SquadMemberReadDTO>>> GetSquadMembers(int gameId, int squadId)
+        {
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            var squadMemberModel = await _squadService.GetSquadMembersAsync(gameId, squadId);
+
+            if (squadMemberModel == null)
+            {
+                return NotFound($"Squad member could not be found with gameId: {gameId} and squadId {squadId}");
+            }
+
+            return Ok(_mapper.Map<List<SquadMemberReadDTO>>(squadMemberModel));
+        }
     }
 }
