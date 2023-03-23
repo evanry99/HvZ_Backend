@@ -42,7 +42,6 @@ namespace HvZ.Controllers
             return gameReadDTO;
         }
 
-
         /// <summary>
         /// Get a game by id
         /// </summary>
@@ -129,9 +128,8 @@ namespace HvZ.Controllers
 
             await _gameService.AddGameAsync(gameModel);
 
-            return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, gameDTO);
+            return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, _mapper.Map<GameReadDTO>(gameModel));
         }
-
 
         /// <summary>
         /// Delete a game by id

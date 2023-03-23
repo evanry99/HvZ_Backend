@@ -5,12 +5,11 @@ namespace HvZ.Services
     public interface IGameService
     {
         public Task <IEnumerable<GameDomain>> GetAllGamesAsync();
-        public Task <GameDomain> GetGameAsync(int id);
-        public Task<IEnumerable<KillDomain>> GetGameKillsAsync(int id);
+        public Task <GameDomain> GetGameAsync(int gameId);
         public Task <GameDomain> AddGameAsync(GameDomain game);
-        public Task UpdateGameAsync(GameDomain game, int id);
-        public Task DeleteGameAsync(int id);
-        public bool GameExists(int id);
+        public Task UpdateGameAsync(GameDomain game, int gameId);
+        public Task DeleteGameAsync(int gameId);
+        public bool GameExists(int gameId);
 
     }
 }

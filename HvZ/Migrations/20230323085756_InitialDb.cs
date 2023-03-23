@@ -38,6 +38,7 @@ namespace HvZ.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsAdmin = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -54,9 +55,9 @@ namespace HvZ.Migrations
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     IsHumanVisible = table.Column<bool>(type: "bit", nullable: false),
                     IsZombieVisible = table.Column<bool>(type: "bit", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -262,18 +263,18 @@ namespace HvZ.Migrations
                 columns: new[] { "Id", "Description", "EndTime", "GameState", "Name", "Nw_Lat", "Nw_Lng", "Se_Lat", "Se_Lng", "StartTime" },
                 values: new object[,]
                 {
-                    { 1, "Human vs Zombie fun", null, "Registration", "First Game", 40.753, 73.983000000000004, null, null, new DateTime(2023, 3, 15, 12, 37, 52, 637, DateTimeKind.Local).AddTicks(9524) },
+                    { 1, "Human vs Zombie fun", null, "Registration", "First Game", 40.753, 73.983000000000004, null, null, new DateTime(2023, 3, 23, 9, 57, 56, 167, DateTimeKind.Local).AddTicks(9185) },
                     { 2, "Very fun game join plz!", null, "In Progress", "Second Game", null, null, 33.924900000000001, 18.424099999999999, new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "FirstName", "IsAdmin", "LastName" },
+                columns: new[] { "Id", "FirstName", "IsAdmin", "LastName", "UserName" },
                 values: new object[,]
                 {
-                    { 1, "Håvard", false, "Madland" },
-                    { 2, "An", false, "Nguyen" },
-                    { 3, "Vilhelm", false, "Assersen" }
+                    { 1, "Håvard", false, "Madland", "Hav" },
+                    { 2, "An", false, "Nguyen", "Al" },
+                    { 3, "Vilhelm", false, "Assersen", "Will" }
                 });
 
             migrationBuilder.InsertData(
@@ -281,9 +282,9 @@ namespace HvZ.Migrations
                 columns: new[] { "Id", "Description", "EndTime", "GameId", "IsHumanVisible", "IsZombieVisible", "Name", "StartTime" },
                 values: new object[,]
                 {
-                    { 1, "Find a sock to equip yourself", new DateTime(2023, 3, 15, 12, 7, 52, 637, DateTimeKind.Utc).AddTicks(9768), 1, true, false, "Gather", new DateTime(2023, 3, 15, 11, 37, 52, 637, DateTimeKind.Utc).AddTicks(9767) },
-                    { 2, "Survive the horde of zombies for 15 minutes ", new DateTime(2023, 3, 15, 11, 52, 52, 637, DateTimeKind.Utc).AddTicks(9771), 2, true, false, "Survive", new DateTime(2023, 3, 15, 11, 37, 52, 637, DateTimeKind.Utc).AddTicks(9770) },
-                    { 3, "Kill 5 humans within 45 minutes ", new DateTime(2023, 3, 15, 12, 22, 52, 637, DateTimeKind.Utc).AddTicks(9772), 2, false, true, "Blood bath", new DateTime(2023, 3, 15, 11, 37, 52, 637, DateTimeKind.Utc).AddTicks(9771) }
+                    { 1, "Find a sock to equip yourself", new DateTime(2023, 3, 23, 9, 27, 56, 167, DateTimeKind.Utc).AddTicks(9374), 1, true, false, "Gather", new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9371) },
+                    { 2, "Survive the horde of zombies for 15 minutes ", new DateTime(2023, 3, 23, 9, 12, 56, 167, DateTimeKind.Utc).AddTicks(9376), 2, true, false, "Survive", new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9376) },
+                    { 3, "Kill 5 humans within 45 minutes ", new DateTime(2023, 3, 23, 9, 42, 56, 167, DateTimeKind.Utc).AddTicks(9378), 2, false, true, "Blood bath", new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9377) }
                 });
 
             migrationBuilder.InsertData(
@@ -313,9 +314,9 @@ namespace HvZ.Migrations
                 columns: new[] { "Id", "ChatTime", "GameId", "IsHumanGlobal", "IsZombieGlobal", "Message", "PlayerId", "SquadId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 3, 15, 11, 37, 52, 637, DateTimeKind.Utc).AddTicks(9750), 1, true, false, "One zombie close to me", 2, 1 },
-                    { 2, new DateTime(2023, 3, 15, 11, 37, 52, 637, DateTimeKind.Utc).AddTicks(9752), 1, false, true, "Surround that human", 1, 2 },
-                    { 3, new DateTime(2023, 3, 15, 11, 37, 52, 637, DateTimeKind.Utc).AddTicks(9753), 2, true, false, "Need help!", 3, 1 }
+                    { 1, new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9358), 1, true, false, "One zombie close to me", 2, 1 },
+                    { 2, new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9360), 1, false, true, "Surround that human", 1, 2 },
+                    { 3, new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9361), 2, true, false, "Need help!", 3, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -340,17 +341,17 @@ namespace HvZ.Migrations
             migrationBuilder.InsertData(
                 table: "SquadCheckIns",
                 columns: new[] { "Id", "EndTime", "GameId", "Lat", "Lng", "SquadId", "SquadMemberId", "StartTime" },
-                values: new object[] { 1, new DateTime(2023, 3, 15, 12, 22, 52, 638, DateTimeKind.Utc).AddTicks(42), 1, 55.229999999999997, 20.100999999999999, 1, 1, new DateTime(2023, 3, 15, 11, 37, 52, 638, DateTimeKind.Utc).AddTicks(41) });
+                values: new object[] { 1, new DateTime(2023, 3, 23, 9, 42, 56, 167, DateTimeKind.Utc).AddTicks(9420), 1, 55.229999999999997, 20.100999999999999, 1, 1, new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9420) });
 
             migrationBuilder.InsertData(
                 table: "SquadCheckIns",
                 columns: new[] { "Id", "EndTime", "GameId", "Lat", "Lng", "SquadId", "SquadMemberId", "StartTime" },
-                values: new object[] { 2, new DateTime(2023, 3, 15, 12, 7, 52, 638, DateTimeKind.Utc).AddTicks(45), 1, 10.987, 40.500999999999998, 2, 2, new DateTime(2023, 3, 15, 11, 37, 52, 638, DateTimeKind.Utc).AddTicks(45) });
+                values: new object[] { 2, new DateTime(2023, 3, 23, 9, 27, 56, 167, DateTimeKind.Utc).AddTicks(9422), 1, 10.987, 40.500999999999998, 2, 2, new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9422) });
 
             migrationBuilder.InsertData(
                 table: "SquadCheckIns",
                 columns: new[] { "Id", "EndTime", "GameId", "Lat", "Lng", "SquadId", "SquadMemberId", "StartTime" },
-                values: new object[] { 3, new DateTime(2023, 3, 15, 11, 47, 52, 638, DateTimeKind.Utc).AddTicks(47), 2, 70.566999999999993, 5.1109999999999998, 1, 3, new DateTime(2023, 3, 15, 11, 37, 52, 638, DateTimeKind.Utc).AddTicks(47) });
+                values: new object[] { 3, new DateTime(2023, 3, 23, 9, 7, 56, 167, DateTimeKind.Utc).AddTicks(9423), 2, 70.566999999999993, 5.1109999999999998, 1, 3, new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9423) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Chats_GameId",
@@ -421,7 +422,7 @@ namespace HvZ.Migrations
                 name: "IX_SquadMembers_PlayerId",
                 table: "SquadMembers",
                 column: "PlayerId",
-                unique: true);
+                unique: false);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SquadMembers_SquadId",
