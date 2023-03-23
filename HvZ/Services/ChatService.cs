@@ -53,6 +53,11 @@ namespace HvZ.Services
             return _context.Players.Any(p => p.Id == playerId);
         }
 
+        public bool SquadExists(int squadId)
+        {
+            return _context.Squads.Any(s => s.Id == squadId);
+        }
+
         public async Task<IEnumerable<ChatDomain>> GetFactionChatsAsync(int gameId, int playerId)
         {
             var playerModel = await _context.Players.FindAsync(playerId);
