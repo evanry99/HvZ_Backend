@@ -42,7 +42,6 @@ namespace HvZ.Controllers
             return gameReadDTO;
         }
 
-
         /// <summary>
         /// Get a game by id
         /// </summary>
@@ -76,7 +75,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
         {
@@ -106,7 +105,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         // POST: api/GameDomains
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
@@ -132,7 +131,7 @@ namespace HvZ.Controllers
         /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
         // DELETE: api/GameDomains/5
-        //[Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
         {
@@ -143,28 +142,5 @@ namespace HvZ.Controllers
             await _gameService.DeleteGameAsync(id);
             return NoContent();
         }
-
-
-
-
-        /// <summary>
-        /// Get all kills from a game by game id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <response code="200"> Success. Return a list of killers in a game</response>
-        /// <response code="404"> Game not found. </response>
-        /// <response code="500"> Internal error</response>
-        //[HttpGet("{id}/kills")]
-        //public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetGameKills(int id) 
-        //{
-        //    if (!_gameService.GameExists(id))
-        //    {
-        //        return NotFound($"Game with id {id} does not exist");
-        //    }
-        //    var gameModel = await _gameService.GetGameKillsAsync(id);
-
-        //    return _mapper.Map<List<KillReadDTO>>(gameModel);
-        //}
     }
 }
