@@ -81,7 +81,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
         {
@@ -116,7 +116,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         // POST: api/GameDomains
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
@@ -143,7 +143,7 @@ namespace HvZ.Controllers
         /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
         // DELETE: api/GameDomains/5
-        //[Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
         {
