@@ -79,7 +79,7 @@ namespace HvZ
                     IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
                     {
                         var client = new HttpClient();
-                        var keyuri = builder.Configuration.GetConnectionString("TokenSecrets:KeyURI");
+                        var keyuri = builder.Configuration.GetConnectionString("KeyURI");
                         //Retrieves the keys from keycloak instance to verify token
                         var response = client.GetAsync(keyuri).Result;
                         var responseString = response.Content.ReadAsStringAsync().Result;
@@ -89,7 +89,7 @@ namespace HvZ
 
                     ValidIssuers = new List<string>
                    {
-                        builder.Configuration.GetConnectionString("TokenSecrets:IssuerURI")
+                        builder.Configuration.GetConnectionString("IssuerURI")
                    },
 
                     //This checks the token for a the 'aud' claim value
