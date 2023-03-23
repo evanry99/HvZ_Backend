@@ -51,6 +51,11 @@ namespace HvZ.Services
             return _context.Players.Any(p => p.Id == playerId);
         }
 
+        public bool GameExists(int gameId)
+        {
+            return  _context.Games.Any(g => g.Id == gameId);
+        }
+
         /// <summary>
         /// Generates a random six-character string consisting of characters from the string "123456"
         /// Then check if a player is using the BiteCode, if a player are using it then it create a new BiteCode
