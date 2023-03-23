@@ -42,7 +42,6 @@ namespace HvZ.Controllers
             return gameReadDTO;
         }
 
-
         /// <summary>
         /// Get a game by id
         /// </summary>
@@ -76,6 +75,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
         {
@@ -118,9 +118,8 @@ namespace HvZ.Controllers
 
             await _gameService.AddGameAsync(gameModel);
 
-            return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, gameDTO);
+            return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, _mapper.Map<GameReadDTO>(gameModel));
         }
-
 
         /// <summary>
         /// Delete a game by id

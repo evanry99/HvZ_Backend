@@ -39,7 +39,7 @@ namespace HvZ.Controllers
         /// <response code="200"> Success. Return a list of global chats in a game</response>
         /// <response code="404"> Game not found. </response>
         /// <response code="500"> Internal error</response>
-        [HttpGet("{gameId}/chat")]
+        [HttpGet("{gameId}/chat/global")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetGlobalChats(int gameId)
         {
             var chatModel = await _chatService.GetGlobalChatsAsync(gameId);
@@ -144,6 +144,24 @@ namespace HvZ.Controllers
             }
 
             var chatModel = await _chatService.GetSquadChatsAsync(gameId, squadId);
+
+            return _mapper.Map<List<ChatReadDTO>>(chatModel);
+        }
+
+        /// <summary>
+        /// Get all chats in a game
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        [HttpGet("{gameId}/chat")]
+        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetGameChats(int gameId)
+        {
+            if (!_chatService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            var chatModel = await _chatService.GetGameChatsAsync(gameId);
 
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
