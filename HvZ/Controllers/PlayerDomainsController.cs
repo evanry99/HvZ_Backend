@@ -79,10 +79,14 @@ namespace HvZ.Controllers
 
             if (!_playerService.PlayerExists(playerId))
             {
-                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
+                return NotFound($"Player with id {playerId} does not exist");
             }
 
             var playerDomain = await _playerService.GetPlayerAsync(gameId, playerId);
+            if(playerDomain == null)
+            {
+                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
+            }
             return _mapper.Map<PlayerReadDTO>(playerDomain);
         }
 
@@ -116,6 +120,12 @@ namespace HvZ.Controllers
             }
 
             if (!_playerService.PlayerExists(playerId))
+            {
+                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
+            }
+
+            var playerCheckDomain = await _playerService.GetPlayerAsync(gameId, playerId);
+            if (playerCheckDomain == null)
             {
                 return NotFound($"Player with id {playerId} does not exist in game {gameId}");
             }
@@ -189,6 +199,11 @@ namespace HvZ.Controllers
                 return NotFound($"Player with id {playerId} does not exist in game {gameId}");
             }
 
+            var playerCheckDomain = await _playerService.GetPlayerAsync(gameId, playerId);
+            if (playerCheckDomain == null)
+            {
+                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
+            }
 
             await _playerService.DeletePlayerAsync(gameId, playerId);
 

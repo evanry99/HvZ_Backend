@@ -83,10 +83,14 @@ namespace HvZ.Controllers
 
             if(!_missionService.MissionExists(missionId))
             {
-                return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
+                return NotFound($"Mission with id {missionId} does not exist");
             }
 
             var missionModel = await _missionService.GetGameMissionAsync(gameId, missionId);
+            if(missionModel == null)
+            {
+                return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
+            }
             return _mapper.Map<MissionReadDTO>(missionModel);
         }
 
@@ -125,12 +129,18 @@ namespace HvZ.Controllers
 
             if (!_missionService.MissionExists(missionId))
             {
-                return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
+                return NotFound($"Mission with id {missionId} does not exist");
             }
 
             if (missionDTO.EndTime <= missionDTO.StartTime)
             {
                 return BadRequest("Mission start or end time is invalid");
+            }
+
+            var missionCheckModel = await _missionService.GetGameMissionAsync(gameId, missionId);
+            if (missionCheckModel == null)
+            {
+                return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
             }
 
             var missionModel = _mapper.Map<MissionDomain>(missionDTO);
@@ -214,6 +224,11 @@ namespace HvZ.Controllers
             }
 
             if (!_missionService.MissionExists(missionId))
+            {
+                return NotFound($"Mission with id {missionId} does not exist");
+            }
+            var missionCheckModel = await _missionService.GetGameMissionAsync(gameId, missionId);
+            if (missionCheckModel == null)
             {
                 return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
             }

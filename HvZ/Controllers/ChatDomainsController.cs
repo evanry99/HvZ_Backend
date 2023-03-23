@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Authorization;
 namespace HvZ.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/game")]
     [ApiController]
     [Produces("application/json")]
@@ -115,7 +115,7 @@ namespace HvZ.Controllers
 
             if (!_chatService.ChatExists(chatId))
             {
-                return NotFound($"Chat with id {chatId} does not exist in game {gameId}");
+                return NotFound($"Chat with id {chatId} does not exist");
             }
 
             if(!_chatService.GameExists(gameId))
@@ -159,10 +159,14 @@ namespace HvZ.Controllers
 
             if (!_chatService.PlayerExists(playerId))
             {
-                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
+                return NotFound($"Player with id {playerId} does not exist");
             }
 
             var chatModel = await _chatService.GetFactionChatsAsync(gameId, playerId);
+            if (chatModel == null)
+            {
+                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
+            }
 
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
@@ -195,10 +199,15 @@ namespace HvZ.Controllers
 
             if(!_chatService.SquadExists(squadId))
             {
-                return NotFound($"Squad with id {squadId} does not exist in game {gameId}");
+                return NotFound($"Squad with id {squadId} does not exist");
             }
 
             var chatModel = await _chatService.GetSquadChatsAsync(gameId, squadId);
+            if (chatModel == null)
+            {
+                return NotFound($"Squad with id {squadId} does not exist in game {gameId}");
+            }
+
 
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }

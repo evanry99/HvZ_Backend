@@ -34,6 +34,7 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of squads in a game</response>
+        /// <response code="400"> Bad request. </response>
         /// <response code="404"> Game not found. </response>
         /// <response code="500"> Internal error</response>
         // GET: api/SquadDomains
