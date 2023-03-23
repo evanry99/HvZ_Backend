@@ -55,7 +55,11 @@ namespace HvZ.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReadDTO>> GetUserDomain(int id)
         {
-            if(!_userService.UserExists(id))
+            if (id <= 0)
+            {
+                return BadRequest($"Invalid user id {id}. The gameId must be greater than zero.");
+            }
+            if (!_userService.UserExists(id))
             {
                 return NotFound($"User with id {id} does not exsist");
             }
@@ -104,9 +108,9 @@ namespace HvZ.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserDomain(int id, UserEditDTO userDTO)
         {
-            if (id != userDTO.Id)
+            if (id <= 0)
             {
-                return BadRequest();
+                return BadRequest($"Invalid user id {id}. The gameId must be greater than zero.");
             }
             if (!_userService.UserExists(id))
             {
@@ -155,6 +159,11 @@ namespace HvZ.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserDomain(int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest($"Invalid user id {id}. The gameId must be greater than zero.");
+            }
+
             if (!_userService.UserExists(id))
             {
                 return NotFound($"User with id {id} does not exist");
