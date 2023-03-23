@@ -189,6 +189,11 @@ namespace HvZ.Services
             return await _context.SquadMembers.FirstOrDefaultAsync(sm => sm.GameId == gameId && sm.PlayerId == playerId);
         }
 
+        public async Task<IEnumerable<SquadMemberDomain>> GetSquadMembersAsync(int gameId, int squadId)
+        {
+            return await _context.SquadMembers.Where(sm => sm.GameId == gameId && sm.SquadId == squadId).ToListAsync();
+        }
+
         /// <summary>
         /// Method to check if game exists.
         /// </summary>
