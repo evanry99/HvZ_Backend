@@ -11,7 +11,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    //[Authorize]
+    [Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class PlayerDomainsController : ControllerBase
@@ -32,7 +32,7 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="200"> Success. Returns a list of players</response>
         /// <response code="400"> Bad request. </response>
-        /// <response code="404"> The game was not found</response>
+        /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/player")]
         public async Task<ActionResult<IEnumerable<PlayerReadDTO>>> GetGamePlayers(int gameId)
@@ -57,7 +57,7 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific player</response>
         /// <response code="400"> Bad request. </response>
-        /// <response code="404"> Player was not found</response>
+        /// <response code="404"> Player not found</response>
         /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/player/{playerId}")]
         public async Task<ActionResult<PlayerReadDTO>> GetPlayerDomain(int gameId, int playerId)
@@ -94,7 +94,7 @@ namespace HvZ.Controllers
         /// <param name="playerId"></param>
         /// <returns></returns>
         /// <response code="204"> Update success. Player updated</response>
-        /// <response code="404"> Player or Game was not found</response>
+        /// <response code="404"> Player or Game not found</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="500"> Internal error</response>
         [HttpPut("{gameId}/player/{playerId}")]
@@ -134,7 +134,7 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Player created succesfully</response>
         /// <response code="400"> Bad request. </response>
-        /// <response code="404"> Game was not found</response>
+        /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
         [HttpPost("{gameId}/player")]
         public async Task<ActionResult<PlayerReadDTO>> PostPlayerDomain(PlayerCreateDTO playerDTO, int gameId)
@@ -163,7 +163,7 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="204"> Player deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
-        /// <response code="404"> Player not found</response>
+        /// <response code="404"> Player or Game not found</response>
         /// <response code="500"> Internal error</response>
         [HttpDelete("{gameId}/player/{playerId}")]
         public async Task<IActionResult> DeletePlayerDomain(int gameId, int playerId)
