@@ -40,7 +40,12 @@ namespace HvZ.Controllers
         [HttpGet("{gameId}/chat")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetGlobalChats(int gameId)
         {
-            if(!_chatService.GameExists(gameId))
+            if (gameId <= 0)
+            {
+                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (!_chatService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist ");
             }
@@ -57,14 +62,21 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Chat created successfully</response>
         /// <response code="400"> Bad request </response>
+        /// <response code="404"> Bad request </response>
         /// <response code="500"> Internal error</response>
         [HttpPost("{gameId}/chat")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
         public async Task<ActionResult<ChatReadDTO>> PostChat(ChatCreateDTO chatDTO, int gameId)
         {
+            if (gameId <= 0)
+            {
+                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
+            }
+
             if (!_chatService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist");
@@ -91,9 +103,14 @@ namespace HvZ.Controllers
         public async Task<IActionResult> DeleteChatDomain(int gameId, int chatId)
         {
 
-            if (gameId <= 0 || chatId <= 0)
+            if (gameId <= 0)
             {
-                return BadRequest($"Invalid game id {gameId} or chat id {chatId}");
+                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (chatId <= 0)
+            {
+                return BadRequest($"Invalid chat id {chatId}. The chatId must be greater than zero.");
             }
 
             if (!_chatService.ChatExists(chatId))
@@ -127,13 +144,14 @@ namespace HvZ.Controllers
         {
             if (gameId <= 0)
             {
-                return BadRequest("Invalid gameId parameter. The gameId must be greater than zero.");
+                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
             }
 
             if (playerId <= 0)
             {
-                return BadRequest("Invalid playerId parameter. The playerId must be greater than zero.");
+                return BadRequest($"Invalid playerId parameter id {playerId}. The playerId must be greater than zero.");
             }
+
             if (!_chatService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist");
@@ -160,9 +178,24 @@ namespace HvZ.Controllers
         [HttpGet("{gameId}/chat/squad-chat/{squadId}/")]
         public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetSquadChats(int gameId, int squadId)
         {
+            if (gameId <= 0)
+            {
+                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (squadId <= 0)
+            {
+                return BadRequest($"Invalid squadId parameter id {squadId}. The squadId must be greater than zero.");
+            }
+
             if (!_chatService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            if(!_chatService.SquadExists(squadId))
+            {
+                return NotFound($"Squad with id {squadId} does not exist");
             }
 
             var chatModel = await _chatService.GetSquadChatsAsync(gameId, squadId);
