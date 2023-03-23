@@ -26,7 +26,7 @@ namespace HvZ.Controllers
         }
 
         /// <summary>
-        /// Get all kills in a game
+        /// Get all kills in a game by gameId
         /// </summary>
         /// <param name="gameId"></param>
         /// <returns></returns>
@@ -36,6 +36,16 @@ namespace HvZ.Controllers
         [HttpGet("{gameId}/kill")]
         public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetKills(int gameId)
         {
+            if (gameId <= 0)
+            {
+                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (!_killService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist ");
+            }
+
             return _mapper.Map<List<KillReadDTO>>(await _killService.GetAllKillsAsync(gameId));
         }
 
@@ -46,21 +56,36 @@ namespace HvZ.Controllers
         /// <param name="killId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific kill </response>
-        /// <response code="404"> KIll not found </response> 
+        /// <response code="400"> Bad request </response> 
+        /// <response code="404"> Game/kill not found </response> 
         /// <response code="500"> Internal error </response> 
         // GET: api/KillDomains/5
-        [Authorize]
+        // [Authorize] remove comment tag after testing
         [HttpGet("{gameId}/kill/{killId}")]
         public async Task<ActionResult<KillReadDTO>> GetKillDomain(int gameId, int killId)
         
         {
-            var killDomain = await _killService.GetKillAsync(gameId, killId);
-
-            if (killDomain == null)
+            if(gameId <= 0)
             {
-                return NotFound();
+                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
             }
 
+            if(killId <= 0)
+            {
+                return BadRequest($"Invalid killId parameter id {killId}. The killId must be greater than zero");
+            }
+
+            if (!_killService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist ");
+            }
+
+            if (!_killService.KillExists(killId))
+            {
+                return NotFound($"Kill with id {killId} does not exist in game {gameId} ");
+            }
+
+            var killDomain = await _killService.GetKillAsync(gameId, killId);
             return _mapper.Map<KillReadDTO>(killDomain);
         }
 
@@ -72,21 +97,32 @@ namespace HvZ.Controllers
         /// <param name="killId"></param>
         /// <returns></returns>
         /// <response code="204"> Update success. Kill updated  </response>
-        /// <response code="404"> Kill not found </response> 
+        /// <response code="400"> Bad request </response> 
+        /// <response code="404"> Game/kill not found </response> 
         /// <response code="500"> Internal error </response> 
         // PUT: api/KillDomains/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{gameId}/kill/{killId}")]
         public async Task<IActionResult> PutKillDomain(KillEditDTO killDTO, int gameId, int killId)
         {
-            if (killId != killDTO.Id)
+            if(gameId <= 0)
             {
-                return BadRequest();
+                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
             }
 
-            if (!_killService.KillExists(killId))
+            if (killId <= 0)
             {
-                return NotFound();
+                return BadRequest($"Invalid kill id {killId}. The killId must be greater than zero.");
+            }
+
+
+            if (!_killService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exsist");
+            }
+
+            if(!_killService.KillExists(killId))
+            {
+                return NotFound($"Kill with id {killId} does not exist in game {gameId}");
             }
 
 
@@ -104,12 +140,22 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Kill created successfully </response>
         /// <response code="400"> Bad request </response> 
+        /// <response code="404"> Game not found </response> 
         /// <response code="500"> Internal error </response> 
         // POST: api/KillDomains
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{gameId}/kill")]
         public async Task<ActionResult<KillReadDTO>> PostKillDomain(KillCreateDTO killDTO, int gameId)
         {
+            if (gameId <= 0)
+            {
+                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (!_killService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exsist");
+            }
+
             var killDomain = _mapper.Map<KillDomain>(killDTO);
             await _killService.AddKillAsync(killDomain, gameId);
 
@@ -130,11 +176,24 @@ namespace HvZ.Controllers
         [HttpDelete("{gameId}/kill/{killId}")]
         public async Task<IActionResult> DeleteKillDomain(int gameId, int killId)
         {
-            var killDomain = await _killService.GetKillAsync(gameId, killId);
-
-            if (killDomain == null)
+            if (gameId <= 0)
             {
-                return NotFound();
+                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (killId <= 0)
+            {
+                return BadRequest($"Invalid kill id {killId}. The killId must be greater than zero.");
+            }
+
+            if (!_killService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exsist");
+            }
+
+            if (!_killService.KillExists(killId))
+            {
+                return NotFound($"Kill with id {killId} does not exist in game {gameId}");
             }
 
             await _killService.DeleteKillAsync(gameId, killId);
