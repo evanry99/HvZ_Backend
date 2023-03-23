@@ -135,7 +135,6 @@ namespace HvZ.Controllers
                 return NotFound($"Squad with id {squadId} does not exist in game {gameId}");
             }
 
-
             var squadModel = _mapper.Map<SquadDomain>(squadDTO);
             await _squadService.UpdateSquadAsync(gameId,squadId,squadModel);
             return NoContent();
