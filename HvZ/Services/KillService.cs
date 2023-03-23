@@ -44,6 +44,11 @@ namespace HvZ.Services
             return _context.Kills.Any(k => k.Id == killId);
         }
 
+        public bool GameExists (int gameId)
+        {
+            return _context.Games.Any(g => g.Id == gameId);
+        }
+
         public async Task UpdateKillAsync(KillDomain kill, int gameId, int killId)
         {
             _context.Entry(kill).State = EntityState.Modified;
