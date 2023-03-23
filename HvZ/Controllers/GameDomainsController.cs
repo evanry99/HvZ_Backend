@@ -49,12 +49,17 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific game</response>
+        /// <response code="400"> Bad request. </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
         // GET: api/GameDomains/5
         [HttpGet("{id}")]
         public async Task<ActionResult<GameReadDTO>> GetGameDomain(int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest($"Invalid gameId parameter id {id}. The gameId must be greater than zero.");
+            }
             var gameReadDTO = await _gameService.GetGameAsync(id);
 
             if (gameReadDTO == null)
@@ -80,6 +85,11 @@ namespace HvZ.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest($"Invalid gameId parameter id {id}. The gameId must be greater than zero.");
+            }
+
             if (!_gameService.GameExists(id))
             {
                 return NotFound($"Game with id {id} does not exist");
@@ -137,6 +147,10 @@ namespace HvZ.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameDomain(int id)
         {
+            if (id <= 0)
+            {
+                return BadRequest($"Invalid gameId parameter id {id}. The gameId must be greater than zero.");
+            }
             if (!_gameService.GameExists(id))
             {
                 return NotFound($"Game with id {id} does not exist");
