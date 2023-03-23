@@ -5,6 +5,7 @@ using HvZ.Model.DTO.SquadCheckInDTO;
 using HvZ.Model.DTO.SquadDTO;
 using HvZ.Model.DTO.SquadMemberDTO;
 using HvZ.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
@@ -13,6 +14,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
+    [Authorize]
 
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class SquadDomainsController : ControllerBase
