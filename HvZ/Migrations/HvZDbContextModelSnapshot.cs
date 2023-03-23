@@ -66,7 +66,7 @@ namespace HvZ.Migrations
                         new
                         {
                             Id = 1,
-                            ChatTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1079),
+                            ChatTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9358),
                             GameId = 1,
                             IsHumanGlobal = true,
                             IsZombieGlobal = false,
@@ -77,7 +77,7 @@ namespace HvZ.Migrations
                         new
                         {
                             Id = 2,
-                            ChatTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1082),
+                            ChatTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9360),
                             GameId = 1,
                             IsHumanGlobal = false,
                             IsZombieGlobal = true,
@@ -88,7 +88,7 @@ namespace HvZ.Migrations
                         new
                         {
                             Id = 3,
-                            ChatTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1083),
+                            ChatTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9361),
                             GameId = 2,
                             IsHumanGlobal = true,
                             IsZombieGlobal = false,
@@ -152,7 +152,7 @@ namespace HvZ.Migrations
                             Name = "First Game",
                             Nw_Lat = 40.753,
                             Nw_Lng = 73.983000000000004,
-                            StartTime = new DateTime(2023, 3, 20, 11, 41, 26, 34, DateTimeKind.Local).AddTicks(700)
+                            StartTime = new DateTime(2023, 3, 23, 9, 57, 56, 167, DateTimeKind.Local).AddTicks(9185)
                         },
                         new
                         {
@@ -240,10 +240,9 @@ namespace HvZ.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("GameId")
@@ -260,7 +259,7 @@ namespace HvZ.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -274,34 +273,34 @@ namespace HvZ.Migrations
                         {
                             Id = 1,
                             Description = "Find a sock to equip yourself",
-                            EndTime = new DateTime(2023, 3, 20, 11, 11, 26, 34, DateTimeKind.Utc).AddTicks(1108),
+                            EndTime = new DateTime(2023, 3, 23, 9, 27, 56, 167, DateTimeKind.Utc).AddTicks(9374),
                             GameId = 1,
                             IsHumanVisible = true,
                             IsZombieVisible = false,
                             Name = "Gather",
-                            StartTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1108)
+                            StartTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9371)
                         },
                         new
                         {
                             Id = 2,
                             Description = "Survive the horde of zombies for 15 minutes ",
-                            EndTime = new DateTime(2023, 3, 20, 10, 56, 26, 34, DateTimeKind.Utc).AddTicks(1113),
+                            EndTime = new DateTime(2023, 3, 23, 9, 12, 56, 167, DateTimeKind.Utc).AddTicks(9376),
                             GameId = 2,
                             IsHumanVisible = true,
                             IsZombieVisible = false,
                             Name = "Survive",
-                            StartTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1112)
+                            StartTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9376)
                         },
                         new
                         {
                             Id = 3,
                             Description = "Kill 5 humans within 45 minutes ",
-                            EndTime = new DateTime(2023, 3, 20, 11, 26, 26, 34, DateTimeKind.Utc).AddTicks(1114),
+                            EndTime = new DateTime(2023, 3, 23, 9, 42, 56, 167, DateTimeKind.Utc).AddTicks(9378),
                             GameId = 2,
                             IsHumanVisible = false,
                             IsZombieVisible = true,
                             Name = "Blood bath",
-                            StartTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1114)
+                            StartTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9377)
                         });
                 });
 
@@ -411,35 +410,35 @@ namespace HvZ.Migrations
                         new
                         {
                             Id = 1,
-                            EndTime = new DateTime(2023, 3, 20, 11, 26, 26, 34, DateTimeKind.Utc).AddTicks(1193),
+                            EndTime = new DateTime(2023, 3, 23, 9, 42, 56, 167, DateTimeKind.Utc).AddTicks(9420),
                             GameId = 1,
                             Lat = 55.229999999999997,
                             Lng = 20.100999999999999,
                             SquadId = 1,
                             SquadMemberId = 1,
-                            StartTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1192)
+                            StartTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9420)
                         },
                         new
                         {
                             Id = 2,
-                            EndTime = new DateTime(2023, 3, 20, 11, 11, 26, 34, DateTimeKind.Utc).AddTicks(1198),
+                            EndTime = new DateTime(2023, 3, 23, 9, 27, 56, 167, DateTimeKind.Utc).AddTicks(9422),
                             GameId = 1,
                             Lat = 10.987,
                             Lng = 40.500999999999998,
                             SquadId = 2,
                             SquadMemberId = 2,
-                            StartTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1198)
+                            StartTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9422)
                         },
                         new
                         {
                             Id = 3,
-                            EndTime = new DateTime(2023, 3, 20, 10, 51, 26, 34, DateTimeKind.Utc).AddTicks(1200),
+                            EndTime = new DateTime(2023, 3, 23, 9, 7, 56, 167, DateTimeKind.Utc).AddTicks(9423),
                             GameId = 2,
                             Lat = 70.566999999999993,
                             Lng = 5.1109999999999998,
                             SquadId = 1,
                             SquadMemberId = 3,
-                            StartTime = new DateTime(2023, 3, 20, 10, 41, 26, 34, DateTimeKind.Utc).AddTicks(1199)
+                            StartTime = new DateTime(2023, 3, 23, 8, 57, 56, 167, DateTimeKind.Utc).AddTicks(9423)
                         });
                 });
 
