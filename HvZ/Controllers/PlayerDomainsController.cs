@@ -11,8 +11,6 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-
-    [ApiConventionType(typeof(DefaultApiConventions))]
     public class PlayerDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -93,10 +91,12 @@ namespace HvZ.Controllers
             }
 
             var playerDomain = await _playerService.GetPlayerAsync(gameId, playerId);
-            if(playerDomain == null)
+
+            if (playerDomain == null)
             {
                 return NotFound($"Player with id {playerId} does not exist in game {gameId}");
             }
+
             return _mapper.Map<PlayerReadDTO>(playerDomain);
         }
 
@@ -142,6 +142,7 @@ namespace HvZ.Controllers
             }
 
             var playerCheckDomain = await _playerService.GetPlayerAsync(gameId, playerId);
+
             if (playerCheckDomain == null)
             {
                 return NotFound($"Player with id {playerId} does not exist in game {gameId}");
@@ -209,7 +210,6 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeletePlayerDomain(int gameId, int playerId)
         {
-
             if (gameId <= 0)
             {
                 return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
@@ -231,6 +231,7 @@ namespace HvZ.Controllers
             }
 
             var playerCheckDomain = await _playerService.GetPlayerAsync(gameId, playerId);
+
             if (playerCheckDomain == null)
             {
                 return NotFound($"Player with id {playerId} does not exist in game {gameId}");
