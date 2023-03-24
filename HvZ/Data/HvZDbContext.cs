@@ -19,6 +19,11 @@ namespace HvZ.Data
         public DbSet<SquadDomain> Squads { get; set; }
         public DbSet<SquadMemberDomain> SquadMembers { get; set; }
 
+        /// <summary>
+        /// Method to seed the database with initial records of data into each table.
+        /// Also ignores cascades on delete behaviours between tables.
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GameDomain>().HasData(SeedDataHelper.GetGameDomains());
@@ -38,8 +43,6 @@ namespace HvZ.Data
             modelBuilder.Entity<SquadMemberDomain>().HasData(SeedDataHelper.GetSquadMemberDomains());
 
             modelBuilder.Entity<SquadCheckInDomain>().HasData(SeedDataHelper.GetSquadCheckInDomains());
-
-
 
             //On deleting Kill and Victim
             modelBuilder.Entity<KillDomain>()
@@ -95,14 +98,6 @@ namespace HvZ.Data
                 .WithMany(sm => sm.SquadCheckIns)
                 .HasForeignKey(s => s.SquadMemberId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-
-
-
-
-
-
         }
-
     }
 }

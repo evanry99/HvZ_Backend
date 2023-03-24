@@ -16,7 +16,6 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-
     public class ChatDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -79,7 +78,6 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
         public async Task<ActionResult<ChatReadDTO>> PostChat(ChatCreateDTO chatDTO, int gameId)
         {
             if (gameId <= 0)
@@ -91,7 +89,6 @@ namespace HvZ.Controllers
             {
                 return NotFound($"Game with id {gameId} does not exist");
             }
-
 
             var chatDomain = _mapper.Map<ChatDomain>(chatDTO);
             await _chatService.AddChatAsync(chatDomain, gameId);
@@ -119,7 +116,6 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteChatDomain(int gameId, int chatId)
         {
-
             if (gameId <= 0)
             {
                 return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
@@ -140,12 +136,10 @@ namespace HvZ.Controllers
                 return NotFound($"Game with id {gameId} does not exist");
             }
 
-
             await _chatService.DeleteChatAsync(gameId, chatId);
 
             return NoContent();
         }
-
 
         /// <summary>
         /// Get faction chats based on gameId and playerId
@@ -186,6 +180,7 @@ namespace HvZ.Controllers
             }
 
             var chatModel = await _chatService.GetFactionChatsAsync(gameId, playerId);
+
             if (chatModel == null)
             {
                 return NotFound($"Player with id {playerId} does not exist in game {gameId}");
@@ -233,11 +228,11 @@ namespace HvZ.Controllers
             }
 
             var chatModel = await _chatService.GetSquadChatsAsync(gameId, squadId);
+
             if (chatModel == null)
             {
                 return NotFound($"Squad with id {squadId} does not exist in game {gameId}");
             }
-
 
             return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
@@ -264,6 +259,7 @@ namespace HvZ.Controllers
             {
                 return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
             }
+
             if (!_chatService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist");

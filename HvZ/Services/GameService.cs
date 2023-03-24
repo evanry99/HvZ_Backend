@@ -8,7 +8,6 @@ namespace HvZ.Services
 {
     public class GameService : IGameService
     {
-
         public readonly HvZDbContext _context;
 
         public GameService(HvZDbContext context)
@@ -97,7 +96,6 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task UpdateGameAsync(GameDomain game, int gameId)
         {
-
             string decodeDescription = HttpUtility.HtmlDecode(game.Description);
             game.Description = decodeDescription;
 

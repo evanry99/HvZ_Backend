@@ -7,6 +7,7 @@ namespace HvZ.Services
     public class SquadCheckInService : ISquadCheckInService
     {
         public readonly HvZDbContext _context;
+
         public SquadCheckInService(HvZDbContext context)
         {
             _context = context;

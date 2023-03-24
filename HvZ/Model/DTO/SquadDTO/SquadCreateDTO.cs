@@ -6,7 +6,6 @@ namespace HvZ.Model.DTO.SquadDTO
     {
         public string Name { get; set; }
         public bool IsHuman { get; set; }
-        //public int GameId { get; set; }
         public SquadMemberCreateDTO SquadMember { get; set; }
     }
 }

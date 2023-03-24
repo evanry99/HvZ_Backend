@@ -6,7 +6,8 @@ namespace HvZ.Profiles
 {
     public class GameProfile: Profile
     {
-        public GameProfile() {
+        public GameProfile()
+        {
             CreateMap<GameCreateDTO, GameDomain>();
             CreateMap<GameDomain, GameReadDTO>();
             CreateMap<GameEditDTO, GameDomain>();

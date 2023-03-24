@@ -17,5 +17,6 @@ namespace HvZ.Services
         public Task <bool> GameExistsAsync(int gameId);
         public Task <bool> PlayerExistsAsync(int playerId);
         public Task <IEnumerable<SquadMemberDomain>> GetSquadMembersAsync(int gameId, int squadId);
+        public Task DeleteSquadMemberAsync(int gameId, int squadMemberId);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace HvZ.Data
 {
+    /// <summary>
+    /// Class to create data to put initially into database.
+    /// </summary>
     public class SeedDataHelper
     {
         public static List<GameDomain> GetGameDomains()
@@ -128,6 +131,7 @@ namespace HvZ.Data
             };
             return users;
         }
+
         public static List<ChatDomain> GetChatDomains()
         {
             List<ChatDomain> chats = new List<ChatDomain>()
@@ -169,6 +173,7 @@ namespace HvZ.Data
             };
             return chats;
         }
+
         public static List<MissionDomain> GetMissionDomains()
         {
             List<MissionDomain> missions = new List<MissionDomain>()
@@ -284,6 +289,7 @@ namespace HvZ.Data
             };
             return squadMembers;
         }
+
         public static List<SquadCheckInDomain> GetSquadCheckInDomains()
         {
             List<SquadCheckInDomain> squadCheckIns = new List<SquadCheckInDomain>()
@@ -325,6 +331,5 @@ namespace HvZ.Data
             }; 
             return squadCheckIns;
         }
-
     }
 }
