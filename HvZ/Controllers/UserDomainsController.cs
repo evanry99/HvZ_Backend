@@ -13,7 +13,7 @@ namespace HvZ.Controllers
     [Consumes("application/json")]
     [Authorize]
 
-    [ApiConventionType(typeof(DefaultApiConventions))]
+    
     public class UserDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -33,9 +33,13 @@ namespace HvZ.Controllers
         /// </summary>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of all users</response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="500"> Internal error</response>
         // GET: api/UserDomains
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetUsers()
         {
             var userModel = await _userService.GetAllUserAsync();
@@ -50,11 +54,18 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific user</response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> User not found. </response>
         /// <response code="500"> Internal error</response>
 
         // GET: api/UserDomains/5
-        [HttpGet("{id}")]
+        [HttpGet("{userid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> GetUserDomain(int userId)
         {
             if (userId <= 0)
@@ -75,10 +86,12 @@ namespace HvZ.Controllers
         /// <param name="username"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific user</response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Username not found. </response>
         /// <response code="500"> Internal error</response>
         [HttpGet("username/{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> GetUserByUsername(string username)
@@ -98,16 +111,21 @@ namespace HvZ.Controllers
         /// <summary>
         /// Update a user by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userid"></param>
         /// <param name="userDTO"></param>
         /// <returns></returns>
         /// <response code="204"> Update success. User updated</response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> User was not found</response>
         /// <response code="500"> Internal error</response>
         // PUT: api/UserDomains/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{userid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutUserDomain(int userId, UserEditDTO userDTO)
         {
             if (userId <= 0)
@@ -135,9 +153,14 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> User created successfully</response>
         /// <response code="400"> Bad request</response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="500"> Internal error</response>
         // POST: api/UserDomains
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> PostUserDomain(UserCreateDTO userDTO)
         {
             var userModel = _mapper.Map<UserDomain>(userDTO);
@@ -155,10 +178,16 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="204"> User deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> User not found</response>
         /// <response code="500"> Internal error</response>
         // DELETE: api/UserDomains/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{userid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteUserDomain(int userId)
         {
             if (userId <= 0)
