@@ -22,7 +22,14 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<IEnumerable<PlayerDomain>> GetAllGamePlayersAsync(int gameId)
         {
-            return await _context.Players.Where(p => p.GameId == gameId).ToListAsync();
+            var players = await _context.Players.Where(p => p.GameId == gameId).ToListAsync();
+
+            foreach (var player in players)
+            {
+                string decodedBiteCode = HttpUtility.HtmlDecode(player.BiteCode);
+                player.BiteCode = decodedBiteCode;
+            }
+            return players;
         }
 
         /// <summary>
