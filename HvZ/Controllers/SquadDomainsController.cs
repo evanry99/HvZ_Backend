@@ -14,7 +14,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    //[Authorize]
+    [Authorize]
     public class SquadDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
