@@ -3,7 +3,6 @@ using HvZ.Model.Domain;
 using HvZ.Model.DTO.SquadCheckInDTO;
 
 namespace HvZ.Profiles
-
 {
     public class SquadCheckInProfile : Profile
     {
