@@ -92,5 +92,10 @@ namespace HvZ.Services
         {
             return _context.Games.Any(g => g.Id == id);
         }
+
+        public bool MissionExists(int missionId)
+        {
+            return _context.Missions.Any(m => m.Id == missionId);
+        }
     }
 }

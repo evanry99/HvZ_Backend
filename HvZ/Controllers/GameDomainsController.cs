@@ -48,17 +48,22 @@ namespace HvZ.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific game</response>
+        /// <response code="400"> Bad request. </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
         // GET: api/GameDomains/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GameReadDTO>> GetGameDomain(int id)
+        public async Task<ActionResult<GameReadDTO>> GetGameDomain(int gameId)
         {
-            var gameReadDTO = await _gameService.GetGameAsync(id);
+            if (gameId <= 0)
+            {
+                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
+            }
+            var gameReadDTO = await _gameService.GetGameAsync(gameId);
 
             if (gameReadDTO == null)
             {
-                return NotFound($"Game with id {id} does not exist");
+                return NotFound($"Game with id {gameId} does not exist");
             }
 
             return _mapper.Map<GameReadDTO>(gameReadDTO);
@@ -77,11 +82,16 @@ namespace HvZ.Controllers
         // PUT: api/GameDomains/5
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int id)
+        public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int gameId)
         {
-            if (!_gameService.GameExists(id))
+            if (gameId <= 0)
             {
-                return NotFound($"Game with id {id} does not exist");
+                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (!_gameService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
             }
 
             if (gameDTO.EndTime <= gameDTO.StartTime)
@@ -91,7 +101,7 @@ namespace HvZ.Controllers
 
             var gameModel = _mapper.Map<GameDomain>(gameDTO);
 
-            await _gameService.UpdateGameAsync(gameModel, id);
+            await _gameService.UpdateGameAsync(gameModel, gameId);
 
             return NoContent();
         }
@@ -133,14 +143,20 @@ namespace HvZ.Controllers
         // DELETE: api/GameDomains/5
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGameDomain(int id)
+        public async Task<IActionResult> DeleteGameDomain(int gameId)
         {
-            if (!_gameService.GameExists(id))
+            if (gameId <= 0)
             {
-                return NotFound($"Game with id {id} does not exist");
+                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
             }
-            await _gameService.DeleteGameAsync(id);
+            if (!_gameService.GameExists(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+            await _gameService.DeleteGameAsync(gameId);
             return NoContent();
         }
+
+
     }
 }

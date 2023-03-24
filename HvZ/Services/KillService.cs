@@ -1,4 +1,4 @@
-﻿using HvZ.Data;
+using HvZ.Data;
 using HvZ.Model.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
@@ -73,6 +73,12 @@ namespace HvZ.Services
         {
             return _context.Kills.Any(k => k.Id == killId);
         }
+
+        public bool GameExists (int gameId)
+        {
+            return _context.Games.Any(g => g.Id == gameId);
+        }
+
 
         /// <summary>
         /// Method to update a kill in a game.
