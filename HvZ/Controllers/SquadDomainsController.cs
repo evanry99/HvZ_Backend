@@ -14,7 +14,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Authorize]
+    //[Authorize]
     public class SquadDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -469,6 +469,45 @@ namespace HvZ.Controllers
             }
 
             return Ok(_mapper.Map<List<SquadMemberReadDTO>>(squadMemberModel));
+        }
+
+        /// <summary>
+        /// Method to delete a squad member by gameId and squadMemberId
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="squadMemberId"></param>
+        /// <returns></returns>
+        /// <response code="204"> Squad member deleted succesfully </response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="404">Squad member not Found</response>
+        /// <response code="500">Internal error</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpDelete("{gameId}/squadMember/{squadMemberId}")]
+        public async Task<ActionResult> DeleteSquadMember(int gameId, int squadMemberId)
+        {
+            if (gameId <= 0)
+            {
+                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
+            }
+
+            if (squadMemberId <= 0)
+            {
+                return BadRequest($"Invalid squad member id {squadMemberId}. The squadMemberId must be greater than zero.");
+            }
+
+            if (!await _squadService.GameExistsAsync(gameId))
+            {
+                return NotFound($"Game with id {gameId} does not exist");
+            }
+
+            await _squadService.DeleteSquadMemberAsync(gameId, squadMemberId);
+
+            return NoContent();
         }
     }
 }
