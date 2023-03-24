@@ -23,6 +23,8 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<KillDomain> AddKillAsync(KillDomain kill, int gameId)
         {
+            string encodeStory = HttpUtility.HtmlEncode(kill.Story);
+            kill.Story = encodeStory;
 
             kill.GameId = gameId;
             _context.Kills.Add(kill);
