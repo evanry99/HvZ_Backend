@@ -33,7 +33,6 @@ namespace HvZ.Controllers
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game not found </response> 
         /// <response code="500"> Internal error </response>
-        // GET: api/KillDomains
         [HttpGet("{gameId}/kill")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -65,8 +64,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request </response> 
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game/kill not found </response> 
-        /// <response code="500"> Internal error </response> 
-        // GET: api/KillDomains/5
+        /// <response code="500"> Internal error </response>
         [HttpGet("{gameId}/kill/{killId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -97,10 +95,12 @@ namespace HvZ.Controllers
             }
 
             var killDomain = await _killService.GetKillAsync(gameId, killId);
+
             if (killDomain == null)
             {
                 return NotFound($"Kill with id {killId} does not exist in game {gameId}");
             }
+
             return _mapper.Map<KillReadDTO>(killDomain);
         }
 
@@ -115,8 +115,7 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request </response> 
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game/kill not found </response> 
-        /// <response code="500"> Internal error </response> 
-        // PUT: api/KillDomains/5
+        /// <response code="500"> Internal error </response>
         [HttpPut("{gameId}/kill/{killId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -135,7 +134,6 @@ namespace HvZ.Controllers
                 return BadRequest($"Invalid kill id {killId}. The killId must be greater than zero.");
             }
 
-
             if (!_killService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exsist");
@@ -147,6 +145,7 @@ namespace HvZ.Controllers
             }
 
             var killCheckDomain = await _killService.GetKillAsync(gameId, killId);
+
             if (killCheckDomain == null)
             {
                 return NotFound($"Kill with id {killId} does not exist in game {gameId}");
@@ -165,11 +164,10 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <returns></returns>
         /// <response code="201"> Kill created successfully </response>
-        /// <response code="400"> Bad request </response> 
+        /// <response code="400"> Bad request </response>
         /// <response code="401"> Unauthorized </response>
-        /// <response code="404"> Game not found </response> 
-        /// <response code="500"> Internal error </response> 
-        // POST: api/KillDomains
+        /// <response code="404"> Game not found </response>
+        /// <response code="500"> Internal error </response>
         [HttpPost("{gameId}/kill")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -201,11 +199,10 @@ namespace HvZ.Controllers
         /// <param name="killId"></param>
         /// <returns></returns>
         /// <response code="204"> Kill deleted successfully </response>
-        /// <response code="400"> Bad request </response> 
+        /// <response code="400"> Bad request </response>
         /// <response code="401"> Unauthorized </response>
-        /// <response code="404"> Kill not found </response> 
-        /// <response code="500"> Internal error </response> 
-        // DELETE: api/KillDomains/5
+        /// <response code="404"> Kill not found </response>
+        /// <response code="500"> Internal error </response>
         [HttpDelete("{gameId}/kill/{killId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -235,6 +232,7 @@ namespace HvZ.Controllers
             }
 
             var killCheckDomain = await _killService.GetKillAsync(gameId, killId);
+
             if (killCheckDomain == null)
             {
                 return NotFound($"Kill with id {killId} does not exist in game {gameId}");
