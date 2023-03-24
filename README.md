@@ -57,7 +57,7 @@ It should look similar like this:
 
 }
 ```
-3. To migrate the database into your server/database. In Visual Studio go to **Tools -> NuGet Package Manager ->Package Manager Console**
+3. To migrate the database into your server/database. In Visual Studio go to **Tools -> NuGet Package Manager -> Package Manager Console**
 
 In the console use:
 
