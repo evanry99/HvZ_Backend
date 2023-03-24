@@ -14,8 +14,6 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-
-    [ApiConventionType(typeof(DefaultApiConventions))]
     public class GameDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -35,6 +33,8 @@ namespace HvZ.Controllers
         /// <response code="500"> Internal error</response>
         // GET: api/GameDomains
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<GameReadDTO>>> GetGame()
         {
             var gameModel = await _gameService.GetAllGamesAsync();
@@ -45,14 +45,18 @@ namespace HvZ.Controllers
         /// <summary>
         /// Get a game by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="gameid"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific game</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
         // GET: api/GameDomains/5
-        [HttpGet("{id}")]
+        [HttpGet("{gameid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<GameReadDTO>> GetGameDomain(int gameId)
         {
             if (gameId <= 0)
@@ -72,16 +76,22 @@ namespace HvZ.Controllers
         /// <summary>
         /// Update a game by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="gameid"></param>
         /// <param name="gameDTO"></param>
         /// <returns></returns>
         /// <response code="204"> Update success. Game updated</response>
-        /// <response code="404"> The game was not found</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("{gameid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutGameDomain(GameEditDTO gameDTO, int gameId)
         {
             if (gameId <= 0)
@@ -113,10 +123,15 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Game created succesfully</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="500"> Internal error</response>
         // POST: api/GameDomains
         [Authorize]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<GameReadDTO>> PostGameDomain(GameCreateDTO gameDTO)
         {
             if (gameDTO.EndTime <= gameDTO.StartTime)
@@ -134,15 +149,21 @@ namespace HvZ.Controllers
         /// <summary>
         /// Delete a game by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="gameid"></param>
         /// <returns></returns>
         /// <response code="204"> Game deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
         // DELETE: api/GameDomains/5
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("{gameid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteGameDomain(int gameId)
         {
             if (gameId <= 0)

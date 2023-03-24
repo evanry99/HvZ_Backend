@@ -11,8 +11,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-
-    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Authorize]
     public class MissionDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -31,9 +30,15 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="200"> Success. Returns a list of Games</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/mission")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<MissionReadDTO>>> GetAllGameMissions(int gameId)
         {
             if (gameId <= 0)
@@ -59,10 +64,13 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific mission in a game</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game or mission not found. </response>
         /// <response code="500"> Internal error</response>
         [HttpGet("{gameId}/mission/{missionId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<MissionReadDTO>> GetMissionDomain(int gameId, int missionId)
@@ -104,11 +112,13 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="204"> Update success. Mission updated</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> The game or mission was not found</response>
         /// <response code="500"> Internal error</response>
         [HttpPut("{gameId}/mission/{missionId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutMissionDomain(MissionEditDTO missionDTO, int gameId, int missionId)
@@ -159,11 +169,13 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Mission created succesfully</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game not found. </response>
         /// <response code="500"> Internal error</response>
         [HttpPost("{gameId}/mission")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<MissionReadDTO>> PostMissionDomain(MissionCreateDTO missionDTO, int gameId)
@@ -200,11 +212,13 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="204"> Mission deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game or mission not found</response>
         /// <response code="500"> Internal error</response>
         [HttpDelete("{gameId}/mission/{missionId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteMissionDomain(int gameId, int missionId)
