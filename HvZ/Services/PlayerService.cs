@@ -1,6 +1,7 @@
 ﻿using HvZ.Data;
 using HvZ.Model.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Web;
 
 namespace HvZ.Services
 {
@@ -43,6 +44,8 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<PlayerDomain> AddPlayerAsync(PlayerDomain player, int gameId)
         {
+            string encodeBiteCode = HttpUtility.HtmlEncode(player.BiteCode);
+            player.BiteCode = encodeBiteCode;
             player.GameId = gameId;
             player.BiteCode = GenerateBiteCode();
             _context.Players.Add(player);

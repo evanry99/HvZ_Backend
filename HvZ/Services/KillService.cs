@@ -52,7 +52,15 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<IEnumerable<KillDomain>> GetAllKillsAsync(int gameId)
         {
-            return await _context.Kills.Where(k => k.GameId == gameId).ToListAsync();
+            var kills = await _context.Kills.Where(k => k.GameId == gameId).ToListAsync();
+            
+            foreach (var kill in kills)
+            {
+                string decodedStory = HttpUtility.HtmlDecode(kill.Story);
+                kill.Story = decodedStory;
+            }
+
+            return kills; 
         }
 
         /// <summary>
@@ -62,9 +70,9 @@ namespace HvZ.Services
         /// <param name="killId"></param>
         /// <returns></returns>
         public async Task<KillDomain> GetKillAsync(int gameId, int killId)
-        {
+        {   
             return await _context.Kills.FirstOrDefaultAsync(k => k.GameId == gameId && k.Id == killId);
-        }
+        }   
 
         /// <summary>
         /// Method to check if a kill exists.
