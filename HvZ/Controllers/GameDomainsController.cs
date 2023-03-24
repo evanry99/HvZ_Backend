@@ -31,7 +31,6 @@ namespace HvZ.Controllers
         /// <returns>A list of games</returns>
         /// <response code="200"> Success. Returns a list of Games</response>
         /// <response code="500"> Internal error</response>
-        // GET: api/GameDomains
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -51,7 +50,6 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
-        // GET: api/GameDomains/5
         [HttpGet("{gameId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -63,6 +61,7 @@ namespace HvZ.Controllers
             {
                 return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
             }
+
             var gameReadDTO = await _gameService.GetGameAsync(gameId);
 
             if (gameReadDTO == null)
@@ -84,7 +83,6 @@ namespace HvZ.Controllers
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
-        // PUT: api/GameDomains/5
         [Authorize]
         [HttpPut("{gameId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -125,7 +123,6 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="401"> Unauthorized </response>
         /// <response code="500"> Internal error</response>
-        // POST: api/GameDomains
         [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -156,7 +153,6 @@ namespace HvZ.Controllers
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game not found</response>
         /// <response code="500"> Internal error</response>
-        // DELETE: api/GameDomains/5
         [Authorize]
         [HttpDelete("{gameId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -170,14 +166,15 @@ namespace HvZ.Controllers
             {
                 return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
             }
+
             if (!_gameService.GameExists(gameId))
             {
                 return NotFound($"Game with id {gameId} does not exist");
             }
+
             await _gameService.DeleteGameAsync(gameId);
+
             return NoContent();
         }
-
-
     }
 }
