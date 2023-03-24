@@ -11,7 +11,7 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Authorize]
+    //[Authorize]
 
     
     public class UserDomainsController : ControllerBase
@@ -51,7 +51,7 @@ namespace HvZ.Controllers
         /// <summary>
         /// Get a user by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific user</response>
         /// <response code="400"> Bad request. </response>
@@ -60,7 +60,7 @@ namespace HvZ.Controllers
         /// <response code="500"> Internal error</response>
 
         // GET: api/UserDomains/5
-        [HttpGet("{userid}")]
+        [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -111,7 +111,7 @@ namespace HvZ.Controllers
         /// <summary>
         /// Update a user by id
         /// </summary>
-        /// <param name="userid"></param>
+        /// <param name="userId"></param>
         /// <param name="userDTO"></param>
         /// <returns></returns>
         /// <response code="204"> Update success. User updated</response>
@@ -120,7 +120,7 @@ namespace HvZ.Controllers
         /// <response code="404"> User was not found</response>
         /// <response code="500"> Internal error</response>
         // PUT: api/UserDomains/5
-        [HttpPut("{userid}")]
+        [HttpPut("{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -174,7 +174,7 @@ namespace HvZ.Controllers
         /// <summary>
         /// Delete a user by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         /// <response code="204"> User deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
@@ -182,7 +182,7 @@ namespace HvZ.Controllers
         /// <response code="404"> User not found</response>
         /// <response code="500"> Internal error</response>
         // DELETE: api/UserDomains/5
-        [HttpDelete("{userid}")]
+        [HttpDelete("{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

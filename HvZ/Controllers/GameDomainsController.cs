@@ -45,14 +45,14 @@ namespace HvZ.Controllers
         /// <summary>
         /// Get a game by id
         /// </summary>
-        /// <param name="gameid"></param>
+        /// <param name="gameId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific game</response>
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
         // GET: api/GameDomains/5
-        [HttpGet("{gameid}")]
+        [HttpGet("{gameId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -76,7 +76,7 @@ namespace HvZ.Controllers
         /// <summary>
         /// Update a game by id
         /// </summary>
-        /// <param name="gameid"></param>
+        /// <param name="gameId"></param>
         /// <param name="gameDTO"></param>
         /// <returns></returns>
         /// <response code="204"> Update success. Game updated</response>
@@ -86,7 +86,7 @@ namespace HvZ.Controllers
         /// <response code="500"> Internal error</response>
         // PUT: api/GameDomains/5
         [Authorize]
-        [HttpPut("{gameid}")]
+        [HttpPut("{gameId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -149,7 +149,7 @@ namespace HvZ.Controllers
         /// <summary>
         /// Delete a game by id
         /// </summary>
-        /// <param name="gameid"></param>
+        /// <param name="gameId"></param>
         /// <returns></returns>
         /// <response code="204"> Game deleted succesfully</response>
         /// <response code="400"> Bad request. </response>
@@ -158,7 +158,7 @@ namespace HvZ.Controllers
         /// <response code="500"> Internal error</response>
         // DELETE: api/GameDomains/5
         [Authorize]
-        [HttpDelete("{gameid}")]
+        [HttpDelete("{gameId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
