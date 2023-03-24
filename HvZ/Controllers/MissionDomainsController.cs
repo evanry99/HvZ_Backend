@@ -96,10 +96,12 @@ namespace HvZ.Controllers
             }
 
             var missionModel = await _missionService.GetGameMissionAsync(gameId, missionId);
+
             if(missionModel == null)
             {
                 return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
             }
+
             return _mapper.Map<MissionReadDTO>(missionModel);
         }
 
@@ -149,6 +151,7 @@ namespace HvZ.Controllers
             }
 
             var missionCheckModel = await _missionService.GetGameMissionAsync(gameId, missionId);
+
             if (missionCheckModel == null)
             {
                 return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
@@ -180,8 +183,6 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<MissionReadDTO>> PostMissionDomain(MissionCreateDTO missionDTO, int gameId)
         {
-
-
             if (gameId <= 0)
             {
                 return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
@@ -242,7 +243,9 @@ namespace HvZ.Controllers
             {
                 return NotFound($"Mission with id {missionId} does not exist");
             }
+
             var missionCheckModel = await _missionService.GetGameMissionAsync(gameId, missionId);
+
             if (missionCheckModel == null)
             {
                 return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
