@@ -11,31 +11,25 @@ namespace HvZ.Controllers
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    //[Authorize]
-
-    
+    [Authorize]
     public class UserDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-
         public UserDomainsController(IMapper mapper, IUserService userService)
         {
             _mapper = mapper;
             _userService = userService;
-
         }
-
 
         /// <summary>
         /// Get all Users
         /// </summary>
         /// <returns></returns>
-        /// <response code="200"> Success. Return a list of all users</response>
-        /// <response code="401"> Unauthorized </response>
-        /// <response code="500"> Internal error</response>
-        // GET: api/UserDomains
+        /// <response code="200">Success. Return a list of all users</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal error</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -47,7 +41,6 @@ namespace HvZ.Controllers
             return userReadDTO;
         }
 
-
         /// <summary>
         /// Get a user by id
         /// </summary>
@@ -58,8 +51,6 @@ namespace HvZ.Controllers
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> User not found. </response>
         /// <response code="500"> Internal error</response>
-
-        // GET: api/UserDomains/5
         [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -80,6 +71,7 @@ namespace HvZ.Controllers
 
             return _mapper.Map<UserReadDTO>(userReadDTO);
         }
+
         /// <summary>
         /// Get a user by username
         /// </summary>
@@ -96,7 +88,6 @@ namespace HvZ.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> GetUserByUsername(string username)
         {
-
             if (!_userService.UserNameExists(username))
             {
                 return NotFound($"User with username: {username} does not exsist");
@@ -105,8 +96,6 @@ namespace HvZ.Controllers
 
             return _mapper.Map<UserReadDTO>(userReadDTO);
         }
-
-
 
         /// <summary>
         /// Update a user by id
@@ -119,7 +108,6 @@ namespace HvZ.Controllers
         /// <response code="400"> Bad request. </response>
         /// <response code="404"> User was not found</response>
         /// <response code="500"> Internal error</response>
-        // PUT: api/UserDomains/5
         [HttpPut("{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -140,11 +128,7 @@ namespace HvZ.Controllers
 
             await _userService.UpdateUserAsync(userModel);
             return NoContent();
-
-
-
         }
-
 
         /// <summary>
         /// Add a new user 
@@ -152,13 +136,10 @@ namespace HvZ.Controllers
         /// <param name="userDTO"></param>
         /// <returns></returns>
         /// <response code="201"> User created successfully</response>
-        /// <response code="400"> Bad request</response>
         /// <response code="401"> Unauthorized </response>
         /// <response code="500"> Internal error</response>
-        // POST: api/UserDomains
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<UserReadDTO>> PostUserDomain(UserCreateDTO userDTO)
@@ -168,8 +149,6 @@ namespace HvZ.Controllers
 
             return CreatedAtAction("GetUserDomain", new { id = userModel.Id }, userModel);
         }
-
-
 
         /// <summary>
         /// Delete a user by id
@@ -181,7 +160,6 @@ namespace HvZ.Controllers
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> User not found</response>
         /// <response code="500"> Internal error</response>
-        // DELETE: api/UserDomains/5
         [HttpDelete("{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -201,7 +179,6 @@ namespace HvZ.Controllers
             }
             await _userService.DeleteUserAsync(userId);
             return NoContent();
-
         }
     }
 }
