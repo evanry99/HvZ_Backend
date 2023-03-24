@@ -15,7 +15,6 @@ namespace HvZ.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
 
-    [ApiConventionType(typeof(DefaultApiConventions))]
     public class ChatDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;

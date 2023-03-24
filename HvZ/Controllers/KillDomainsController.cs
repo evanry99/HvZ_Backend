@@ -12,8 +12,6 @@ namespace HvZ.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [Authorize]
-
-    [ApiConventionType(typeof(DefaultApiConventions))]
     public class KillDomainsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -31,9 +29,17 @@ namespace HvZ.Controllers
         /// <param name="gameId"></param>
         /// <returns></returns>
         /// <response code="200"> Success. Return a list of all kills </response>
+        /// <response code="400"> Bad request. </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="404"> Game not found </response> 
         /// <response code="500"> Internal error </response>
         // GET: api/KillDomains
         [HttpGet("{gameId}/kill")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<KillReadDTO>>> GetKills(int gameId)
         {
             if (gameId <= 0)
@@ -57,11 +63,16 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="200"> Success. Return a specific kill </response>
         /// <response code="400"> Bad request </response> 
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game/kill not found </response> 
         /// <response code="500"> Internal error </response> 
         // GET: api/KillDomains/5
-        [Authorize]
         [HttpGet("{gameId}/kill/{killId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<KillReadDTO>> GetKillDomain(int gameId, int killId)
         
         {
@@ -102,10 +113,16 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="204"> Update success. Kill updated  </response>
         /// <response code="400"> Bad request </response> 
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game/kill not found </response> 
         /// <response code="500"> Internal error </response> 
         // PUT: api/KillDomains/5
         [HttpPut("{gameId}/kill/{killId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutKillDomain(KillEditDTO killDTO, int gameId, int killId)
         {
             if(gameId <= 0)
@@ -149,10 +166,16 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="201"> Kill created successfully </response>
         /// <response code="400"> Bad request </response> 
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Game not found </response> 
         /// <response code="500"> Internal error </response> 
         // POST: api/KillDomains
         [HttpPost("{gameId}/kill")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<KillReadDTO>> PostKillDomain(KillCreateDTO killDTO, int gameId)
         {
             if (gameId <= 0)
@@ -179,10 +202,16 @@ namespace HvZ.Controllers
         /// <returns></returns>
         /// <response code="204"> Kill deleted successfully </response>
         /// <response code="400"> Bad request </response> 
+        /// <response code="401"> Unauthorized </response>
         /// <response code="404"> Kill not found </response> 
         /// <response code="500"> Internal error </response> 
         // DELETE: api/KillDomains/5
         [HttpDelete("{gameId}/kill/{killId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteKillDomain(int gameId, int killId)
         {
             if (gameId <= 0)

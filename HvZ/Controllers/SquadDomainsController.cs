@@ -22,7 +22,7 @@ namespace HvZ.Controllers
         private readonly ISquadCheckInService _squadCheckInService;
         private readonly ISquadService _squadService;
 
-        public SquadDomainsController(HvZDbContext context, IMapper mapper, ISquadCheckInService squadCheckInService, ISquadService squadService)
+        public SquadDomainsController(IMapper mapper, ISquadCheckInService squadCheckInService, ISquadService squadService)
         {
             _mapper = mapper;
             _squadCheckInService = squadCheckInService;
@@ -155,7 +155,7 @@ namespace HvZ.Controllers
         }
 
         /// <summary>
-        /// Create a new squad in a game
+        /// Add a new squad in a game
         /// </summary>
         /// <param name="gameId"></param>
         /// <param name="squadDTO"></param>
