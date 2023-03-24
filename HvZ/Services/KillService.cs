@@ -7,7 +7,6 @@ namespace HvZ.Services
 {
     public class KillService : IKillService
     {
-
         public readonly HvZDbContext _context;
 
         public KillService(HvZDbContext context)
@@ -88,7 +87,6 @@ namespace HvZ.Services
         {
             return _context.Games.Any(g => g.Id == gameId);
         }
-
 
         /// <summary>
         /// Method to update a kill in a game.

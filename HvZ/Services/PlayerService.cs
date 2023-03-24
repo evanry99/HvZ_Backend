@@ -7,7 +7,6 @@ namespace HvZ.Services
 {
     public class PlayerService : IPlayerService
     {
-
         public readonly HvZDbContext _context;
 
         public PlayerService(HvZDbContext context)
@@ -96,6 +95,11 @@ namespace HvZ.Services
             return _context.Players.Any(p => p.Id == playerId);
         }
 
+        /// <summary>
+        /// Method to check if a game exists.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
         public bool GameExists(int gameId)
         {
             return  _context.Games.Any(g => g.Id == gameId);

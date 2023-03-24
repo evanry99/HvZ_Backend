@@ -6,7 +6,6 @@ namespace HvZ.Services
 {
     public class UserService : IUserService
     {
-
         private readonly HvZDbContext _context;
 
         public UserService(HvZDbContext context)
@@ -27,7 +26,7 @@ namespace HvZ.Services
         }
 
         /// <summary>
-        /// MEthod to delete a user.
+        /// Method to delete a user.
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>

@@ -12,7 +12,5 @@ namespace HvZ.Services
         public Task DeleteUserAsync(int userId);
         public bool UserExists(int userId);
         public bool UserNameExists(string username);
-
-
     }
 }

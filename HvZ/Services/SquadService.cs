@@ -189,6 +189,12 @@ namespace HvZ.Services
             return await _context.SquadMembers.FirstOrDefaultAsync(sm => sm.GameId == gameId && sm.PlayerId == playerId);
         }
 
+        /// <summary>
+        /// Medthod to get all squad members in a squad.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="squadId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<SquadMemberDomain>> GetSquadMembersAsync(int gameId, int squadId)
         {
             return await _context.SquadMembers.Where(sm => sm.GameId == gameId && sm.SquadId == squadId).ToListAsync();
@@ -212,6 +218,27 @@ namespace HvZ.Services
         public async Task<bool> PlayerExistsAsync(int playerId)
         {
             return await _context.Players.AnyAsync(p => p.Id == playerId);
+        }
+
+        /// <summary>
+        /// Method to delete a squad member.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="squadMemberId"></param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException"></exception>
+        public async Task DeleteSquadMemberAsync(int gameId, int squadMemberId)
+        {
+            var squadMemberModel = await _context.SquadMembers.FirstOrDefaultAsync(sm => sm.GameId == gameId && sm.Id == squadMemberId);
+
+            if (squadMemberModel == default)
+            {
+                throw new KeyNotFoundException($"Squad member with id {squadMemberId} in game {gameId} does not exist");
+            }
+
+            _context.SquadMembers.Remove(squadMemberModel);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

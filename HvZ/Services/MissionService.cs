@@ -93,6 +93,11 @@ namespace HvZ.Services
             return _context.Games.Any(g => g.Id == id);
         }
 
+        /// <summary>
+        /// Method to check if a mission exists.
+        /// </summary>
+        /// <param name="missionId"></param>
+        /// <returns></returns>
         public bool MissionExists(int missionId)
         {
             return _context.Missions.Any(m => m.Id == missionId);

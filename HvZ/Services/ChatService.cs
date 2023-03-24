@@ -9,6 +9,7 @@ namespace HvZ.Services
     public class ChatService : IChatService
     {
         public readonly HvZDbContext _context;
+
         public ChatService(HvZDbContext context)
         {
             _context = context;
@@ -78,16 +79,25 @@ namespace HvZ.Services
             return _context.Games.Any(g => g.Id == id);
         }
 
+        /// <summary>
+        /// Method to check if player exists in DB.
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
         public bool PlayerExists(int playerId) 
         {
             return _context.Players.Any(p => p.Id == playerId);
         }
 
+        /// <summary>
+        /// Method to check if squad exists in DB.
+        /// </summary>
+        /// <param name="squadId"></param>
+        /// <returns></returns>
         public bool SquadExists(int squadId)
         {
             return _context.Squads.Any(s => s.Id == squadId);
         }
-
 
         /// <summary>
         /// Method to get faction chat messages. Takes input player Id and checks 
@@ -100,11 +110,6 @@ namespace HvZ.Services
         public async Task<IEnumerable<ChatDomain>> GetFactionChatsAsync(int gameId, int playerId)
         {
             var playerModel = await _context.Players.FindAsync(playerId);
-
-           /* if (playerModel == null)
-            {
-                throw new ArgumentException($"Player with id {playerId} could not be found");
-            }*/
 
             if (playerModel.IsHuman == true)
             {
@@ -136,7 +141,6 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<IEnumerable<ChatDomain>> GetGameChatsAsync(int gameId)
         {
-
             var messages = await _context.Chats.Where(c => c.GameId == gameId).ToListAsync();
             
             foreach (var message in messages)
