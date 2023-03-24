@@ -6,11 +6,9 @@ namespace HvZ.Model.Domain
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         [MaxLength(20)]
         public string Name { get; set; }
-
         [Required]
         [MaxLength(15)]
         public string GameState { get; set; }
@@ -20,8 +18,6 @@ namespace HvZ.Model.Domain
         [Required]
         public DateTime StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-
-        //Coordinates
         public double? Nw_Lat { get; set; }
         public double? Nw_Lng { get; set; }
         public double? Se_Lat { get; set; }

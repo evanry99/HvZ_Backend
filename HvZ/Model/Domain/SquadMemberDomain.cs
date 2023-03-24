@@ -7,7 +7,6 @@ namespace HvZ.Model.Domain
     {
         [Required]
         public int Id { get; set; }
-
         [Required]
         [MaxLength(20)]
         public string Rank { get; set; }
@@ -18,14 +17,13 @@ namespace HvZ.Model.Domain
         [Required]
         public int PlayerId { get; set; }
 
-        // Relationship
+        // Relationships
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
         [ForeignKey("SquadId")]
         public SquadDomain Squad { get; set; }
         [ForeignKey("PlayerId")]
         public PlayerDomain Player { get; set; }
-
         public ICollection<SquadCheckInDomain>? SquadCheckIns { get; set; }
     }
 }
