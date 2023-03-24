@@ -67,8 +67,7 @@ namespace HvZ.Controllers
             {
                 return NotFound($"Game with id {gameId} does not exist");
             }
-            string encodedMessage = HttpUtility.HtmlEncode(chatDTO.Message);
-            chatDTO.Message = encodedMessage;
+
 
             var chatDomain = _mapper.Map<ChatDomain>(chatDTO);
             await _chatService.AddChatAsync(chatDomain, gameId);

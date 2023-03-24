@@ -1,6 +1,7 @@
 ﻿using HvZ.Data;
 using HvZ.Model.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Web;
 
 namespace HvZ.Services
 {
@@ -22,6 +23,7 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<KillDomain> AddKillAsync(KillDomain kill, int gameId)
         {
+
             kill.GameId = gameId;
             _context.Kills.Add(kill);
             await _context.SaveChangesAsync();
