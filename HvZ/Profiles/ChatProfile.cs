@@ -10,7 +10,6 @@ namespace HvZ.Profiles
         {
             CreateMap<ChatCreateDTO, ChatDomain>();
             CreateMap<ChatDomain, ChatReadDTO>();
-            CreateMap<ChatEditDTO, ChatDomain>();
         }
     }
 }

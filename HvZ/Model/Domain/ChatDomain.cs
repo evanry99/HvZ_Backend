@@ -19,14 +19,14 @@ namespace HvZ.Model.Domain
         [Required]
         public int GameId { get; set; }
         [Required]
-        public int PlayerId { get; set; }
+        public int? PlayerId { get; set; }
         public int? SquadId { get; set; }
 
         // Relationships
         [ForeignKey("GameId")]
         public GameDomain Game { get; set; }
         [ForeignKey("PlayerId")]
-        public PlayerDomain Player { get; set; }
+        public PlayerDomain? Player { get; set; }
         [ForeignKey("SquadId")]
         public SquadDomain? Squad { get; set; }
     }

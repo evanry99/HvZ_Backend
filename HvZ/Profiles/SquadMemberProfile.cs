@@ -10,7 +10,6 @@ namespace HvZ.Profiles
         {
             CreateMap<SquadMemberCreateDTO, SquadMemberDomain>();
             CreateMap<SquadMemberDomain, SquadMemberReadDTO>();
-            CreateMap<SquadMemberEditDTO, SquadMemberDomain>();
         }
     }
 }
