@@ -138,7 +138,7 @@ namespace HvZ.Controllers
 
             await _gameService.AddGameAsync(gameModel);
 
-            return CreatedAtAction("GetGameDomain", new { id = gameModel.Id }, _mapper.Map<GameReadDTO>(gameModel));
+            return CreatedAtAction("PostGameDomain", new { id = gameModel.Id }, _mapper.Map<GameReadDTO>(gameModel));
         }
 
         /// <summary>

@@ -136,6 +136,7 @@ namespace HvZ.Services
             }
             SquadDomain existingsSquad = await _context.Squads.FindAsync(squadId);
             existingsSquad.Name = squad.Name;
+            existingsSquad.Id= squadId;
             existingsSquad.GameId = gameId;
             existingsSquad.IsHuman= squad.IsHuman;
 

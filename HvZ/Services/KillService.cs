@@ -97,6 +97,7 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task UpdateKillAsync(KillDomain kill, int gameId, int killId)
         {
+            kill.Id = killId;
             _context.Entry(kill).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }

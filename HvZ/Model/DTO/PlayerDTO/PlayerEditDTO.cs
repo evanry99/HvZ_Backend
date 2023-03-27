@@ -2,7 +2,6 @@
 {
     public class PlayerEditDTO
     {
-        public int Id { get; set; }
         public string BiteCode { get; set; }
         public bool IsPatientZero { get; set; }
         public bool IsHuman { get; set; }

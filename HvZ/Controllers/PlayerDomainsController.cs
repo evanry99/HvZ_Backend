@@ -92,12 +92,6 @@ namespace HvZ.Controllers
                 return NotFound($"Player with id {playerId} does not exist in game {gameId}");
             }
 
-            var playerCheckDomain = await _playerService.GetPlayerAsync(gameId, playerId);
-
-            if (playerCheckDomain == null)
-            {
-                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
-            }
 
             PlayerDomain playerDomain = _mapper.Map<PlayerDomain>(playerDTO);
             await _playerService.UpdatePlayerAsync(playerDomain, gameId, playerId);

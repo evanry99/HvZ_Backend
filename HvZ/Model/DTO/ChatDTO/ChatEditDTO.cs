@@ -2,7 +2,6 @@
 {
     public class ChatEditDTO
     {
-        public int Id { get; set; }
         public string Message { get; set; }
         public bool IsHumanGlobal { get; set; }
         public bool IsZombieGlobal { get; set; }

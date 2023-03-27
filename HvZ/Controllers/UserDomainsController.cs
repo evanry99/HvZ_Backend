@@ -127,7 +127,7 @@ namespace HvZ.Controllers
             }
             var userModel = _mapper.Map<UserDomain>(userDTO);
 
-            await _userService.UpdateUserAsync(userModel);
+            await _userService.UpdateUserAsync(userModel, userId);
             return NoContent();
         }
 
@@ -148,7 +148,7 @@ namespace HvZ.Controllers
             var userModel = _mapper.Map<UserDomain>(userDTO);
             await _userService.AddUserAsync(userModel);
 
-            return CreatedAtAction("GetUserDomain", new { id = userModel.Id }, userModel);
+            return CreatedAtAction("PostUserDomain", new { id = userModel.Id }, userModel);
         }
 
         /// <summary>
