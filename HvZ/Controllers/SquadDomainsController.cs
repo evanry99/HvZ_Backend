@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HvZ.Data;
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.SquadCheckInDTO;
 using HvZ.Model.DTO.SquadDTO;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HvZ.Controllers
 {
     [Route("api/game/")]
+    [Tags("Squad")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]

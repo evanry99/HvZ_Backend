@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
-
 namespace HvZ
 {
     public class Program
@@ -16,13 +15,12 @@ namespace HvZ
         {
             Configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
 
+        public IConfiguration Configuration { get; }
 
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
 
             // Add DbContext
             builder.Services.AddDbContext<HvZDbContext>(options =>
@@ -42,8 +40,8 @@ namespace HvZ
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Human Vs Zombie",
-                    Description = "ASP.NET Core Web API for a Human vs Zombie game"
+                    Title = "Humans Vs Zombies",
+                    Description = "ASP.NET Core Web API for a Humans vs Zombies game"
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

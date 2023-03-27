@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HvZ.Controllers
 {
     [Route("api/game")]
+    [Tags("Mission")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]

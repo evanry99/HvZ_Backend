@@ -2,12 +2,13 @@
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.PlayerDTO;
 using HvZ.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {
     [Route("api/game")]
+    [Tags("Player")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -48,56 +49,6 @@ namespace HvZ.Controllers
                 return NotFound($"Game with id {gameId} does not exist");
             }
             return _mapper.Map<List<PlayerReadDTO>>(await _playerService.GetAllGamePlayersAsync(gameId));
-        }
-
-        /// <summary>
-        /// Get a player by game Id and player Id
-        /// </summary>
-        /// <param name="gameId"></param>
-        /// <param name="playerId"></param>
-        /// <returns></returns>
-        /// <response code="200"> Success. Return a specific player</response>
-        /// <response code="400"> Bad request. </response>
-        /// <response code="401"> Unauthorized </response>
-        /// <response code="404"> Player not found</response>
-        /// <response code="500"> Internal error</response>
-        [Authorize]
-        [HttpGet("{gameId}/player/{playerId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PlayerReadDTO>> GetPlayerDomain(int gameId, int playerId)
-        {
-            if (gameId <= 0)
-            {
-                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
-            }
-
-            if (playerId <= 0)
-            {
-                return BadRequest($"Invalid playerId parameter id {playerId}. The player must be greater than zero.");
-            }
-
-            if (!_playerService.GameExists(gameId))
-            {
-                return NotFound($"Game with id {gameId} does not exist");
-            }
-
-            if (!_playerService.PlayerExists(playerId))
-            {
-                return NotFound($"Player with id {playerId} does not exist");
-            }
-
-            var playerDomain = await _playerService.GetPlayerAsync(gameId, playerId);
-
-            if (playerDomain == null)
-            {
-                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
-            }
-
-            return _mapper.Map<PlayerReadDTO>(playerDomain);
         }
 
         /// <summary>

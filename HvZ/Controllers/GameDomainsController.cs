@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.GameDTO;
-using HvZ.Model.DTO.KillDTO;
-using HvZ.Model.DTO.PlayerDTO;
 using HvZ.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HvZ.Controllers
 {
     [Route("api/game")]
+    [Tags("Game")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
