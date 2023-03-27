@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
-
 namespace HvZ
 {
     public class Program
@@ -16,13 +15,12 @@ namespace HvZ
         {
             Configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
 
+        public IConfiguration Configuration { get; }
 
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
 
             // Add DbContext
             builder.Services.AddDbContext<HvZDbContext>(options =>
