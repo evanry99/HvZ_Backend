@@ -81,7 +81,7 @@ namespace HvZ.Controllers
         /// <response code="401"> Unauthorized </response>
         /// <response code="404"> The game was not found</response>
         /// <response code="500"> Internal error</response>
-        //[Authorize]
+        [Authorize]
         [HttpPut("{gameId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
