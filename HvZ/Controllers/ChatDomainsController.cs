@@ -3,11 +3,9 @@ using HvZ.Model;
 using HvZ.Model.Domain;
 using HvZ.Model.DTO.ChatDTO;
 using HvZ.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.Authorization;
-using System.Web;
-using System;
 
 namespace HvZ.Controllers
 {
@@ -28,38 +26,6 @@ namespace HvZ.Controllers
             _mapper = mapper;
             _chatService = chatService;
             _hubContext= hubContext;
-        }
-
-        /// <summary>
-        /// Get cross faction global chat by gameId
-        /// </summary>
-        /// <param name="gameId"></param>
-        /// <returns></returns>
-        /// <response code="200"> Success. Return a list of global chats in a game</response>
-        /// <response code="400"> Bad request. </response>
-        /// <response code="401"> Unauthorized </response>
-        /// <response code="404"> Game not found. </response>
-        /// <response code="500"> Internal error</response>
-        [HttpGet("{gameId}/chat/global")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetGlobalChats(int gameId)
-        {
-            if (gameId <= 0)
-            {
-                return BadRequest($"Invalid game id {gameId}. The gameId must be greater than zero.");
-            }
-
-            if (!_chatService.GameExists(gameId))
-            {
-                return NotFound($"Game with id {gameId} does not exist");
-            }
-            var chatModel = await _chatService.GetGlobalChatsAsync(gameId);
-            
-            return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
 
         /// <summary>
@@ -140,102 +106,6 @@ namespace HvZ.Controllers
             await _chatService.DeleteChatAsync(gameId, chatId);
 
             return NoContent();
-        }
-
-        /// <summary>
-        /// Get faction chats based on gameId and playerId
-        /// </summary>
-        /// <param name="gameId"></param>
-        /// <returns></returns>
-        /// <response code="200"> Success. Return a list of faction chats in a game</response>
-        /// <response code="400"> Bad request. </response>
-        /// <response code="401"> Unauthorized </response>
-        /// <response code="404"> Game not found. </response>
-        /// <response code="500"> Internal error</response>
-        [HttpGet("{gameId}/chat/faction-chat/{playerId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetFactionChats(int gameId, int playerId)
-        {
-            if (gameId <= 0)
-            {
-                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
-            }
-
-            if (playerId <= 0)
-            {
-                return BadRequest($"Invalid playerId parameter id {playerId}. The playerId must be greater than zero.");
-            }
-
-            if (!_chatService.GameExists(gameId))
-            {
-                return NotFound($"Game with id {gameId} does not exist");
-            }
-
-            if (!_chatService.PlayerExists(playerId))
-            {
-                return NotFound($"Player with id {playerId} does not exist");
-            }
-
-            var chatModel = await _chatService.GetFactionChatsAsync(gameId, playerId);
-
-            if (chatModel == null)
-            {
-                return NotFound($"Player with id {playerId} does not exist in game {gameId}");
-            }
-
-            return _mapper.Map<List<ChatReadDTO>>(chatModel);
-        }
-
-        /// <summary>
-        /// Get squad chat
-        /// </summary>
-        /// <param name="gameId"></param>
-        /// <returns></returns>
-        /// <response code="200"> Success. Return a list of squad chats in a game</response>
-        /// <response code="400"> Bad request. </response>
-        /// <response code="401"> Unauthorized </response>
-        /// <response code="404"> Game not found. </response>
-        /// <response code="500"> Internal error</response>
-        [HttpGet("{gameId}/chat/squad-chat/{squadId}/")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<ChatReadDTO>>> GetSquadChats(int gameId, int squadId)
-        {
-            if (gameId <= 0)
-            {
-                return BadRequest($"Invalid gameId parameter id {gameId}. The gameId must be greater than zero.");
-            }
-
-            if (squadId <= 0)
-            {
-                return BadRequest($"Invalid squadId parameter id {squadId}. The squadId must be greater than zero.");
-            }
-
-            if (!_chatService.GameExists(gameId))
-            {
-                return NotFound($"Game with id {gameId} does not exist");
-            }
-
-            if(!_chatService.SquadExists(squadId))
-            {
-                return NotFound($"Squad with id {squadId} does not exist");
-            }
-
-            var chatModel = await _chatService.GetSquadChatsAsync(gameId, squadId);
-
-            if (chatModel == null)
-            {
-                return NotFound($"Squad with id {squadId} does not exist in game {gameId}");
-            }
-
-            return _mapper.Map<List<ChatReadDTO>>(chatModel);
         }
 
         /// <summary>
