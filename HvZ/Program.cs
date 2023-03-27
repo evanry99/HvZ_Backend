@@ -42,8 +42,8 @@ namespace HvZ
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Human Vs Zombie",
-                    Description = "ASP.NET Core Web API for a Human vs Zombie game"
+                    Title = "Humans Vs Zombies",
+                    Description = "ASP.NET Core Web API for a Humans vs Zombies game"
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
