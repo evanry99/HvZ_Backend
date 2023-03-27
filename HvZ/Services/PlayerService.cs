@@ -32,6 +32,17 @@ namespace HvZ.Services
         }
 
         /// <summary>
+        /// Method to get a specific player in a game.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public async Task<PlayerDomain> GetPlayerAsync(int gameId, int playerId)
+        {
+            return await _context.Players.FirstOrDefaultAsync(p => p.GameId == gameId && p.Id == playerId);
+        }
+
+        /// <summary>
         /// Method to add a new player to a game.
         /// </summary>
         /// <param name="player"></param>
