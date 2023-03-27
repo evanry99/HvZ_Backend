@@ -145,12 +145,6 @@ namespace HvZ.Controllers
                 return NotFound($"Kill with id {killId} does not exist");
             }
 
-            var killCheckDomain = await _killService.GetKillAsync(gameId, killId);
-
-            if (killCheckDomain == null)
-            {
-                return NotFound($"Kill with id {killId} does not exist in game {gameId}");
-            }
 
             KillDomain killDomain = _mapper.Map<KillDomain>(killDTO);
             await _killService.UpdateKillAsync(killDomain, gameId, killId);

@@ -151,12 +151,6 @@ namespace HvZ.Controllers
                 return BadRequest("Mission start or end time is invalid");
             }
 
-            var missionCheckModel = await _missionService.GetGameMissionAsync(gameId, missionId);
-
-            if (missionCheckModel == null)
-            {
-                return NotFound($"Mission with id {missionId} does not exist in game {gameId}");
-            }
 
             var missionModel = _mapper.Map<MissionDomain>(missionDTO);
 
