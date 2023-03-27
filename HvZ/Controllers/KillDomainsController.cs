@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace HvZ.Controllers
 {
     [Route("api/game")]
+    [Tags("Kill")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]

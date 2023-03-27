@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HvZ.Controllers
 {
     [Route("api/user")]
+    [Tags("User")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]

@@ -13,6 +13,7 @@ namespace HvZ.Controllers
 {
     [Authorize]
     [Route("api/game")]
+    [Tags("Chat")]
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
