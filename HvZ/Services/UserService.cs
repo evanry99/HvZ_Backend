@@ -72,8 +72,9 @@ namespace HvZ.Services
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task UpdateUserAsync(UserDomain user)
+        public async Task UpdateUserAsync(UserDomain user, int userId)
         {
+            user.Id = userId;
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
