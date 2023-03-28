@@ -10,6 +10,7 @@ The RESTful API includes seven main API fields: Chat, Game, Kill, Mission, Playe
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Resource](#resource)
 - [Contributing](#contributing)
 
 ## Technologies
@@ -69,6 +70,10 @@ The command will create a database with tables and initial data.
 4. Run the program with IIS Express, it will open a new localhost swagger site.
 Here you can test the APIs with CRUD (create, read, update and delete).
 You can take a look at the API documentation on how to use the APIs.
+
+## Resource
+Frontend: [HvZ - frontend repository](https://gitlab.com/experis-case/hvz-frontend)
+
 
 ## Contributing
 
