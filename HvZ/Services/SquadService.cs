@@ -57,8 +57,12 @@ namespace HvZ.Services
         {
             var squad = await _context.Squads.FindAsync(squadId);
 
+            var squadCheckIns = await _context.SquadCheckIns.Where(sc => sc.SquadId == squadId).ToListAsync();
+            _context.RemoveRange(squadCheckIns);
+            var chats = await _context.Chats.Where(c => c.SquadId == squadId).ToListAsync();
+            _context.RemoveRange(chats);
             var squadMembers = await _context.SquadMembers.Where(sm => sm.GameId == gameId && sm.SquadId == squadId).ToListAsync();
-            _context.SquadMembers.RemoveRange(squadMembers);
+            _context.RemoveRange(squadMembers);
 
             _context.Squads.Remove(squad);
 
@@ -236,6 +240,11 @@ namespace HvZ.Services
             {
                 throw new KeyNotFoundException($"Squad member with id {squadMemberId} in game {gameId} does not exist");
             }
+
+            var chats = await _context.Chats.Where(c => c.PlayerId == squadMemberModel.PlayerId).ToListAsync();
+            _context.Chats.RemoveRange(chats);
+            var checkIns = await _context.SquadCheckIns.Where(ci => ci.SquadMemberId == squadMemberId).ToListAsync();
+            _context.SquadCheckIns.RemoveRange(checkIns);
 
             _context.SquadMembers.Remove(squadMemberModel);
 

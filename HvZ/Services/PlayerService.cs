@@ -74,13 +74,29 @@ namespace HvZ.Services
         }
 
         /// <summary>
-        /// Method to delete a player in a game.
+        /// Method to delete a player in a game. First it manually deletes all records which has a player as parent or grandparent,
+        /// then deletes the player itself.
         /// </summary>
         /// <param name="gameId"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
         public async Task DeletePlayerAsync(int gameId, int playerId)
         {
+            var squadMember = await _context.SquadMembers.Where(sm => sm.PlayerId == playerId).FirstOrDefaultAsync();
+            if (squadMember != null)
+            {
+                var squadCheckIns = await _context.SquadCheckIns.Where(sc => sc.SquadMemberId == squadMember.Id).ToListAsync();
+                _context.SquadCheckIns.RemoveRange(squadCheckIns);
+                _context.SquadMembers.Remove(squadMember);
+            }
+
+            var kills = await _context.Kills.Where(k => k.KillerId == playerId).ToListAsync();
+            _context.Kills.RemoveRange(kills);
+            var kills2 = await _context.Kills.Where(k => k.VictimId == playerId).ToListAsync();
+            _context.Kills.RemoveRange(kills2);
+            var chats = await _context.Chats.Where(c => c.PlayerId == playerId).ToListAsync();
+            _context.RemoveRange(chats);
+
             var player = await _context.Players.FirstOrDefaultAsync(p => p.GameId == gameId && p.Id == playerId);
             _context.Players.Remove(player);
             await _context.SaveChangesAsync();
