@@ -21,14 +21,7 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<IEnumerable<PlayerDomain>> GetAllGamePlayersAsync(int gameId)
         {
-            var players = await _context.Players.Where(p => p.GameId == gameId).ToListAsync();
-
-            foreach (var player in players)
-            {
-                string decodedBiteCode = HttpUtility.HtmlDecode(player.BiteCode);
-                player.BiteCode = decodedBiteCode;
-            }
-            return players;
+            return await _context.Players.Where(p => p.GameId == gameId).ToListAsync();
         }
 
         /// <summary>
@@ -50,8 +43,6 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<PlayerDomain> AddPlayerAsync(PlayerDomain player, int gameId)
         {
-            string encodeBiteCode = HttpUtility.HtmlEncode(player.BiteCode);
-            player.BiteCode = encodeBiteCode;
             player.GameId = gameId;
             player.BiteCode = GenerateBiteCode();
             _context.Players.Add(player);

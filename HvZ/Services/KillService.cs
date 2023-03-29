@@ -22,9 +22,6 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<KillDomain> AddKillAsync(KillDomain kill, int gameId)
         {
-            string encodeStory = HttpUtility.HtmlEncode(kill.Story);
-            kill.Story = encodeStory;
-
             kill.GameId = gameId;
             _context.Kills.Add(kill);
             await _context.SaveChangesAsync();
@@ -51,15 +48,7 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<IEnumerable<KillDomain>> GetAllKillsAsync(int gameId)
         {
-            var kills = await _context.Kills.Where(k => k.GameId == gameId).ToListAsync();
-            
-            foreach (var kill in kills)
-            {
-                string decodedStory = HttpUtility.HtmlDecode(kill.Story);
-                kill.Story = decodedStory;
-            }
-
-            return kills; 
+            return await _context.Kills.Where(k => k.GameId == gameId).ToListAsync();
         }
 
         /// <summary>
