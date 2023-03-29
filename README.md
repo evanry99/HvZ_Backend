@@ -2,7 +2,7 @@
 
 
 ## Project Description
-The goal of this project is to design and implement a software solution for managing the state and communication of one or more concurrent games of HvZ. For the backend, a suitable database has been created using a code-first approach, and a RESTful API service has been developed to allow the frontend to interact with the database. To ensure the security of the backend, a Keycloak instance has been implemented. The database and API are deployed in Azure.
+The goal of this project is to design and implement a software solution for managing the state and communication of one or more concurrent games of HvZ. For the backend, a suitable database has been created using a code-first approach, and a RESTful API service has been developed to allow the frontend to interact with the database. To ensure the security of the backend, a Keycloak instance has been implemented. The database and API are deployed in Azure. The hosted website can be found here: [hvz.no](https://www.hvz.no/ "Humans vs Zombies website") 
 
 The RESTful API includes seven main API fields: Chat, Game, Kill, Mission, Player, Squad, and User. Documentation for each API endpoint and instructions on how to use them are provided in the GitLab project.
 ## Table of Contents
