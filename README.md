@@ -74,6 +74,9 @@ You can take a look at the API documentation on how to use the APIs.
 ## Resource
 Frontend: [HvZ - frontend repository](https://gitlab.com/experis-case/hvz-frontend)
 
+## Entity Relationship Diagram (ERD)
+
+![erdimage](./entity_relationship_diagram.png)
 
 ## Contributing
 
