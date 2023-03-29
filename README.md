@@ -76,7 +76,7 @@ Frontend: [HvZ - frontend repository](https://gitlab.com/experis-case/hvz-fronte
 
 ## Entity Relationship Diagram (ERD)
 
-![erdimage](./Database_ER_diagram_HvZ.png)
+![erdimage](./entity_relationship_diagram.png)
 
 ## Contributing
 
