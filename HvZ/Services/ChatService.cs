@@ -22,8 +22,6 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<ChatDomain> AddChatAsync(ChatDomain chat, int gameId)
         {
-            string encodedMessage = HttpUtility.HtmlEncode(chat.Message);
-            chat.Message = encodedMessage;
             chat.GameId = gameId;
 
             _context.Chats.Add(chat);
@@ -91,16 +89,8 @@ namespace HvZ.Services
         /// <param name="gameId"></param>
         /// <returns></returns>
         public async Task<IEnumerable<ChatDomain>> GetGameChatsAsync(int gameId)
-        {
-            var messages = await _context.Chats.Where(c => c.GameId == gameId).ToListAsync();
-            
-            foreach (var message in messages)
-            {
-                string decodedMessage = HttpUtility.HtmlDecode(message.Message);
-                message.Message = decodedMessage;
-            }
-            
-            return messages;
+        {   
+            return await _context.Chats.Where(c => c.GameId == gameId).ToListAsync();
         }
     }
 }

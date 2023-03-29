@@ -22,15 +22,6 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<GameDomain> AddGameAsync(GameDomain game)
         {
-            string encodedDescription= HttpUtility.HtmlEncode(game.Description);
-            game.Description= encodedDescription;
-            
-            string encodedName = HttpUtility.HtmlEncode(game.Name);
-            game.Name = encodedName;
-            
-            string encodedGameState = HttpUtility.HtmlEncode(game.GameState);
-            game.GameState = encodedGameState;
-
             _context.Games.Add(game);
             await _context.SaveChangesAsync();
             return game;
@@ -74,18 +65,7 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task<GameDomain> GetGameAsync(int gameId)
         {
-            var game = await _context.Games.FindAsync(gameId);
-
-            string decodeDescription = HttpUtility.HtmlDecode(game.Description);
-            game.Description = decodeDescription;
-
-            string decodeGameState = HttpUtility.HtmlDecode(game.GameState);
-            game.GameState = decodeGameState;
-
-            string decodeName = HttpUtility.HtmlDecode(game.Name);
-            game.Name= decodeName;
-
-            return game;
+            return await _context.Games.FindAsync(gameId);
         }
 
         /// <summary>
@@ -96,15 +76,6 @@ namespace HvZ.Services
         /// <returns></returns>
         public async Task UpdateGameAsync(GameDomain game, int gameId)
         {
-            string decodeDescription = HttpUtility.HtmlDecode(game.Description);
-            game.Description = decodeDescription;
-
-            string decodeGameState = HttpUtility.HtmlDecode(game.GameState);
-            game.GameState = decodeGameState;
-
-            string decodeName = HttpUtility.HtmlDecode(game.Name);
-            game.Name = decodeName;
-
             game.Id = gameId;
             _context.Entry(game).State = EntityState.Modified;
             await _context.SaveChangesAsync();
